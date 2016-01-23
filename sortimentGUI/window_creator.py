@@ -11,6 +11,3 @@ def create_window_main(database=None, show_all=True):
         window.show_all()
     window.connect("delete-event", Gtk.main_quit)
     return window
-
-def create_button(text=""):
-    return Gtk.Button(text)
