@@ -54,6 +54,7 @@ class MainWindowHandler:
     def register_user_image(self, image):
         """
         Function used to register where to put image of selected user.
+
         :param image: image object
         """
         self.user_image = image
@@ -62,6 +63,7 @@ class MainWindowHandler:
     def register_spinner(self, spinner):
         """
         Function used to register default spinner to indicate running process.
+
         :param spinner: spinner object
         """
         self.spinner = spinner
@@ -74,6 +76,7 @@ class MainWindowHandler:
         """
         Function used to test spinner as if data were being retrieved from database.
         """
+
         print("Doing hard work.")
         sleep(5)
         print("Done")
@@ -81,8 +84,10 @@ class MainWindowHandler:
     def register_user_list(self, list):
         """
         Function used to register graphical list of users.
+
         :param list: list to register
         """
+
         self.user_list = list
         sortimentGUI.gtk_element_editor.set_listbox_filter(list, self.user_filter)
         self.update_user_list()
@@ -90,8 +95,10 @@ class MainWindowHandler:
     def register_food_list(self, list):
         """
         Function used to register graphical list of food.
+
         :param list: list to register
         """
+
         self.food_list = list
         # todo: add food filter
         self.update_food_list()
@@ -107,7 +114,9 @@ class MainWindowHandler:
     def update_user_list(self, *args):
         """
         Updates user list with new data from database.
+
         """
+
         list = Database.get_user(None)
         for user in list:
             row = sortimentGUI.gtk_element_editor.create_user_row(user, self.user_selected)
@@ -120,6 +129,7 @@ class MainWindowHandler:
         """
         Updates food list with new data from database.
         """
+
         list = Database.get_food(None)
         for food in list:
             row = sortimentGUI.gtk_element_editor.create_food_row(food, self.food_selected)
@@ -134,6 +144,7 @@ class MainWindowHandler:
         """
         Updates all data presented in main window.
         """
+
         self.update_food_list()
         self.update_user_list()
         self.update_user_image()
@@ -144,11 +155,13 @@ class MainWindowHandler:
 
         :param database: database to use
         """
+
         self.database = database
 
     def user_filter(self, row, *args):
         """
         Function used to filter users in listbox.
+
         :param row: row.user should contain valid user dictionary
         :return: True if user should be displayed, False otherwise.
         """

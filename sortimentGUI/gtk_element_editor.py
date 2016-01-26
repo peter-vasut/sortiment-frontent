@@ -7,10 +7,12 @@ def create_button(text=""):
 def create_user_row(user, callback):
     """
     Creates ListBoxRow to display user nick or name and image.
+
     :param user: user dictionary
     :param callback: function to be called when user is clicked
     :return: new ListBoxRow according to user data and callback function
     """
+
     row = Gtk.ListBoxRow()
     event_box = Gtk.EventBox()
     hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
@@ -30,10 +32,12 @@ def create_user_row(user, callback):
 def create_food_row(food, callback):
     """
     Creates ListBoxRow to display food name and image.
+
     :param food: food dictionary
     :param callback: function to be called when user is clicked
     :return: new ListBoxRow according to user data and callback function
     """
+
     return create_user_row(food, callback)  # todo: create different row type for food with price tag and edit button
 
 
