@@ -1,5 +1,5 @@
-import time
 from gi.repository import Gtk
+
 import sortimentGUI.window_creator
 from database import Database
 
