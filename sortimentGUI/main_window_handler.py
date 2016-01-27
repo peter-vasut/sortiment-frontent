@@ -130,7 +130,7 @@ class MainWindowHandler:
         Updates food list with new data from database.
         """
 
-        list = Database.get_food(None)
+        list = Database.get_item(None)
         for food in list:
             row = sortimentGUI.gtk_element_editor.create_food_row(food, self.food_selected)
             self.food_list.add(row)

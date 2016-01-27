@@ -25,7 +25,7 @@ def create_window_main(database=None, show_all=True):
     return window
 
 
-def create_window_transaction(database=None, show_all=True):
+def create_window_transaction(database=None, show_all=True, user=dict()):
     """
     Creates transaction window used for transferring money between user and cash, or between two users.
 
