@@ -3,7 +3,6 @@ import threading
 from time import sleep
 
 import sortimentGUI.gtk_element_editor
-from database import Database
 
 
 class MainWindowHandler:
@@ -117,7 +116,7 @@ class MainWindowHandler:
 
         """
 
-        list = Database.get_user(None)
+        list = self.database.get_user(None)
         for user in list:
             row = sortimentGUI.gtk_element_editor.create_user_row(user, self.user_selected)
             self.user_list.add(row)
@@ -130,7 +129,7 @@ class MainWindowHandler:
         Updates food list with new data from database.
         """
 
-        list = Database.get_item(None)
+        list = self.database.get_item(None)
         for food in list:
             row = sortimentGUI.gtk_element_editor.create_food_row(food, self.food_selected)
             self.food_list.add(row)
