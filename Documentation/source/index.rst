@@ -11,8 +11,9 @@ Contents:
 .. toctree::
 :maxdepth: 4
 
-       modules
-       docuinfo
+      modules
+      docuinfo
+      runinfo
 
 
 Indices and tables

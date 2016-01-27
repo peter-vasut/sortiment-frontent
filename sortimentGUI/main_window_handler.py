@@ -1,8 +1,8 @@
 import functools
 import threading
 from time import sleep
-
-import sortimentGUI.gtk_element_editor
+# import gtk_element_editor
+from . import gtk_element_editor
 
 
 class MainWindowHandler:
@@ -88,7 +88,7 @@ class MainWindowHandler:
         """
 
         self.user_list = list
-        sortimentGUI.gtk_element_editor.set_listbox_filter(list, self.user_filter)
+        gtk_element_editor.set_listbox_filter(list, self.user_filter)
         self.update_user_list()
 
     def register_food_list(self, list):
@@ -118,7 +118,7 @@ class MainWindowHandler:
 
         list = self.database.get_user(None)
         for user in list:
-            row = sortimentGUI.gtk_element_editor.create_user_row(user, self.user_selected)
+            row = gtk_element_editor.create_user_row(user, self.user_selected)
             self.user_list.add(row)
         self.user_list.show_all()
 
@@ -131,7 +131,7 @@ class MainWindowHandler:
 
         list = self.database.get_item(None)
         for food in list:
-            row = sortimentGUI.gtk_element_editor.create_food_row(food, self.food_selected)
+            row = gtk_element_editor.create_food_row(food, self.food_selected)
             self.food_list.add(row)
         self.food_list.show_all()
 
