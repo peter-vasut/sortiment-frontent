@@ -1,10 +1,12 @@
+from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 
 
 def create_button(text=""):
     return Gtk.Button(text)
 
-def create_user_row(user, callback):
+
+def create_user_row(user, callback, image_height=50):
     """
     Creates ListBoxRow to display user nick or name and image.
 
@@ -19,7 +21,7 @@ def create_user_row(user, callback):
     label = Gtk.Label(user.get('nick',user.get('name',"???")), xalign=0)
     image = Gtk.Image()
     image.set_from_icon_name("gtk-missing-image", 6)
-    # todo: load real user image
+    load_image_from_file(image, user.get('photo', ''), image_height, image_height)
     hbox.pack_start(image, False, True, 0)
     hbox.pack_start(label, True, True, 0)
     event_box.add(hbox)
@@ -42,4 +44,32 @@ def create_food_row(food, callback):
 
 
 def set_listbox_filter(listbox, filter_function):
+    """
+    Sets filter function of listbox.
+    :param listbox: listbox to be set
+    :param filter_function: filter function
+    """
     listbox.set_filter_func(filter_function, None)
+
+
+def load_image_from_file(image, path, width, height):
+    """
+    Loads file to image (if file exists).
+    :param image: Gtk.Image where to put data from file
+    :param path: path to image file
+    :param width: target width of image
+    :param height: target height of image
+    :return: True if successful, False otherwise
+    """
+    success = True
+    try:
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file(path)
+        scaled_buf = pixbuf.scale_simple(width, height, GdkPixbuf.InterpType.BILINEAR)
+        image.set_from_pixbuf(scaled_buf)
+    except:
+        success = False
+    return success
+
+
+def image_set_missing(image):
+    image.set_from_icon_name("gtk-missing-image", 6)

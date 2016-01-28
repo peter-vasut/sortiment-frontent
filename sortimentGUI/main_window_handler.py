@@ -1,7 +1,7 @@
 import functools
 import threading
 from time import sleep
-# import gtk_element_editor
+
 from . import gtk_element_editor
 
 
@@ -12,6 +12,10 @@ class MainWindowHandler:
     user_list = None
     food_list = None
     database = None
+    selected_food = None
+    selected_user = None
+    selected_amount = 0
+    image_size = 300
 
     def use_spinner(function):
         """
@@ -102,11 +106,16 @@ class MainWindowHandler:
         # todo: add food filter
         self.update_food_list()
 
-    def user_selected(self, _, _2, id):
-        print("Not implemented", id)  # todo
+    def user_selected(self, *args):
+        self.selected_user = args[2]
+        gtk_element_editor.image_set_missing(self.user_image)
+        gtk_element_editor.load_image_from_file(self.user_image,
+                                                self.selected_user.get('photo', ''),
+                                                self.image_size,
+                                                self.image_size)
 
     def food_selected(self, *args):
-        print("Not implmented", args)  # todo
+        self.selected_food = args[2]
 
     @use_threading
     @use_spinner
@@ -166,3 +175,10 @@ class MainWindowHandler:
         """
         # todo: implement filter
         return True
+
+    def buy_food(self, *args):
+        self.database.buy_items(self.selected_user, self.selected_food, self.selected_amount)
+        # todo: error message
+
+    def amount_selected(self, *args):
+        print(args)  # todo
