@@ -107,7 +107,8 @@
     <span class="k">pass</span>  <span class="c"># todo</span>
 
 </div>
-<div class="viewcode-block" id="create_window"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_creator.create_window">[docs]</a><span class="k">def</span> <span class="nf">create_window</span><span class="p">(</span><span class="n">layout_file_location</span><span class="p">,</span> <span class="n">event_handler</span><span class="p">,</span> <span class="n">show_all</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">should_quit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">relative_filenames</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="create_window"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_creator.create_window">[docs]</a><span class="k">def</span> <span class="nf">create_window</span><span class="p">(</span><span class="n">layout_file_location</span><span class="p">,</span> <span class="n">event_handler</span><span class="p">,</span> <span class="n">show_all</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">should_quit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">relative_filenames</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                  <span class="n">fullscreen</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Universal function for creating window.</span>
 <span class="sd">    :param layout_file_location: path to .glade file containing layout information about window</span>
@@ -127,6 +128,8 @@
         <span class="n">window</span><span class="o">.</span><span class="n">show_all</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">should_quit</span><span class="p">:</span>
         <span class="n">window</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;delete-event&quot;</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">main_quit</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">fullscreen</span><span class="p">:</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">fullscreen</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">window</span></div>
 </pre></div>
 

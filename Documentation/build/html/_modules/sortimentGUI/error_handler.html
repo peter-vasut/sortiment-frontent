@@ -49,16 +49,19 @@
             
   <h1>Source code for sortimentGUI.error_handler</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<div class="viewcode-block" id="show_error"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.error_handler.show_error">[docs]</a><span class="k">def</span> <span class="nf">show_error</span><span class="p">(</span><span class="n">parent_window</span><span class="p">,</span><span class="n">text</span><span class="p">):</span> <span class="c">#todo: not working in parallel?</span>
-    <span class="n">dialog</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MessageDialog</span><span class="p">(</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent_window</span><span class="p">,</span>
-                      <span class="n">flags</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">DialogFlags</span><span class="o">.</span><span class="n">MODAL</span><span class="p">,</span>
-                      <span class="nb">type</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
-                      <span class="n">buttons</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ButtonsType</span><span class="o">.</span><span class="n">CANCEL</span><span class="p">,</span>
-                      <span class="n">message_format</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
+
+
+<div class="viewcode-block" id="show_error"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.error_handler.show_error">[docs]</a><span class="k">def</span> <span class="nf">show_error</span><span class="p">(</span><span class="n">parent_window</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>  <span class="c"># todo: not working in parallel?</span>
+    <span class="n">dialog</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MessageDialog</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent_window</span><span class="p">,</span>
+                               <span class="n">flags</span><span class="o">=</span><span class="n">Gtk</span><span class="o">.</span><span class="n">DialogFlags</span><span class="o">.</span><span class="n">MODAL</span><span class="p">,</span>
+                               <span class="nb">type</span><span class="o">=</span><span class="n">Gtk</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                               <span class="n">buttons</span><span class="o">=</span><span class="n">Gtk</span><span class="o">.</span><span class="n">ButtonsType</span><span class="o">.</span><span class="n">CANCEL</span><span class="p">,</span>
+                               <span class="n">message_format</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
     <span class="n">dialog</span><span class="o">.</span><span class="n">show_all</span><span class="p">()</span>
+
 </div>
 <div class="viewcode-block" id="catch_exception"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.error_handler.catch_exception">[docs]</a><span class="k">def</span> <span class="nf">catch_exception</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
     <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
@@ -67,6 +70,7 @@
             <span class="k">return</span> <span class="n">function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="n">show_error</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">Window</span><span class="p">(),</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+
     <span class="k">return</span> <span class="n">inner</span></div>
 </pre></div>
 

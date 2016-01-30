@@ -159,6 +159,26 @@
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_scaling">
+<tt class="descname">apply_dynamic_scaling</tt><big>(</big><em>awidth</em>, <em>aheight</em>, <em>standard_window_width=640</em>, <em>standard_window_height=320</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.apply_dynamic_scaling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_scaling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scales all widgets registered for dynamic scaling.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>awidth</strong> &#8211; actual window width</li>
+<li><strong>aheight</strong> &#8211; actual window height</li>
+<li><strong>standard_window_width</strong> &#8211; standard window width used as reference</li>
+<li><strong>standard_window_height</strong> &#8211; standard window height used as reference</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="sortimentGUI.main_window_handler.MainWindowHandler.buy_food">
 <tt class="descname">buy_food</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.buy_food"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.buy_food" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -166,6 +186,11 @@
 <dl class="attribute">
 <dt id="sortimentGUI.main_window_handler.MainWindowHandler.database">
 <tt class="descname">database</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.database" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.main_window_handler.MainWindowHandler.dynamic_scaling_list">
+<tt class="descname">dynamic_scaling_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.dynamic_scaling_list" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -182,6 +207,20 @@
 <dt id="sortimentGUI.main_window_handler.MainWindowHandler.image_size">
 <tt class="descname">image_size</tt><em class="property"> = 300</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.image_size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.main_window_handler.MainWindowHandler.register_dynamic_scaling">
+<tt class="descname">register_dynamic_scaling</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.register_dynamic_scaling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.register_dynamic_scaling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to be called for registering widget as dynamicly scalable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> &#8211; Argument 0 should be widget do be resized on window change.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="sortimentGUI.main_window_handler.MainWindowHandler.register_food_list">
@@ -362,6 +401,12 @@
 <tt class="descname">user_selected</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.user_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.user_selected" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="method">
+<dt id="sortimentGUI.main_window_handler.MainWindowHandler.window_configure">
+<tt class="descname">window_configure</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.window_configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.window_configure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function which should be callen on every change of window size.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -369,7 +414,7 @@
 <span id="sortimentgui-window-creator-module"></span><h2>sortimentGUI.window_creator module<a class="headerlink" href="#module-sortimentGUI.window_creator" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="sortimentGUI.window_creator.create_window">
-<tt class="descclassname">sortimentGUI.window_creator.</tt><tt class="descname">create_window</tt><big>(</big><em>layout_file_location</em>, <em>event_handler</em>, <em>show_all=True</em>, <em>should_quit=True</em>, <em>relative_filenames=True</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_creator.html#create_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_creator.create_window" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">sortimentGUI.window_creator.</tt><tt class="descname">create_window</tt><big>(</big><em>layout_file_location</em>, <em>event_handler</em>, <em>show_all=True</em>, <em>should_quit=True</em>, <em>relative_filenames=True</em>, <em>fullscreen=True</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_creator.html#create_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_creator.create_window" title="Permalink to this definition">¶</a></dt>
 <dd><p>Universal function for creating window.
 :param layout_file_location: path to .glade file containing layout information about window
 :param event_handler: handler used to handle window events

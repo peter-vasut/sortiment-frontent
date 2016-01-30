@@ -48,14 +48,15 @@
           <div class="body">
             
   <h1>Source code for sortimentGUI.gtk_element_editor</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
 <span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">GdkPixbuf</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
 
 
 <div class="viewcode-block" id="create_button"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_button">[docs]</a><span class="k">def</span> <span class="nf">create_button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
 </div>
-<div class="viewcode-block" id="create_user_row"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_user_row">[docs]</a><span class="k">def</span> <span class="nf">create_user_row</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">image_height</span> <span class="o">=</span> <span class="mi">50</span><span class="p">):</span>
+<div class="viewcode-block" id="create_user_row"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_user_row">[docs]</a><span class="k">def</span> <span class="nf">create_user_row</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">image_height</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates ListBoxRow to display user nick or name and image.</span>
 
@@ -99,6 +100,7 @@
 <span class="sd">    :param filter_function: filter function</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">listbox</span><span class="o">.</span><span class="n">set_filter_func</span><span class="p">(</span><span class="n">filter_function</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
 </div>
 <div class="viewcode-block" id="load_image_from_file"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.load_image_from_file">[docs]</a><span class="k">def</span> <span class="nf">load_image_from_file</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -117,6 +119,7 @@
     <span class="k">except</span><span class="p">:</span>
         <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
     <span class="k">return</span> <span class="n">success</span>
+
 </div>
 <div class="viewcode-block" id="image_set_missing"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.image_set_missing">[docs]</a><span class="k">def</span> <span class="nf">image_set_missing</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
     <span class="n">image</span><span class="o">.</span><span class="n">set_from_icon_name</span><span class="p">(</span><span class="s">&quot;gtk-missing-image&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span></div>
