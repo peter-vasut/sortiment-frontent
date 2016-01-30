@@ -57,7 +57,8 @@ def create_window_food(database=None, show_all=True):
     pass  # todo
 
 
-def create_window(layout_file_location, event_handler, show_all=True, should_quit=True, relative_filenames=True):
+def create_window(layout_file_location, event_handler, show_all=True, should_quit=True, relative_filenames=True,
+                  fullscreen=True):
     """
     Universal function for creating window.
     :param layout_file_location: path to .glade file containing layout information about window
@@ -77,4 +78,6 @@ def create_window(layout_file_location, event_handler, show_all=True, should_qui
         window.show_all()
     if should_quit:
         window.connect("delete-event", Gtk.main_quit)
+    if fullscreen:
+        window.fullscreen()
     return window
