@@ -7,13 +7,15 @@ def create_button(text=""):
     return Gtk.Button(text)
 
 
-def create_user_row(user, callback, image_height=50):  # todo: request image size
+def create_user_row(user, selection_callback=None, register_dynamic_font_callback=None,
+                    image_height=50):  # todo: request image size
     """
     Creates ListBoxRow to display user nick or name and image.
 
     :param user: user dictionary
-    :param callback: function to be called when user is clicked
-    :return: new ListBoxRow according to user data and callback function
+    :param selection_callback: function to be called when user is clicked
+    :param register_dynamic_font_callback: callback for registering label of row
+    :return: new Gtk.ListBoxRow
     """
 
     row = Gtk.ListBoxRow()
@@ -26,9 +28,12 @@ def create_user_row(user, callback, image_height=50):  # todo: request image siz
     hbox.pack_start(image, False, True, 0)
     hbox.pack_start(label, True, True, 0)
     event_box.add(hbox)
-    event_box.connect("button_press_event",callback,user)
+    if selection_callback != None:
+        event_box.connect("button_press_event", selection_callback, user)
     row.user = user
     row.add(event_box)
+    if register_dynamic_font_callback != None:
+        register_dynamic_font_callback(label, 0.6)
     return row
 
 

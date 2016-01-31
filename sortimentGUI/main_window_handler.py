@@ -131,7 +131,7 @@ class MainWindowHandler:
 
         list = self.database.get_user(None)
         for user in list:
-            row = gtk_element_editor.create_user_row(user, self.user_selected)
+            row = gtk_element_editor.create_user_row(user, self.user_selected, self.register_dynamic_font)
             self.user_list.add(row)
         self.user_list.show_all()
 
@@ -221,14 +221,14 @@ class MainWindowHandler:
             if w[2] > 0:
                 w[0].props.height_request = ceil(w[2] * scaling_factor)
 
-    def register_dynamic_font(self, widget, *args):
+    def register_dynamic_font(self, widget, scale=1, *args):
         """
         Function to be called for registering widget containing text to resize and set default font.
 
         :param widget: widget to be resized on window height change
         """
 
-        self.dynamic_font_list.append(widget)
+        self.dynamic_font_list.append((widget, scale))
 
     def apply_dynamic_font(self, factor, aheight):
         """
@@ -239,4 +239,4 @@ class MainWindowHandler:
         """
 
         for w in self.dynamic_font_list:
-            w.modify_font(gtk_element_editor.create_font_from_description(str(ceil(factor * aheight))))
+            w[0].modify_font(gtk_element_editor.create_font_from_description(str(ceil(factor * w[1] * aheight))))
