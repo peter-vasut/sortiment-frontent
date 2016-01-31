@@ -20,6 +20,7 @@ class MainWindowHandler:
     dynamic_scaling_list = list()
     dynamic_font_list = list()
     default_font_factor = 0.05
+    window_size = None  # last known window size
 
     def use_spinner(function):
         """
@@ -32,8 +33,6 @@ class MainWindowHandler:
 
         @functools.wraps(function)
         def inner(self, *args, **kwargs):
-            if self.spinner == None:
-                print("Object", self, "has no spinner registred.")
             self.task_count += 1
             if self.spinner != None:
                 self.spinner.start()
@@ -144,7 +143,7 @@ class MainWindowHandler:
 
         list = self.database.get_item(None)
         for food in list:
-            row = gtk_element_editor.create_food_row(food, self.food_selected)
+            row = gtk_element_editor.create_food_row(food, self.food_selected, self.register_dynamic_font)
             self.food_list.add(row)
         self.food_list.show_all()
 
@@ -189,12 +188,14 @@ class MainWindowHandler:
 
     def window_configure(self, *args):
         """
-        Function which should be callen on every change of window size.
+        Function which should be called on every change of window size.
+
+        :param args First argument should be Gtk.Window or should contain get_size method.
         """
 
-        window_size = args[0].get_size()
-        self.apply_dynamic_scaling(window_size[0], window_size[1])  # todo: add std. win. width and height
-        self.apply_dynamic_font(self.default_font_factor, window_size[1])
+        self.window_size = args[0].get_size()
+        self.apply_dynamic_scaling_all(self.window_size[0], self.window_size[1])  # todo: add std. win. width and height
+        self.apply_dynamic_font_all(self.default_font_factor, self.window_size[1])
 
     def register_dynamic_scaling(self, *args):
         """
@@ -205,7 +206,24 @@ class MainWindowHandler:
 
         self.dynamic_scaling_list.append((args[0], args[0].props.width_request, args[0].props.height_request))
 
-    def apply_dynamic_scaling(self, awidth, aheight, standard_window_width=640, standard_window_height=320):
+    def apply_dynamic_scaling(self, awidth, aheight, widget_t, standard_window_width=640, standard_window_height=320):
+        """
+        Scales specific widget.
+
+        :param awidth: actual window width
+        :param aheight: actual window height
+        :param widget_t: (widget to scale, original widget width, original widget height)
+        :param standard_window_width: standard window width used as reference
+        :param standard_window_height: standard window height used as reference
+        """
+
+        scaling_factor = sqrt((min(awidth, aheight) ** 2) / (standard_window_width * standard_window_height))
+        if widget_t[1] > 0:
+            widget_t[0].props.width_request = ceil(widget_t[1] * scaling_factor)
+        if widget_t[2] > 0:
+            widget_t[0].props.height_request = ceil(widget_t[2] * scaling_factor)
+
+    def apply_dynamic_scaling_all(self, awidth, aheight, standard_window_width=640, standard_window_height=320):
         """
         Scales all widgets registered for dynamic scaling.
 
@@ -214,12 +232,9 @@ class MainWindowHandler:
         :param standard_window_width: standard window width used as reference
         :param standard_window_height: standard window height used as reference
         """
-        scaling_factor = sqrt((min(awidth, aheight) ** 2) / (standard_window_width * standard_window_height))
+
         for w in self.dynamic_scaling_list:
-            if w[1] > 0:
-                w[0].props.width_request = ceil(w[1] * scaling_factor)
-            if w[2] > 0:
-                w[0].props.height_request = ceil(w[2] * scaling_factor)
+            self.apply_dynamic_scaling(awidth, aheight, w, standard_window_width, standard_window_height)
 
     def register_dynamic_font(self, widget, scale=1, *args):
         """
@@ -229,14 +244,27 @@ class MainWindowHandler:
         """
 
         self.dynamic_font_list.append((widget, scale))
+        if self.window_size is not None:
+            self.apply_dynamic_font(self.default_font_factor * scale, self.window_size[1], widget)
 
-    def apply_dynamic_font(self, factor, aheight):
+    def apply_dynamic_font(self, factor, aheight, widget):
         """
-        Sets default font on registered widgets according to actual window height.
+        Sets font size on specific widget according to actual window height.
 
-        :param factor: fotnt size divided by actual window height
+        :param factor: font size divided by window height
+        :param aheight: actual window height
+        :param widget: widget to setup
+        """
+
+        widget.modify_font(gtk_element_editor.create_font_from_description(str(ceil(factor * aheight))))
+
+    def apply_dynamic_font_all(self, factor, aheight):
+        """
+        Sets font size on registered widgets according to actual window height.
+
+        :param factor: factor * widget scaling factor * aheight = font size
         :param aheight: actual height of window
         """
 
         for w in self.dynamic_font_list:
-            w[0].modify_font(gtk_element_editor.create_font_from_description(str(ceil(factor * w[1] * aheight))))
+            self.apply_dynamic_font(factor * w[1], aheight, w[0])

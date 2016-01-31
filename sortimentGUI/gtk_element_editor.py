@@ -37,16 +37,17 @@ def create_user_row(user, selection_callback=None, register_dynamic_font_callbac
     return row
 
 
-def create_food_row(food, callback):
+def create_food_row(food, selection_callback, register_dynamic_font_callback=None, image_height=50):
     """
     Creates ListBoxRow to display food name and image.
 
     :param food: food dictionary
-    :param callback: function to be called when user is clicked
+    :param selection_callback: function to be called when user is clicked
     :return: new ListBoxRow according to user data and callback function
     """
 
-    return create_user_row(food, callback)  # todo: create different row type for food with price tag and edit button
+    return create_user_row(food, selection_callback, register_dynamic_font_callback,
+                           image_height)  # todo: create different row type for food with price tag and edit button
 
 
 def set_listbox_filter(listbox, filter_function):
