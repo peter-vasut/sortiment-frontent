@@ -81,6 +81,20 @@
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="sortimentGUI.gtk_element_editor.create_font_from_description">
+<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_font_from_description</tt><big>(</big><em>desc</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_font_from_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_font_from_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates Pango font from string description.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>desc</strong> &#8211; description</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.create_food_row">
 <tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_food_row</tt><big>(</big><em>food</em>, <em>callback</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_food_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_food_row" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates ListBoxRow to display food name and image.</p>
@@ -103,7 +117,7 @@
 
 <dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.create_user_row">
-<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_user_row</tt><big>(</big><em>user</em>, <em>callback</em>, <em>image_height=50</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_user_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_user_row" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_user_row</tt><big>(</big><em>user</em>, <em>selection_callback=None</em>, <em>register_dynamic_font_callback=None</em>, <em>image_height=50</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_user_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_user_row" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates ListBoxRow to display user nick or name and image.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -111,11 +125,12 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>user</strong> &#8211; user dictionary</li>
-<li><strong>callback</strong> &#8211; function to be called when user is clicked</li>
+<li><strong>selection_callback</strong> &#8211; function to be called when user is clicked</li>
+<li><strong>register_dynamic_font_callback</strong> &#8211; callback for registering label of row</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">new ListBoxRow according to user data and callback function</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">new Gtk.ListBoxRow</p>
 </td>
 </tr>
 </tbody>
@@ -125,7 +140,16 @@
 <dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.image_set_missing">
 <tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">image_set_missing</tt><big>(</big><em>image</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#image_set_missing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.image_set_missing" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set stock gtk-missing-image to image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> &#8211; Gtk.Image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.load_image_from_file">
@@ -159,6 +183,24 @@
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_font">
+<tt class="descname">apply_dynamic_font</tt><big>(</big><em>factor</em>, <em>aheight</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.apply_dynamic_font"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets default font on registered widgets according to actual window height.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>factor</strong> &#8211; fotnt size divided by actual window height</li>
+<li><strong>aheight</strong> &#8211; actual height of window</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_scaling">
 <tt class="descname">apply_dynamic_scaling</tt><big>(</big><em>awidth</em>, <em>aheight</em>, <em>standard_window_width=640</em>, <em>standard_window_height=320</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.apply_dynamic_scaling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_scaling" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scales all widgets registered for dynamic scaling.</p>
@@ -189,6 +231,16 @@
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="sortimentGUI.main_window_handler.MainWindowHandler.default_font_factor">
+<tt class="descname">default_font_factor</tt><em class="property"> = 0.05</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.default_font_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.main_window_handler.MainWindowHandler.dynamic_font_list">
+<tt class="descname">dynamic_font_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.dynamic_font_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="sortimentGUI.main_window_handler.MainWindowHandler.dynamic_scaling_list">
 <tt class="descname">dynamic_scaling_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.dynamic_scaling_list" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -207,6 +259,20 @@
 <dt id="sortimentGUI.main_window_handler.MainWindowHandler.image_size">
 <tt class="descname">image_size</tt><em class="property"> = 300</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.image_size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.main_window_handler.MainWindowHandler.register_dynamic_font">
+<tt class="descname">register_dynamic_font</tt><big>(</big><em>widget</em>, <em>scale=1</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.register_dynamic_font"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.register_dynamic_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to be called for registering widget containing text to resize and set default font.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>widget</strong> &#8211; widget to be resized on window height change</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="sortimentGUI.main_window_handler.MainWindowHandler.register_dynamic_scaling">
