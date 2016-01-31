@@ -18,6 +18,8 @@ class MainWindowHandler:
     selected_amount = 0
     image_size = 300
     dynamic_scaling_list = list()
+    dynamic_font_list = list()
+    default_font_factor = 0.05
 
     def use_spinner(function):
         """
@@ -192,6 +194,7 @@ class MainWindowHandler:
 
         window_size = args[0].get_size()
         self.apply_dynamic_scaling(window_size[0], window_size[1])  # todo: add std. win. width and height
+        self.apply_dynamic_font(self.default_font_factor, window_size[1])
 
     def register_dynamic_scaling(self, *args):
         """
@@ -201,7 +204,6 @@ class MainWindowHandler:
         """
 
         self.dynamic_scaling_list.append((args[0], args[0].props.width_request, args[0].props.height_request))
-        print("Dynamic list: ", self.dynamic_scaling_list)
 
     def apply_dynamic_scaling(self, awidth, aheight, standard_window_width=640, standard_window_height=320):
         """
@@ -218,3 +220,23 @@ class MainWindowHandler:
                 w[0].props.width_request = ceil(w[1] * scaling_factor)
             if w[2] > 0:
                 w[0].props.height_request = ceil(w[2] * scaling_factor)
+
+    def register_dynamic_font(self, widget, *args):
+        """
+        Function to be called for registering widget containing text to resize and set default font.
+
+        :param widget: widget to be resized on window height change
+        """
+
+        self.dynamic_font_list.append(widget)
+
+    def apply_dynamic_font(self, factor, aheight):
+        """
+        Sets default font on registered widgets according to actual window height.
+
+        :param factor: fotnt size divided by actual window height
+        :param aheight: actual height of window
+        """
+
+        for w in self.dynamic_font_list:
+            w.modify_font(gtk_element_editor.create_font_from_description(str(ceil(factor * aheight))))

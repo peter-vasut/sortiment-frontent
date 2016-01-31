@@ -1,12 +1,13 @@
 from gi.repository import GdkPixbuf
 from gi.repository import Gtk
+from gi.repository import Pango
 
 
 def create_button(text=""):
     return Gtk.Button(text)
 
 
-def create_user_row(user, callback, image_height=50):
+def create_user_row(user, callback, image_height=50):  # todo: request image size
     """
     Creates ListBoxRow to display user nick or name and image.
 
@@ -72,4 +73,19 @@ def load_image_from_file(image, path, width, height):
 
 
 def image_set_missing(image):
+    """
+    Set stock gtk-missing-image to image.
+
+    :param image: Gtk.Image
+    """
+
     image.set_from_icon_name("gtk-missing-image", 6)
+
+
+def create_font_from_description(desc):
+    """
+    Creates Pango font from string description.
+
+    :param desc: description
+    """
+    return Pango.font_description_from_string(desc)
