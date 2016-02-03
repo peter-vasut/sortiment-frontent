@@ -3,19 +3,18 @@ import os
 from gi.repository import Gtk
 
 from database import Database
-from .window_handler import WindowHandler
 
 
-def create_window_main(database=None, show_all=True):
+def create_window_main(handler, database=None, show_all=True):
     """
     Creates main window witch user and food list and other elements.
 
+    :param handler: WindowHandler object
     :param database: database to be used for retrieving user data
     :param show_all: True if window should be shown immediately
     :return: new Window
     """
 
-    handler = WindowHandler()
     if database == None:
         database = Database()
     handler.set_database(database)
@@ -34,20 +33,22 @@ def create_window_transaction(database=None, show_all=True, user=dict()):
     pass  # todo
 
 
-def create_window_profile(handler, database=None, show_all=True):
+def create_window_profile(handler, database=None, show_all=True, fullscreen=True):
     """
     Creates window displaying info about user. It also contains button to navigate to transaction window.
 
+    :param fullscreen: True if window should be in full screen mode by default
     :param handler: Sortiment WindowHandler or None
     :param database: database to be used for retrieving data instead of database used in handler.
     :param show_all: True if window should be shown immediately
     :return: new Window
     """
 
-    if handler is None:
-        handler = WindowHandler()
     if database is not None:
-        handler.set_database()
+        handler.set_database(database)
+    return create_window("layouts/profile_window.glade", handler, show_all=show_all, should_quit=False,
+                         relative_filenames=True, fullscreen=fullscreen)
+
 
 def create_window_food(database=None, show_all=True):
     """
@@ -84,4 +85,5 @@ def create_window(layout_file_location, event_handler, show_all=True, should_qui
         window.connect("delete-event", Gtk.main_quit)
     if fullscreen:
         window.fullscreen()
+    event_handler.set_actual_window(window)
     return window

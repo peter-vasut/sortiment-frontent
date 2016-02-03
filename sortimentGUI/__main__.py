@@ -2,10 +2,11 @@ from gi.repository import Gtk
 
 from database import Database
 from . import window_creator
+from .window_handler import WindowHandler
 
 
 def main():
-    window = window_creator.create_window_main(Database)
+    window = window_creator.create_window_main(WindowHandler(), Database())
     Gtk.main()
 
 

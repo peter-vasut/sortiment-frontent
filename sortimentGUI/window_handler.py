@@ -21,6 +21,8 @@ class WindowHandler:
     dynamic_font_list = list()
     default_font_factor = 0.05
     window_size = None  # last known window size
+    window_history = list()
+    actual_window = None  # actual window if known
 
     def use_spinner(function):
         """
@@ -237,16 +239,29 @@ class WindowHandler:
         for w in self.dynamic_scaling_list:
             self.apply_dynamic_scaling(awidth, aheight, w, standard_window_width, standard_window_height)
 
-    def register_dynamic_font(self, widget, scale=1, *args):
+    def register_dynamic_font(self, widget, scale=None, *args):
         """
         Function to be called for registering widget containing text to resize and set default font.
 
         :param widget: widget to be resized on window height change
         """
 
+        if scale is None:
+            scale = 1
+            try:
+                label = widget.props.label
+            except:
+                label = ""
+            if "#s:" in label:
+                try:
+                    scale = int(label[label.find("#s:") + 3:])
+                except ValueError:
+                    scale = 1
+
         self.dynamic_font_list.append((widget, scale))
         if self.window_size is not None:
             self.apply_dynamic_font(self.default_font_factor * scale, self.window_size[1], widget)
+
 
     def apply_dynamic_font(self, factor, aheight, widget):
         """
@@ -269,3 +284,21 @@ class WindowHandler:
 
         for w in self.dynamic_font_list:
             self.apply_dynamic_font(factor * w[1], aheight, w[0])
+
+    def set_actual_window(self, window):
+        """
+        After creating, event handler should be given reference to window it is handling. It is not required, but when
+        it is not set, returning to default window won't work.
+
+        :param window: window which is operating
+        """
+
+        self.actual_window = window
+
+    def jmp_profile(self, *args):
+        """
+        Switches current window to profile window.
+        """
+
+        self.window_history.append(self.actual_window)
+        self.actual_window.hide()
