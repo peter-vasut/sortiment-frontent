@@ -6,7 +6,7 @@ from time import sleep
 from . import gtk_element_editor
 
 
-class MainWindowHandler:
+class WindowHandler:
     user_image = None
     spinner = None
     task_count = 0
@@ -42,6 +42,7 @@ class MainWindowHandler:
                 if self.task_count == 0:
                     self.spinner.stop()
             return result
+
         return inner
 
     def use_threading(function):

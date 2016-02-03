@@ -3,7 +3,7 @@ import os
 from gi.repository import Gtk
 
 from database import Database
-from .main_window_handler import MainWindowHandler
+from .window_handler import WindowHandler
 
 
 def create_window_main(database=None, show_all=True):
@@ -15,7 +15,7 @@ def create_window_main(database=None, show_all=True):
     :return: new Window
     """
 
-    handler = MainWindowHandler()
+    handler = WindowHandler()
     if database == None:
         database = Database()
     handler.set_database(database)
@@ -34,16 +34,20 @@ def create_window_transaction(database=None, show_all=True, user=dict()):
     pass  # todo
 
 
-def create_window_profile(database=None, show_all=True):
+def create_window_profile(handler, database=None, show_all=True):
     """
     Creates window displaying info about user. It also contains button to navigate to transaction window.
 
-    :param database: database to be used for retrieving data
+    :param handler: Sortiment WindowHandler or None
+    :param database: database to be used for retrieving data instead of database used in handler.
     :param show_all: True if window should be shown immediately
     :return: new Window
     """
 
-
+    if handler is None:
+        handler = WindowHandler()
+    if database is not None:
+        handler.set_database()
 
 def create_window_food(database=None, show_all=True):
     """
