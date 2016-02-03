@@ -96,7 +96,7 @@
 
 <dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.create_food_row">
-<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_food_row</tt><big>(</big><em>food</em>, <em>callback</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_food_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_food_row" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_food_row</tt><big>(</big><em>food</em>, <em>selection_callback</em>, <em>register_dynamic_font_callback=None</em>, <em>image_height=50</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_food_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_food_row" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates ListBoxRow to display food name and image.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -104,7 +104,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>food</strong> &#8211; food dictionary</li>
-<li><strong>callback</strong> &#8211; function to be called when user is clicked</li>
+<li><strong>selection_callback</strong> &#8211; function to be called when user is clicked</li>
 </ul>
 </td>
 </tr>
@@ -171,311 +171,6 @@
 </dd></dl>
 
 </div>
-<div class="section" id="module-sortimentGUI.main_window_handler">
-<span id="sortimentgui-main-window-handler-module"></span><h2>sortimentGUI.main_window_handler module<a class="headerlink" href="#module-sortimentGUI.main_window_handler" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler">
-<em class="property">class </em><tt class="descclassname">sortimentGUI.main_window_handler.</tt><tt class="descname">MainWindowHandler</tt><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.amount_selected">
-<tt class="descname">amount_selected</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.amount_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.amount_selected" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_font">
-<tt class="descname">apply_dynamic_font</tt><big>(</big><em>factor</em>, <em>aheight</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.apply_dynamic_font"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_font" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets default font on registered widgets according to actual window height.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>factor</strong> &#8211; fotnt size divided by actual window height</li>
-<li><strong>aheight</strong> &#8211; actual height of window</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_scaling">
-<tt class="descname">apply_dynamic_scaling</tt><big>(</big><em>awidth</em>, <em>aheight</em>, <em>standard_window_width=640</em>, <em>standard_window_height=320</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.apply_dynamic_scaling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_scaling" title="Permalink to this definition">¶</a></dt>
-<dd><p>Scales all widgets registered for dynamic scaling.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>awidth</strong> &#8211; actual window width</li>
-<li><strong>aheight</strong> &#8211; actual window height</li>
-<li><strong>standard_window_width</strong> &#8211; standard window width used as reference</li>
-<li><strong>standard_window_height</strong> &#8211; standard window height used as reference</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.buy_food">
-<tt class="descname">buy_food</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.buy_food"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.buy_food" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.database">
-<tt class="descname">database</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.database" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.default_font_factor">
-<tt class="descname">default_font_factor</tt><em class="property"> = 0.05</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.default_font_factor" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.dynamic_font_list">
-<tt class="descname">dynamic_font_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.dynamic_font_list" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.dynamic_scaling_list">
-<tt class="descname">dynamic_scaling_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.dynamic_scaling_list" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.food_list">
-<tt class="descname">food_list</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.food_list" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.food_selected">
-<tt class="descname">food_selected</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.food_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.food_selected" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.image_size">
-<tt class="descname">image_size</tt><em class="property"> = 300</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.image_size" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.register_dynamic_font">
-<tt class="descname">register_dynamic_font</tt><big>(</big><em>widget</em>, <em>scale=1</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.register_dynamic_font"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.register_dynamic_font" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to be called for registering widget containing text to resize and set default font.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>widget</strong> &#8211; widget to be resized on window height change</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.register_dynamic_scaling">
-<tt class="descname">register_dynamic_scaling</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.register_dynamic_scaling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.register_dynamic_scaling" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to be called for registering widget as dynamicly scalable.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> &#8211; Argument 0 should be widget do be resized on window change.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.register_food_list">
-<tt class="descname">register_food_list</tt><big>(</big><em>list</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.register_food_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.register_food_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function used to register graphical list of food.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>list</strong> &#8211; list to register</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.register_spinner">
-<tt class="descname">register_spinner</tt><big>(</big><em>spinner</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.register_spinner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.register_spinner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function used to register default spinner to indicate running process.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>spinner</strong> &#8211; spinner object</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.register_user_image">
-<tt class="descname">register_user_image</tt><big>(</big><em>image</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.register_user_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.register_user_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function used to register where to put image of selected user.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> &#8211; image object</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.register_user_list">
-<tt class="descname">register_user_list</tt><big>(</big><em>list</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.register_user_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.register_user_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function used to register graphical list of users.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>list</strong> &#8211; list to register</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.selected_amount">
-<tt class="descname">selected_amount</tt><em class="property"> = 0</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.selected_amount" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.selected_food">
-<tt class="descname">selected_food</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.selected_food" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.selected_user">
-<tt class="descname">selected_user</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.selected_user" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.set_database">
-<tt class="descname">set_database</tt><big>(</big><em>database</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.set_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.set_database" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets which database should be used for retrieving data to display.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>database</strong> &#8211; database to use</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.spinner">
-<tt class="descname">spinner</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.spinner" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.spinner_test">
-<tt class="descname">spinner_test</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.spinner_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.spinner_test" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function used to test spinner as if data were being retrieved from database.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.task_count">
-<tt class="descname">task_count</tt><em class="property"> = 0</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.task_count" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.update">
-<tt class="descname">update</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates all data presented in main window.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.update_food_list">
-<tt class="descname">update_food_list</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.update_food_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.update_food_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates food list with new data from database.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.update_user_image">
-<tt class="descname">update_user_image</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.update_user_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.update_user_image" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.update_user_list">
-<tt class="descname">update_user_list</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.update_user_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.update_user_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates user list with new data from database.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.use_spinner">
-<tt class="descname">use_spinner</tt><big>(</big><em>function</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.use_spinner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.use_spinner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decorator activating spinner before function and deactivating it.
-(Needs to be ran in separate thread.)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>function</strong> &#8211; function to decorate</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">decorated function</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.use_threading">
-<tt class="descname">use_threading</tt><big>(</big><em>function</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.use_threading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.use_threading" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decorator which runs function in separate thread.
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.user_filter">
-<tt class="descname">user_filter</tt><big>(</big><em>row</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.user_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.user_filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function used to filter users in listbox.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row</strong> &#8211; row.user should contain valid user dictionary</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if user should be displayed, False otherwise.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.user_image">
-<tt class="descname">user_image</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.user_image" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.user_list">
-<tt class="descname">user_list</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.user_list" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.user_selected">
-<tt class="descname">user_selected</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.user_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.user_selected" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="sortimentGUI.main_window_handler.MainWindowHandler.window_configure">
-<tt class="descname">window_configure</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/main_window_handler.html#MainWindowHandler.window_configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.main_window_handler.MainWindowHandler.window_configure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function which should be callen on every change of window size.</p>
-</dd></dl>
-
-</dd></dl>
-
-</div>
 <div class="section" id="module-sortimentGUI.window_creator">
 <span id="sortimentgui-window-creator-module"></span><h2>sortimentGUI.window_creator module<a class="headerlink" href="#module-sortimentGUI.window_creator" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -534,14 +229,15 @@
 
 <dl class="function">
 <dt id="sortimentGUI.window_creator.create_window_profile">
-<tt class="descclassname">sortimentGUI.window_creator.</tt><tt class="descname">create_window_profile</tt><big>(</big><em>database=None</em>, <em>show_all=True</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_creator.html#create_window_profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_creator.create_window_profile" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">sortimentGUI.window_creator.</tt><tt class="descname">create_window_profile</tt><big>(</big><em>handler</em>, <em>database=None</em>, <em>show_all=True</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_creator.html#create_window_profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_creator.create_window_profile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates window displaying info about user. It also contains button to navigate to transaction window.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>database</strong> &#8211; database to be used for retrieving data</li>
+<li><strong>handler</strong> &#8211; Sortiment WindowHandler or None</li>
+<li><strong>database</strong> &#8211; database to be used for retrieving data instead of database used in handler.</li>
 <li><strong>show_all</strong> &#8211; True if window should be shown immediately</li>
 </ul>
 </td>
@@ -575,6 +271,357 @@
 </dd></dl>
 
 </div>
+<div class="section" id="module-sortimentGUI.window_handler">
+<span id="sortimentgui-window-handler-module"></span><h2>sortimentGUI.window_handler module<a class="headerlink" href="#module-sortimentGUI.window_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sortimentGUI.window_handler.WindowHandler">
+<em class="property">class </em><tt class="descclassname">sortimentGUI.window_handler.</tt><tt class="descname">WindowHandler</tt><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.amount_selected">
+<tt class="descname">amount_selected</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.amount_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.amount_selected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.apply_dynamic_font">
+<tt class="descname">apply_dynamic_font</tt><big>(</big><em>factor</em>, <em>aheight</em>, <em>widget</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.apply_dynamic_font"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.apply_dynamic_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets font size on specific widget according to actual window height.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>factor</strong> &#8211; font size divided by window height</li>
+<li><strong>aheight</strong> &#8211; actual window height</li>
+<li><strong>widget</strong> &#8211; widget to setup</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.apply_dynamic_font_all">
+<tt class="descname">apply_dynamic_font_all</tt><big>(</big><em>factor</em>, <em>aheight</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.apply_dynamic_font_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.apply_dynamic_font_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets font size on registered widgets according to actual window height.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>factor</strong> &#8211; factor * widget scaling factor * aheight = font size</li>
+<li><strong>aheight</strong> &#8211; actual height of window</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.apply_dynamic_scaling">
+<tt class="descname">apply_dynamic_scaling</tt><big>(</big><em>awidth</em>, <em>aheight</em>, <em>widget_t</em>, <em>standard_window_width=640</em>, <em>standard_window_height=320</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.apply_dynamic_scaling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.apply_dynamic_scaling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scales specific widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>awidth</strong> &#8211; actual window width</li>
+<li><strong>aheight</strong> &#8211; actual window height</li>
+<li><strong>widget_t</strong> &#8211; (widget to scale, original widget width, original widget height)</li>
+<li><strong>standard_window_width</strong> &#8211; standard window width used as reference</li>
+<li><strong>standard_window_height</strong> &#8211; standard window height used as reference</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.apply_dynamic_scaling_all">
+<tt class="descname">apply_dynamic_scaling_all</tt><big>(</big><em>awidth</em>, <em>aheight</em>, <em>standard_window_width=640</em>, <em>standard_window_height=320</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.apply_dynamic_scaling_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.apply_dynamic_scaling_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scales all widgets registered for dynamic scaling.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>awidth</strong> &#8211; actual window width</li>
+<li><strong>aheight</strong> &#8211; actual window height</li>
+<li><strong>standard_window_width</strong> &#8211; standard window width used as reference</li>
+<li><strong>standard_window_height</strong> &#8211; standard window height used as reference</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.buy_food">
+<tt class="descname">buy_food</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.buy_food"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.buy_food" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.database">
+<tt class="descname">database</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.database" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.default_font_factor">
+<tt class="descname">default_font_factor</tt><em class="property"> = 0.05</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.default_font_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.dynamic_font_list">
+<tt class="descname">dynamic_font_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.dynamic_font_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.dynamic_scaling_list">
+<tt class="descname">dynamic_scaling_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.dynamic_scaling_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.food_list">
+<tt class="descname">food_list</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.food_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.food_selected">
+<tt class="descname">food_selected</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.food_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.food_selected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.image_size">
+<tt class="descname">image_size</tt><em class="property"> = 300</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.image_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_dynamic_font">
+<tt class="descname">register_dynamic_font</tt><big>(</big><em>widget</em>, <em>scale=1</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_dynamic_font"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_dynamic_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to be called for registering widget containing text to resize and set default font.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>widget</strong> &#8211; widget to be resized on window height change</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_dynamic_scaling">
+<tt class="descname">register_dynamic_scaling</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_dynamic_scaling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_dynamic_scaling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to be called for registering widget as dynamicly scalable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> &#8211; Argument 0 should be widget do be resized on window change.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_food_list">
+<tt class="descname">register_food_list</tt><big>(</big><em>list</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_food_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_food_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to register graphical list of food.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>list</strong> &#8211; list to register</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_spinner">
+<tt class="descname">register_spinner</tt><big>(</big><em>spinner</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_spinner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_spinner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to register default spinner to indicate running process.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>spinner</strong> &#8211; spinner object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_user_image">
+<tt class="descname">register_user_image</tt><big>(</big><em>image</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_user_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_user_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to register where to put image of selected user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> &#8211; image object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_user_list">
+<tt class="descname">register_user_list</tt><big>(</big><em>list</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_user_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_user_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to register graphical list of users.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>list</strong> &#8211; list to register</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.selected_amount">
+<tt class="descname">selected_amount</tt><em class="property"> = 0</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.selected_amount" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.selected_food">
+<tt class="descname">selected_food</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.selected_food" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.selected_user">
+<tt class="descname">selected_user</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.selected_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.set_database">
+<tt class="descname">set_database</tt><big>(</big><em>database</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.set_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.set_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets which database should be used for retrieving data to display.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>database</strong> &#8211; database to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.spinner">
+<tt class="descname">spinner</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.spinner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.spinner_test">
+<tt class="descname">spinner_test</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.spinner_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.spinner_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to test spinner as if data were being retrieved from database.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.task_count">
+<tt class="descname">task_count</tt><em class="property"> = 0</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.task_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.update">
+<tt class="descname">update</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates all data presented in main window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.update_food_list">
+<tt class="descname">update_food_list</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_food_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_food_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates food list with new data from database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.update_user_image">
+<tt class="descname">update_user_image</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_user_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_user_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.update_user_list">
+<tt class="descname">update_user_list</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_user_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_user_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates user list with new data from database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.use_spinner">
+<tt class="descname">use_spinner</tt><big>(</big><em>function</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.use_spinner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.use_spinner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator activating spinner before function and deactivating it.
+(Needs to be ran in separate thread.)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>function</strong> &#8211; function to decorate</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">decorated function</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.use_threading">
+<tt class="descname">use_threading</tt><big>(</big><em>function</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.use_threading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.use_threading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator which runs function in separate thread.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.user_filter">
+<tt class="descname">user_filter</tt><big>(</big><em>row</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.user_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.user_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to filter users in listbox.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row</strong> &#8211; row.user should contain valid user dictionary</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if user should be displayed, False otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.user_image">
+<tt class="descname">user_image</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.user_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.user_list">
+<tt class="descname">user_list</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.user_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.user_selected">
+<tt class="descname">user_selected</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.user_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.user_selected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.window_configure">
+<tt class="descname">window_configure</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.window_configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.window_configure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function which should be called on every change of window size.</p>
+<p>:param args First argument should be Gtk.Window or should contain get_size method.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.window_size">
+<tt class="descname">window_size</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.window_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-contents">
 <h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-sortimentGUI"></span></div>
@@ -592,8 +639,8 @@
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-sortimentGUI.error_handler">sortimentGUI.error_handler module</a></li>
 <li><a class="reference internal" href="#module-sortimentGUI.gtk_element_editor">sortimentGUI.gtk_element_editor module</a></li>
-<li><a class="reference internal" href="#module-sortimentGUI.main_window_handler">sortimentGUI.main_window_handler module</a></li>
 <li><a class="reference internal" href="#module-sortimentGUI.window_creator">sortimentGUI.window_creator module</a></li>
+<li><a class="reference internal" href="#module-sortimentGUI.window_handler">sortimentGUI.window_handler module</a></li>
 <li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>

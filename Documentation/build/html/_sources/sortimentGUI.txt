@@ -20,18 +20,18 @@ sortimentGUI.gtk_element_editor module
     :undoc-members:
     :show-inheritance:
 
-sortimentGUI.main_window_handler module
----------------------------------------
-
-.. automodule:: sortimentGUI.main_window_handler
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 sortimentGUI.window_creator module
 ----------------------------------
 
 .. automodule:: sortimentGUI.window_creator
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sortimentGUI.window_handler module
+----------------------------------
+
+.. automodule:: sortimentGUI.window_handler
     :members:
     :undoc-members:
     :show-inheritance:

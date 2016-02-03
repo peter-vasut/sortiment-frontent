@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>sortimentGUI.main_window_handler &mdash; SortimentGUI 0.1 documentation</title>
+    <title>sortimentGUI.window_handler &mdash; SortimentGUI 0.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -47,7 +47,7 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for sortimentGUI.main_window_handler</h1><div class="highlight"><pre>
+  <h1>Source code for sortimentGUI.window_handler</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">ceil</span>
@@ -56,7 +56,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">gtk_element_editor</span>
 
 
-<div class="viewcode-block" id="MainWindowHandler"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler">[docs]</a><span class="k">class</span> <span class="nc">MainWindowHandler</span><span class="p">:</span>
+<div class="viewcode-block" id="WindowHandler"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler">[docs]</a><span class="k">class</span> <span class="nc">WindowHandler</span><span class="p">:</span>
     <span class="n">user_image</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">spinner</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">task_count</span> <span class="o">=</span> <span class="mi">0</span>
@@ -70,8 +70,9 @@
     <span class="n">dynamic_scaling_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">dynamic_font_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">default_font_factor</span> <span class="o">=</span> <span class="mf">0.05</span>
+    <span class="n">window_size</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c"># last known window size</span>
 
-<div class="viewcode-block" id="MainWindowHandler.use_spinner"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.use_spinner">[docs]</a>    <span class="k">def</span> <span class="nf">use_spinner</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.use_spinner"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.use_spinner">[docs]</a>    <span class="k">def</span> <span class="nf">use_spinner</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Decorator activating spinner before function and deactivating it.</span>
 <span class="sd">        (Needs to be ran in separate thread.)</span>
@@ -82,8 +83,6 @@
 
         <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spinner</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s">&quot;Object&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="s">&quot;has no spinner registred.&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">task_count</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spinner</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">spinner</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
@@ -93,9 +92,10 @@
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">spinner</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">result</span>
+
         <span class="k">return</span> <span class="n">inner</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.use_threading"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.use_threading">[docs]</a>    <span class="k">def</span> <span class="nf">use_threading</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.use_threading"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.use_threading">[docs]</a>    <span class="k">def</span> <span class="nf">use_threading</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Decorator which runs function in separate thread.</span>
 <span class="sd">        :return:</span>
@@ -108,7 +108,7 @@
 
         <span class="k">return</span> <span class="n">inner</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.register_user_image"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.register_user_image">[docs]</a>    <span class="k">def</span> <span class="nf">register_user_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.register_user_image"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_user_image">[docs]</a>    <span class="k">def</span> <span class="nf">register_user_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function used to register where to put image of selected user.</span>
 
@@ -117,7 +117,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">user_image</span> <span class="o">=</span> <span class="n">image</span>
 </div>
     <span class="nd">@use_spinner</span>
-<div class="viewcode-block" id="MainWindowHandler.register_spinner"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.register_spinner">[docs]</a>    <span class="k">def</span> <span class="nf">register_spinner</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spinner</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.register_spinner"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_spinner">[docs]</a>    <span class="k">def</span> <span class="nf">register_spinner</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spinner</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function used to register default spinner to indicate running process.</span>
 
@@ -129,7 +129,7 @@
 </div>
     <span class="nd">@use_threading</span>
     <span class="nd">@use_spinner</span>
-<div class="viewcode-block" id="MainWindowHandler.spinner_test"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.spinner_test">[docs]</a>    <span class="k">def</span> <span class="nf">spinner_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.spinner_test"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.spinner_test">[docs]</a>    <span class="k">def</span> <span class="nf">spinner_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function used to test spinner as if data were being retrieved from database.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -138,7 +138,7 @@
         <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&quot;Done&quot;</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.register_user_list"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.register_user_list">[docs]</a>    <span class="k">def</span> <span class="nf">register_user_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.register_user_list"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_user_list">[docs]</a>    <span class="k">def</span> <span class="nf">register_user_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function used to register graphical list of users.</span>
 
@@ -149,7 +149,7 @@
         <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">set_listbox_filter</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_filter</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_user_list</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.register_food_list"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.register_food_list">[docs]</a>    <span class="k">def</span> <span class="nf">register_food_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.register_food_list"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_food_list">[docs]</a>    <span class="k">def</span> <span class="nf">register_food_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function used to register graphical list of food.</span>
 
@@ -160,7 +160,7 @@
         <span class="c"># todo: add food filter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_food_list</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.user_selected"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.user_selected">[docs]</a>    <span class="k">def</span> <span class="nf">user_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.user_selected"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.user_selected">[docs]</a>    <span class="k">def</span> <span class="nf">user_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected_user</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">image_set_missing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_image</span><span class="p">)</span>
         <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">load_image_from_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_image</span><span class="p">,</span>
@@ -168,12 +168,12 @@
                                                 <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span>
                                                 <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.food_selected"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.food_selected">[docs]</a>    <span class="k">def</span> <span class="nf">food_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.food_selected"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.food_selected">[docs]</a>    <span class="k">def</span> <span class="nf">food_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected_food</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 </div>
     <span class="nd">@use_threading</span>
     <span class="nd">@use_spinner</span>
-<div class="viewcode-block" id="MainWindowHandler.update_user_list"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.update_user_list">[docs]</a>    <span class="k">def</span> <span class="nf">update_user_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.update_user_list"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update_user_list">[docs]</a>    <span class="k">def</span> <span class="nf">update_user_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates user list with new data from database.</span>
 
@@ -187,22 +187,22 @@
 </div>
     <span class="nd">@use_threading</span>
     <span class="nd">@use_spinner</span>
-<div class="viewcode-block" id="MainWindowHandler.update_food_list"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.update_food_list">[docs]</a>    <span class="k">def</span> <span class="nf">update_food_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.update_food_list"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update_food_list">[docs]</a>    <span class="k">def</span> <span class="nf">update_food_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates food list with new data from database.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nb">list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">food</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">:</span>
-            <span class="n">row</span> <span class="o">=</span> <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">create_food_row</span><span class="p">(</span><span class="n">food</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">food_selected</span><span class="p">)</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">create_food_row</span><span class="p">(</span><span class="n">food</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">food_selected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">register_dynamic_font</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">food_list</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">food_list</span><span class="o">.</span><span class="n">show_all</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.update_user_image"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.update_user_image">[docs]</a>    <span class="k">def</span> <span class="nf">update_user_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.update_user_image"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update_user_image">[docs]</a>    <span class="k">def</span> <span class="nf">update_user_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="c"># todo</span>
         <span class="k">pass</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.update"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.update"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates all data presented in main window.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -211,7 +211,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">update_user_list</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_user_image</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.set_database"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.set_database">[docs]</a>    <span class="k">def</span> <span class="nf">set_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.set_database"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.set_database">[docs]</a>    <span class="k">def</span> <span class="nf">set_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets which database should be used for retrieving data to display.</span>
 
@@ -220,7 +220,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.user_filter"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.user_filter">[docs]</a>    <span class="k">def</span> <span class="nf">user_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.user_filter"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.user_filter">[docs]</a>    <span class="k">def</span> <span class="nf">user_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function used to filter users in listbox.</span>
 
@@ -230,23 +230,25 @@
         <span class="c"># todo: implement filter</span>
         <span class="k">return</span> <span class="bp">True</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.buy_food"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.buy_food">[docs]</a>    <span class="k">def</span> <span class="nf">buy_food</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.buy_food"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.buy_food">[docs]</a>    <span class="k">def</span> <span class="nf">buy_food</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">buy_items</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_food</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_amount</span><span class="p">)</span>
         <span class="c"># todo: error message</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.amount_selected"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.amount_selected">[docs]</a>    <span class="k">def</span> <span class="nf">amount_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.amount_selected"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.amount_selected">[docs]</a>    <span class="k">def</span> <span class="nf">amount_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">print</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>  <span class="c"># todo</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.window_configure"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.window_configure">[docs]</a>    <span class="k">def</span> <span class="nf">window_configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.window_configure"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.window_configure">[docs]</a>    <span class="k">def</span> <span class="nf">window_configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function which should be callen on every change of window size.</span>
+<span class="sd">        Function which should be called on every change of window size.</span>
+
+<span class="sd">        :param args First argument should be Gtk.Window or should contain get_size method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">window_size</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">apply_dynamic_scaling</span><span class="p">(</span><span class="n">window_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">window_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c"># todo: add std. win. width and height</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">apply_dynamic_font</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_font_factor</span><span class="p">,</span> <span class="n">window_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_dynamic_scaling_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c"># todo: add std. win. width and height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_dynamic_font_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_font_factor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.register_dynamic_scaling"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.register_dynamic_scaling">[docs]</a>    <span class="k">def</span> <span class="nf">register_dynamic_scaling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.register_dynamic_scaling"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_dynamic_scaling">[docs]</a>    <span class="k">def</span> <span class="nf">register_dynamic_scaling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to be called for registering widget as dynamicly scalable.</span>
 
@@ -255,7 +257,24 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">dynamic_scaling_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">width_request</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">height_request</span><span class="p">))</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.apply_dynamic_scaling"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_scaling">[docs]</a>    <span class="k">def</span> <span class="nf">apply_dynamic_scaling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">awidth</span><span class="p">,</span> <span class="n">aheight</span><span class="p">,</span> <span class="n">standard_window_width</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span> <span class="n">standard_window_height</span><span class="o">=</span><span class="mi">320</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.apply_dynamic_scaling"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.apply_dynamic_scaling">[docs]</a>    <span class="k">def</span> <span class="nf">apply_dynamic_scaling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">awidth</span><span class="p">,</span> <span class="n">aheight</span><span class="p">,</span> <span class="n">widget_t</span><span class="p">,</span> <span class="n">standard_window_width</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span> <span class="n">standard_window_height</span><span class="o">=</span><span class="mi">320</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Scales specific widget.</span>
+
+<span class="sd">        :param awidth: actual window width</span>
+<span class="sd">        :param aheight: actual window height</span>
+<span class="sd">        :param widget_t: (widget to scale, original widget width, original widget height)</span>
+<span class="sd">        :param standard_window_width: standard window width used as reference</span>
+<span class="sd">        :param standard_window_height: standard window height used as reference</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">scaling_factor</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="nb">min</span><span class="p">(</span><span class="n">awidth</span><span class="p">,</span> <span class="n">aheight</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">standard_window_width</span> <span class="o">*</span> <span class="n">standard_window_height</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">widget_t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">widget_t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">width_request</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">widget_t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">scaling_factor</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">widget_t</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">widget_t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">height_request</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">widget_t</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">scaling_factor</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.apply_dynamic_scaling_all"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.apply_dynamic_scaling_all">[docs]</a>    <span class="k">def</span> <span class="nf">apply_dynamic_scaling_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">awidth</span><span class="p">,</span> <span class="n">aheight</span><span class="p">,</span> <span class="n">standard_window_width</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span> <span class="n">standard_window_height</span><span class="o">=</span><span class="mi">320</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Scales all widgets registered for dynamic scaling.</span>
 
@@ -264,14 +283,11 @@
 <span class="sd">        :param standard_window_width: standard window width used as reference</span>
 <span class="sd">        :param standard_window_height: standard window height used as reference</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">scaling_factor</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="nb">min</span><span class="p">(</span><span class="n">awidth</span><span class="p">,</span> <span class="n">aheight</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">standard_window_width</span> <span class="o">*</span> <span class="n">standard_window_height</span><span class="p">))</span>
+
         <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamic_scaling_list</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">width_request</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">scaling_factor</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">w</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">height_request</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">scaling_factor</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apply_dynamic_scaling</span><span class="p">(</span><span class="n">awidth</span><span class="p">,</span> <span class="n">aheight</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">standard_window_width</span><span class="p">,</span> <span class="n">standard_window_height</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.register_dynamic_font"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.register_dynamic_font">[docs]</a>    <span class="k">def</span> <span class="nf">register_dynamic_font</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.register_dynamic_font"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_dynamic_font">[docs]</a>    <span class="k">def</span> <span class="nf">register_dynamic_font</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to be called for registering widget containing text to resize and set default font.</span>
 
@@ -279,17 +295,30 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">dynamic_font_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">widget</span><span class="p">,</span> <span class="n">scale</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apply_dynamic_font</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_font_factor</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">widget</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindowHandler.apply_dynamic_font"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.main_window_handler.MainWindowHandler.apply_dynamic_font">[docs]</a>    <span class="k">def</span> <span class="nf">apply_dynamic_font</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">,</span> <span class="n">aheight</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.apply_dynamic_font"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.apply_dynamic_font">[docs]</a>    <span class="k">def</span> <span class="nf">apply_dynamic_font</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">,</span> <span class="n">aheight</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sets default font on registered widgets according to actual window height.</span>
+<span class="sd">        Sets font size on specific widget according to actual window height.</span>
 
-<span class="sd">        :param factor: fotnt size divided by actual window height</span>
+<span class="sd">        :param factor: font size divided by window height</span>
+<span class="sd">        :param aheight: actual window height</span>
+<span class="sd">        :param widget: widget to setup</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">widget</span><span class="o">.</span><span class="n">modify_font</span><span class="p">(</span><span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">create_font_from_description</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span><span class="n">factor</span> <span class="o">*</span> <span class="n">aheight</span><span class="p">))))</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.apply_dynamic_font_all"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.apply_dynamic_font_all">[docs]</a>    <span class="k">def</span> <span class="nf">apply_dynamic_font_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">,</span> <span class="n">aheight</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets font size on registered widgets according to actual window height.</span>
+
+<span class="sd">        :param factor: factor * widget scaling factor * aheight = font size</span>
 <span class="sd">        :param aheight: actual height of window</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamic_font_list</span><span class="p">:</span>
-            <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">modify_font</span><span class="p">(</span><span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">create_font_from_description</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span><span class="n">factor</span> <span class="o">*</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">aheight</span><span class="p">))))</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apply_dynamic_font</span><span class="p">(</span><span class="n">factor</span> <span class="o">*</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">aheight</span><span class="p">,</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div></div>
 </pre></div>
 
           </div>

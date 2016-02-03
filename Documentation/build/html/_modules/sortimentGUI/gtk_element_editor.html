@@ -87,16 +87,17 @@
     <span class="k">return</span> <span class="n">row</span>
 
 </div>
-<div class="viewcode-block" id="create_food_row"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_food_row">[docs]</a><span class="k">def</span> <span class="nf">create_food_row</span><span class="p">(</span><span class="n">food</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+<div class="viewcode-block" id="create_food_row"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_food_row">[docs]</a><span class="k">def</span> <span class="nf">create_food_row</span><span class="p">(</span><span class="n">food</span><span class="p">,</span> <span class="n">selection_callback</span><span class="p">,</span> <span class="n">register_dynamic_font_callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">image_height</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates ListBoxRow to display food name and image.</span>
 
 <span class="sd">    :param food: food dictionary</span>
-<span class="sd">    :param callback: function to be called when user is clicked</span>
+<span class="sd">    :param selection_callback: function to be called when user is clicked</span>
 <span class="sd">    :return: new ListBoxRow according to user data and callback function</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">create_user_row</span><span class="p">(</span><span class="n">food</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>  <span class="c"># todo: create different row type for food with price tag and edit button</span>
+    <span class="k">return</span> <span class="n">create_user_row</span><span class="p">(</span><span class="n">food</span><span class="p">,</span> <span class="n">selection_callback</span><span class="p">,</span> <span class="n">register_dynamic_font_callback</span><span class="p">,</span>
+                           <span class="n">image_height</span><span class="p">)</span>  <span class="c"># todo: create different row type for food with price tag and edit button</span>
 
 </div>
 <div class="viewcode-block" id="set_listbox_filter"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.set_listbox_filter">[docs]</a><span class="k">def</span> <span class="nf">set_listbox_filter</span><span class="p">(</span><span class="n">listbox</span><span class="p">,</span> <span class="n">filter_function</span><span class="p">):</span>
