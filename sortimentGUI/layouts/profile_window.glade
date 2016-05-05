@@ -27,6 +27,7 @@
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
                 <property name="always_show_image">True</property>
+                <signal name="pressed" handler="jmp_back" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -77,6 +78,7 @@
                     <property name="can_focus">False</property>
                     <property name="stock">gtk-missing-image</property>
                     <property name="icon_size">6</property>
+                    <signal name="realize" handler="register_user_image" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -96,6 +98,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">#s:3</property>
                         <signal name="realize" handler="register_dynamic_font" swapped="no"/>
+                        <signal name="realize" handler="register_user_name" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -104,11 +107,12 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="account">
+                      <object class="GtkLabel" id="balance">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">#s:2</property>
                         <signal name="realize" handler="register_dynamic_font" swapped="no"/>
+                        <signal name="realize" handler="register_user_balance" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -143,6 +147,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <signal name="pressed" handler="jmp_transaction" swapped="no"/>
                   </object>
                 </child>
               </object>

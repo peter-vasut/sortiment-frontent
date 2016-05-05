@@ -21,12 +21,14 @@ def create_window_main(handler, database=None, show_all=True):
     return create_window("layouts/main_window.glade", handler, show_all, True)
 
 
-def create_window_transaction(database=None, show_all=True, user=dict()):
+def create_window_transaction(handler, database=None, show_all=True, fullscreen=True):
     """
     Creates transaction window used for transferring money between user and cash, or between two users.
 
-    :param database: database to be used for retrieving data
+    :param handler: WindowHandler object
+    :param database: database to be used to retrieve and edit data
     :param show_all: True if window should be shown immediately
+    :param fullscreen: True if window should be in full screen mode by default
     :return: new Window
     """
 

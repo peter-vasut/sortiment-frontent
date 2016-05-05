@@ -3,7 +3,46 @@ import threading
 from math import sqrt, ceil
 from time import sleep
 
+import window_creator
 from . import gtk_element_editor
+
+
+def use_spinner(function):
+    """
+    Decorator activating spinner before function and deactivating it.
+    (Needs to be ran in separate thread.)
+
+    :param function: function to decorate
+    :return: decorated function
+    """
+
+    @functools.wraps(function)
+    def inner(self, *args, **kwargs):
+        self.task_count += 1
+        if self.spinner is not None:
+            self.spinner.start()
+        result = function(self, *args, **kwargs)
+        self.task_count = max(self.task_count - 1, 0)
+        if self.spinner is not None:
+            if self.task_count == 0:
+                self.spinner.stop()
+        return result
+
+    return inner
+
+
+def use_threading(function):
+    """
+    Decorator which runs function in separate thread.
+    :return:
+    """
+
+    @functools.wraps(function)
+    def inner(self, *args, **kwargs):
+        thread = threading.Thread(target=function, args=tuple([self] + list(args)), kwargs=kwargs)
+        thread.start()
+
+    return inner
 
 
 class WindowHandler:
@@ -23,42 +62,6 @@ class WindowHandler:
     window_size = None  # last known window size
     window_history = list()
     actual_window = None  # actual window if known
-
-    def use_spinner(function):
-        """
-        Decorator activating spinner before function and deactivating it.
-        (Needs to be ran in separate thread.)
-
-        :param function: function to decorate
-        :return: decorated function
-        """
-
-        @functools.wraps(function)
-        def inner(self, *args, **kwargs):
-            self.task_count += 1
-            if self.spinner != None:
-                self.spinner.start()
-            result = function(self, *args, **kwargs)
-            self.task_count = max(self.task_count - 1, 0)
-            if self.spinner != None:
-                if self.task_count == 0:
-                    self.spinner.stop()
-            return result
-
-        return inner
-
-    def use_threading(function):
-        """
-        Decorator which runs function in separate thread.
-        :return:
-        """
-
-        @functools.wraps(function)
-        def inner(self, *args, **kwargs):
-            thread = threading.Thread(target=function, args=tuple([self] + list(args)), kwargs=kwargs)
-            thread.start()
-
-        return inner
 
     def register_user_image(self, image):
         """
@@ -302,3 +305,36 @@ class WindowHandler:
 
         self.window_history.append(self.actual_window)
         self.actual_window.hide()
+        self.actual_window = window_creator.create_window_profile(self, self.database, True, True)
+
+    def jmp_back(self, *args):
+        """
+        Switches window to previous window on window_history.
+        """
+
+        self.actual_window.hide()
+        self.actual_window = self.window_history.pop()
+        self.actual_window.show()
+
+    def register_user_name(self, *args):
+        """
+        Function to be called for registering GtkLabel for displaying name of selected user.
+        """
+
+        pass  # todo
+
+    def register_user_balance(self, *args):
+        """
+        Function to be called for registering GtkLabel for displaying name of selected user.
+        """
+
+        pass  # todo
+
+    def jmp_transaction(self, *args):
+        """
+        Switches current window to transaction window.
+        """
+
+        self.window_history.append(self.actual_window)
+        self.actual_window.hide()
+        self.actual_window = window_creator.create_window_transaction(self, self.database)
