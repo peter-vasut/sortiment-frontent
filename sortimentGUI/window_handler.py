@@ -46,7 +46,6 @@ def use_threading(function):
 
 
 class WindowHandler:
-    user_image = None
     spinner = None
     task_count = 0
     user_list = None
@@ -62,6 +61,7 @@ class WindowHandler:
     window_size = None  # last known window size
     window_history = list()
     actual_window = None  # actual window if known
+    user_image_list = list()  # list of all images which should contain profile image of selected user
 
     def register_user_image(self, image):
         """
@@ -69,7 +69,8 @@ class WindowHandler:
 
         :param image: image object
         """
-        self.user_image = image
+        self.user_image_list.append(image)
+        self.update_user_image()
 
     @use_spinner
     def register_spinner(self, spinner):
@@ -117,11 +118,7 @@ class WindowHandler:
 
     def user_selected(self, *args):
         self.selected_user = args[2]
-        gtk_element_editor.image_set_missing(self.user_image)
-        gtk_element_editor.load_image_from_file(self.user_image,
-                                                self.selected_user.get('photo', ''),
-                                                self.image_size,
-                                                self.image_size)
+        self.update_user_image()
 
     def food_selected(self, *args):
         self.selected_food = args[2]
@@ -154,8 +151,13 @@ class WindowHandler:
         self.food_list.show_all()
 
     def update_user_image(self, *args):
-        # todo
-        pass
+        for user_image in self.user_image_list:
+            gtk_element_editor.image_set_missing(user_image)
+            if self.selected_user is not None:
+                gtk_element_editor.load_image_from_file(user_image,
+                                                        self.selected_user.get('photo', ''),
+                                                        self.image_size,
+                                                        self.image_size)
 
     def update(self, *args):
         """
