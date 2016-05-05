@@ -304,10 +304,10 @@ class WindowHandler:
         """
         Switches current window to profile window.
         """
-
-        self.window_history.append(self.actual_window)
-        self.actual_window.hide()
-        self.actual_window = window_creator.create_window_profile(self, self.database, True, True)
+        if self.selected_user is not None:
+            self.window_history.append(self.actual_window)
+            self.actual_window.hide()
+            self.actual_window = window_creator.create_window_profile(self, self.database, True, True)
 
     def jmp_back(self, *args):
         """
