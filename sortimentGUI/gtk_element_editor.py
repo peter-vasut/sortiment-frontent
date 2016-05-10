@@ -21,7 +21,8 @@ def create_user_row(user, selection_callback=None, register_dynamic_font_callbac
     row = Gtk.ListBoxRow()
     event_box = Gtk.EventBox()
     hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
-    label = Gtk.Label(user.get('nick', user.get('name', "???")), xalign=0)
+    label = Gtk.Label(user.get('nick', user.get('name', "???")),
+                      xalign=0)  # todo: make getting name of user a separate function
     image = Gtk.Image()
     image.set_from_icon_name("gtk-missing-image", 6)
     load_image_from_file(image, user.get('photo', ''), image_height, image_height)
@@ -95,3 +96,13 @@ def create_font_from_description(desc):
     :param desc: description
     """
     return Pango.font_description_from_string(desc)
+
+
+def change_label_text(label, new_text):
+    """
+    Changes text of label.
+    :param label: label to change
+    :param new_text: string representing new text
+    """
+
+    label.set_text(new_text)

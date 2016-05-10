@@ -62,6 +62,7 @@ class WindowHandler:
     window_history = list()
     actual_window = None  # actual window if known
     user_image_list = list()  # list of all images which should contain profile image of selected user
+    user_name_label_list = list()  # todo: labels in this list should be changed when user is selected
 
     def register_user_image(self, image):
         """
@@ -118,10 +119,11 @@ class WindowHandler:
 
     def user_selected(self, *args):
         self.selected_user = args[2]
-        self.update_user_image()
+        self.update_selected_user_all()
 
     def food_selected(self, *args):
         self.selected_food = args[2]
+        # todo: update displayed info about food if needed
 
     @use_threading
     @use_spinner
@@ -159,6 +161,16 @@ class WindowHandler:
                                                         self.image_size,
                                                         self.image_size)
 
+    def update_user_name_label(self, *_):
+        for user_label in self.user_name_label_list:
+            gtk_element_editor.change_label_text(user_label, self.selected_user.get('nick',
+                                                                                    self.selected_user.get('name',
+                                                                                                           "???")))  # todo: get to sep funct.
+
+    def update_selected_user_all(self, *_):
+        self.update_user_image()
+        self.update_user_name_label()
+
     def update(self, *args):
         """
         Updates all data presented in main window.
@@ -166,7 +178,7 @@ class WindowHandler:
 
         self.update_food_list()
         self.update_user_list()
-        self.update_user_image()
+        self.update_selected_user_all()
 
     def set_database(self, database):
         """
@@ -318,12 +330,13 @@ class WindowHandler:
         self.actual_window = self.window_history.pop()
         self.actual_window.show()
 
-    def register_user_name(self, *args):
+    def register_user_name(self, label, *args):
         """
         Function to be called for registering GtkLabel for displaying name of selected user.
         """
 
-        pass  # todo
+        self.user_name_label_list.append(label)
+        self.update_user_name_label()
 
     def register_user_balance(self, *args):
         """
