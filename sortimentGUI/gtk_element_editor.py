@@ -1,3 +1,4 @@
+from gi.repository import GObject
 from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 from gi.repository import Pango
@@ -15,6 +16,7 @@ def create_user_row(user, selection_callback=None, register_dynamic_font_callbac
     :param user: user dictionary
     :param selection_callback: function to be called when user is clicked
     :param register_dynamic_font_callback: callback for registering label of row
+    :param image_height: height of profile image in pixels
     :return: new Gtk.ListBoxRow
     """
 
@@ -29,11 +31,11 @@ def create_user_row(user, selection_callback=None, register_dynamic_font_callbac
     hbox.pack_start(image, False, True, 0)
     hbox.pack_start(label, True, True, 0)
     event_box.add(hbox)
-    if selection_callback != None:
+    if selection_callback is not None:
         event_box.connect("button_press_event", selection_callback, user)
     row.user = user
     row.add(event_box)
-    if register_dynamic_font_callback != None:
+    if register_dynamic_font_callback is not None:
         register_dynamic_font_callback(label, 0.6)
     return row
 
@@ -44,6 +46,8 @@ def create_food_row(food, selection_callback, register_dynamic_font_callback=Non
 
     :param food: food dictionary
     :param selection_callback: function to be called when user is clicked
+    :param register_dynamic_font_callback: function to be called to register resizable font inside row (if needed)
+    :param image_height: height of image of food
     :return: new ListBoxRow according to user data and callback function
     """
 
@@ -74,7 +78,7 @@ def load_image_from_file(image, path, width, height):
         pixbuf = GdkPixbuf.Pixbuf.new_from_file(path)
         scaled_buf = pixbuf.scale_simple(width, height, GdkPixbuf.InterpType.BILINEAR)
         image.set_from_pixbuf(scaled_buf)
-    except:
+    except GObject.GError:
         success = False
     return success
 

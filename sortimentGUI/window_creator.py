@@ -15,7 +15,7 @@ def create_window_main(handler, database=None, show_all=True):
     :return: new Window
     """
 
-    if database == None:
+    if database is None:
         database = Database()
     handler.set_database(database)
     return create_window("layouts/main_window.glade", handler, show_all, True)

@@ -86,7 +86,7 @@ class WindowHandler:
 
     @use_threading
     @use_spinner
-    def spinner_test(self, *args):
+    def spinner_test(self, *_):
         """
         Function used to test spinner as if data were being retrieved from database.
         """
@@ -95,25 +95,25 @@ class WindowHandler:
         sleep(5)
         print("Done")
 
-    def register_user_list(self, list):
+    def register_user_list(self, user_list):
         """
         Function used to register graphical list of users.
 
-        :param list: list to register
+        :param user_list: list to register
         """
 
-        self.user_list = list
-        gtk_element_editor.set_listbox_filter(list, self.user_filter)
+        self.user_list = user_list
+        gtk_element_editor.set_listbox_filter(user_list, self.user_filter)
         self.update_user_list()
 
-    def register_food_list(self, list):
+    def register_food_list(self, food_list):
         """
         Function used to register graphical list of food.
 
-        :param list: list to register
+        :param food_list: list to register
         """
 
-        self.food_list = list
+        self.food_list = food_list
         # todo: add food filter
         self.update_food_list()
 
@@ -127,32 +127,32 @@ class WindowHandler:
 
     @use_threading
     @use_spinner
-    def update_user_list(self, *args):
+    def update_user_list(self, *_):
         """
-        Updates user list with new data from database.
+        Updates user user_list with new data from database.
 
         """
 
-        list = self.database.get_user(None)
-        for user in list:
+        user_list = self.database.get_user(None)
+        for user in user_list:
             row = gtk_element_editor.create_user_row(user, self.user_selected, self.register_dynamic_font)
             self.user_list.add(row)
         self.user_list.show_all()
 
     @use_threading
     @use_spinner
-    def update_food_list(self, *args):
+    def update_food_list(self, *_):
         """
-        Updates food list with new data from database.
+        Updates food food_list with new data from database.
         """
 
-        list = self.database.get_item(None)
-        for food in list:
+        food_list = self.database.get_item(None)
+        for food in food_list:
             row = gtk_element_editor.create_food_row(food, self.food_selected, self.register_dynamic_font)
             self.food_list.add(row)
         self.food_list.show_all()
 
-    def update_user_image(self, *args):
+    def update_user_image(self, *_):
         for user_image in self.user_image_list:
             gtk_element_editor.image_set_missing(user_image)
             if self.selected_user is not None:
@@ -163,15 +163,16 @@ class WindowHandler:
 
     def update_user_name_label(self, *_):
         for user_label in self.user_name_label_list:
-            gtk_element_editor.change_label_text(user_label, self.selected_user.get('nick',
-                                                                                    self.selected_user.get('name',
-                                                                                                           "???")))  # todo: get to sep funct.
+            gtk_element_editor.change_label_text(user_label,
+                                                 self.selected_user.get('nick',
+                                                                        self.selected_user.get('name', "???")))
+            # todo: get to sep funct.
 
     def update_selected_user_all(self, *_):
         self.update_user_image()
         self.update_user_name_label()
 
-    def update(self, *args):
+    def update(self, *_):
         """
         Updates all data presented in main window.
         """
@@ -199,12 +200,12 @@ class WindowHandler:
         # todo: implement filter
         return True
 
-    def buy_food(self, *args):
+    def buy_food(self, *_):
         self.database.buy_items(self.selected_user, self.selected_food, self.selected_amount)
         # todo: error message
 
     def amount_selected(self, *args):
-        print(args)  # todo
+        print(self, args)  # todo
 
     def window_configure(self, *args):
         """
@@ -226,7 +227,8 @@ class WindowHandler:
 
         self.dynamic_scaling_list.append((args[0], args[0].props.width_request, args[0].props.height_request))
 
-    def apply_dynamic_scaling(self, awidth, aheight, widget_t, standard_window_width=640, standard_window_height=320):
+    @staticmethod
+    def apply_dynamic_scaling(awidth, aheight, widget_t, standard_window_width=640, standard_window_height=320):
         """
         Scales specific widget.
 
@@ -256,18 +258,19 @@ class WindowHandler:
         for w in self.dynamic_scaling_list:
             self.apply_dynamic_scaling(awidth, aheight, w, standard_window_width, standard_window_height)
 
-    def register_dynamic_font(self, widget, scale=None, *args):
+    def register_dynamic_font(self, widget, scale=None, *_):
         """
         Function to be called for registering widget containing text to resize and set default font.
 
         :param widget: widget to be resized on window height change
+        :param scale: desired scale (or None)
         """
 
         if scale is None:
             scale = 1
             try:
                 label = widget.props.label
-            except:
+            except AttributeError:
                 label = ""
             if "#s:" in label:
                 try:
@@ -279,8 +282,8 @@ class WindowHandler:
         if self.window_size is not None:
             self.apply_dynamic_font(self.default_font_factor * scale, self.window_size[1], widget)
 
-
-    def apply_dynamic_font(self, factor, aheight, widget):
+    @staticmethod
+    def apply_dynamic_font(factor, aheight, widget):
         """
         Sets font size on specific widget according to actual window height.
 
@@ -312,7 +315,7 @@ class WindowHandler:
 
         self.actual_window = window
 
-    def jmp_profile(self, *args):
+    def jmp_profile(self, *_):
         """
         Switches current window to profile window.
         """
@@ -321,7 +324,7 @@ class WindowHandler:
             self.actual_window.hide()
             self.actual_window = window_creator.create_window_profile(self, self.database, True, True)
 
-    def jmp_back(self, *args):
+    def jmp_back(self, *_):
         """
         Switches window to previous window on window_history.
         """
@@ -330,7 +333,7 @@ class WindowHandler:
         self.actual_window = self.window_history.pop()
         self.actual_window.show()
 
-    def register_user_name(self, label, *args):
+    def register_user_name(self, label, *_):
         """
         Function to be called for registering GtkLabel for displaying name of selected user.
         """

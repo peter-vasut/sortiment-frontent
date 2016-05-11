@@ -6,7 +6,7 @@ from .window_handler import WindowHandler
 
 
 def main():
-    window = window_creator.create_window_main(WindowHandler(), Database())
+    window_creator.create_window_main(WindowHandler(), Database())
     Gtk.main()
 
 
