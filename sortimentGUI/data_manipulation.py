@@ -6,4 +6,4 @@ def get_user_printable_name(user, errstring="???"):
     :return: user['nick'] if exists, user['name'] otherwise (if exists), errstring if 'nick' and 'name' are missing
     """
 
-    user.get('nick', user.get('name', errstring))
+    return user.get('nick', user.get('name', errstring))
