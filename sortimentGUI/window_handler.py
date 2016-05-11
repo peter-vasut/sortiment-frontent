@@ -4,6 +4,7 @@ from math import sqrt, ceil
 from time import sleep
 
 import window_creator
+from data_manipulation import get_user_balance_printable
 from data_manipulation import get_user_printable_name
 from . import gtk_element_editor
 
@@ -64,6 +65,7 @@ class WindowHandler:
     actual_window = None  # actual window if known
     user_image_list = list()  # list of all images which should contain profile image of selected user
     user_name_label_list = list()
+    user_balance_label_list = list()
 
     def register_user_image(self, image):
         """
@@ -165,9 +167,15 @@ class WindowHandler:
         for user_label in self.user_name_label_list:
             gtk_element_editor.change_label_text(user_label, get_user_printable_name(self.selected_user))
 
+    def update_user_balance_label(self, *_):
+        for user_label in self.user_balance_label_list:
+            gtk_element_editor.change_label_text(user_label,
+                                                 get_user_balance_printable(self.selected_user, currency=" e"))
+
     def update_selected_user_all(self, *_):
         self.update_user_image()
         self.update_user_name_label()
+        self.update_user_balance_label()
 
     def update(self, *_):
         """
@@ -338,12 +346,13 @@ class WindowHandler:
         self.user_name_label_list.append(label)
         self.update_user_name_label()
 
-    def register_user_balance(self, *args):
+    def register_user_balance(self, label, *_):
         """
         Function to be called for registering GtkLabel for displaying name of selected user.
         """
 
-        pass  # todo
+        self.user_balance_label_list.append(label)
+        self.update_user_balance_label()
 
     def jmp_transaction(self, *args):
         """

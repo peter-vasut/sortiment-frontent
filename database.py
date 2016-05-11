@@ -5,7 +5,7 @@ class Database:
     @staticmethod
     def get_user(_=None):
         sleep(5)
-        return [{'photo': '/tmp/photo.bmp', 'nick': 'Peto'}, {'nick': 'Kubo'}]
+        return [{'photo': '/tmp/photo.bmp', 'nick': 'Peto', 'balance': 47}, {'nick': 'Kubo'}]
 
     @staticmethod
     def get_item(_=None):
