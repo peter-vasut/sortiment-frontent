@@ -4,7 +4,7 @@ from math import sqrt, ceil
 from time import sleep
 
 import window_creator
-from user_manipulation import get_user_printable_name
+from data_manipulation import get_user_printable_name
 from . import gtk_element_editor
 
 
@@ -63,7 +63,7 @@ class WindowHandler:
     window_history = list()
     actual_window = None  # actual window if known
     user_image_list = list()  # list of all images which should contain profile image of selected user
-    user_name_label_list = list()  # todo: labels in this list should be changed when user is selected
+    user_name_label_list = list()
 
     def register_user_image(self, image):
         """
@@ -124,7 +124,6 @@ class WindowHandler:
 
     def food_selected(self, *args):
         self.selected_food = args[2]
-        # todo: update displayed info about food if needed
 
     @use_threading
     @use_spinner
