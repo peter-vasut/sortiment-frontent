@@ -170,7 +170,7 @@ class WindowHandler:
     def update_user_balance_label(self, *_):
         for user_label in self.user_balance_label_list:
             gtk_element_editor.change_label_text(user_label,
-                                                 get_user_balance_printable(self.selected_user, currency=" e"))
+                                                 get_user_balance_printable(self.selected_user, currency="€"))
 
     def update_selected_user_all(self, *_):
         self.update_user_image()
