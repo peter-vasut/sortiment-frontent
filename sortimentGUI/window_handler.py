@@ -120,11 +120,11 @@ class WindowHandler:
         # todo: add food filter
         self.update_food_list()
 
-    def user_selected(self, *args):
+    def event_user_selected(self, *args):
         self.selected_user = args[2]
         self.update_selected_user_all()
 
-    def food_selected(self, *args):
+    def event_food_selected(self, *args):
         self.selected_food = args[2]
 
     @use_threading
@@ -137,7 +137,7 @@ class WindowHandler:
 
         user_list = self.database.get_user(None)
         for user in user_list:
-            row = gtk_element_editor.create_user_row(user, self.user_selected, self.register_dynamic_font)
+            row = gtk_element_editor.create_user_row(user, self.event_user_selected, self.register_dynamic_font)
             self.user_list.add(row)
         self.user_list.show_all()
 
@@ -150,7 +150,7 @@ class WindowHandler:
 
         food_list = self.database.get_item(None)
         for food in food_list:
-            row = gtk_element_editor.create_food_row(food, self.food_selected, self.register_dynamic_font)
+            row = gtk_element_editor.create_food_row(food, self.event_food_selected, self.register_dynamic_font)
             self.food_list.add(row)
         self.food_list.show_all()
 
@@ -209,7 +209,7 @@ class WindowHandler:
         self.database.buy_items(self.selected_user, self.selected_food, self.selected_amount)
         # todo: error message
 
-    def amount_selected(self, *args):
+    def event_amount_selected(self, *args):
         print(self, args)  # todo
 
     def window_configure(self, *args):
@@ -320,16 +320,16 @@ class WindowHandler:
 
         self.actual_window = window
 
-    def jmp_profile(self, *_):
+    def event_jmp_profile(self, *_):
         """
         Switches current window to profile window.
         """
         if self.selected_user is not None:
             self.window_history.append(self.actual_window)
             self.actual_window.hide()
-            self.actual_window = window_creator.create_window_profile(self, self.database, True, True)
+            self.actual_window = window_creator.create_window_profile(self, self.database)
 
-    def jmp_back(self, *_):
+    def event_jmp_back(self, *_):
         """
         Switches window to previous window on window_history.
         """
@@ -354,7 +354,7 @@ class WindowHandler:
         self.user_balance_label_list.append(label)
         self.update_user_balance_label()
 
-    def jmp_transaction(self, *args):
+    def event_jmp_transaction(self, *args):
         """
         Switches current window to transaction window.
         """
@@ -362,3 +362,6 @@ class WindowHandler:
         self.window_history.append(self.actual_window)
         self.actual_window.hide()
         self.actual_window = window_creator.create_window_transaction(self, self.database)
+
+    def event_numpad(self, num):
+        pass  # todo

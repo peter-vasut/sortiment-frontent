@@ -17,7 +17,7 @@
     <property name="adjustment">adjustment1</property>
     <property name="climb_rate">1</property>
     <signal name="realize" handler="register_dynamic_scaling" swapped="no"/>
-    <signal name="value-changed" handler="amount_selected" swapped="no"/>
+    <signal name="value-changed" handler="event_amount_selected" swapped="no"/>
   </object>
   <object class="GtkImage" id="image_down">
     <property name="visible">True</property>
@@ -121,7 +121,7 @@
               <object class="GtkEventBox" id="eventbox1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <signal name="button-press-event" handler="jmp_profile" swapped="no"/>
+                <signal name="button-press-event" handler="event_jmp_profile" swapped="no"/>
                 <child>
                   <object class="GtkImage" id="image">
                     <property name="width_request">100</property>

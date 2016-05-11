@@ -27,7 +27,8 @@
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
                 <property name="always_show_image">True</property>
-                <signal name="pressed" handler="jmp_back" swapped="no"/>
+                <signal name="clicked" handler="event_jmp_back" swapped="no"/>
+                <signal name="realize" handler="register_dynamic_font" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -46,6 +47,7 @@
                 <property name="use_stock">True</property>
                 <property name="image_position">right</property>
                 <property name="always_show_image">True</property>
+                <signal name="realize" handler="register_dynamic_font" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -147,7 +149,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <signal name="pressed" handler="jmp_transaction" swapped="no"/>
+                    <signal name="clicked" handler="event_jmp_transaction" swapped="no"/>
+                    <signal name="realize" handler="register_dynamic_font" swapped="no"/>
                   </object>
                 </child>
               </object>
