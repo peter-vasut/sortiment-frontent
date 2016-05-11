@@ -4,6 +4,7 @@ from math import sqrt, ceil
 from time import sleep
 
 import window_creator
+from user_manipulation import get_user_printable_name
 from . import gtk_element_editor
 
 
@@ -163,10 +164,7 @@ class WindowHandler:
 
     def update_user_name_label(self, *_):
         for user_label in self.user_name_label_list:
-            gtk_element_editor.change_label_text(user_label,
-                                                 self.selected_user.get('nick',
-                                                                        self.selected_user.get('name', "???")))
-            # todo: get to sep funct.
+            gtk_element_editor.change_label_text(user_label, get_user_printable_name(self.selected_user))
 
     def update_selected_user_all(self, *_):
         self.update_user_image()

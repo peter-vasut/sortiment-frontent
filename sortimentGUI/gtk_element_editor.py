@@ -3,6 +3,8 @@ from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 from gi.repository import Pango
 
+from user_manipulation import get_user_printable_name
+
 
 def create_button(text=""):
     return Gtk.Button(text)
@@ -23,8 +25,7 @@ def create_user_row(user, selection_callback=None, register_dynamic_font_callbac
     row = Gtk.ListBoxRow()
     event_box = Gtk.EventBox()
     hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
-    label = Gtk.Label(user.get('nick', user.get('name', "???")),
-                      xalign=0)  # todo: make getting name of user a separate function
+    label = Gtk.Label(get_user_printable_name(user), xalign=0)
     image = Gtk.Image()
     image.set_from_icon_name("gtk-missing-image", 6)
     load_image_from_file(image, user.get('photo', ''), image_height, image_height)
