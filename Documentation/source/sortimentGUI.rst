@@ -4,6 +4,14 @@ sortimentGUI package
 Submodules
 ----------
 
+sortimentGUI.data_manipulation module
+-------------------------------------
+
+.. automodule:: sortimentGUI.data_manipulation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 sortimentGUI.error_handler module
 ---------------------------------
 

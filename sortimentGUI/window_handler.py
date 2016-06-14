@@ -354,7 +354,7 @@ class WindowHandler:
         self.user_balance_label_list.append(label)
         self.update_user_balance_label()
 
-    def event_jmp_transaction(self, *args):
+    def event_jmp_transaction(self, *_):
         """
         Switches current window to transaction window.
         """
