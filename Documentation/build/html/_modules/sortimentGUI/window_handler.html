@@ -86,6 +86,7 @@
 <div class="viewcode-block" id="use_threading"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.use_threading">[docs]</a><span class="k">def</span> <span class="nf">use_threading</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Decorator which runs function in separate thread.</span>
+
 <span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -182,7 +183,6 @@
 <div class="viewcode-block" id="WindowHandler.update_user_list"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update_user_list">[docs]</a>    <span class="k">def</span> <span class="nf">update_user_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates user user_list with new data from database.</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">user_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>

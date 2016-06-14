@@ -65,20 +65,44 @@
 <dl class="function">
 <dt id="sortimentGUI.data_manipulation.get_user_balance_printable">
 <tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">get_user_balance_printable</tt><big>(</big><em>user</em>, <em>currency=''</em>, <em>errstring='???'</em>, <em>sep='</em>, <em>'</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#get_user_balance_printable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.get_user_balance_printable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets balance of user
-:param user: user object
-:param currency: string appended to balance
-:param errstring: string to return if balance could not be resolved
-:return: returns user balance, or none on error</p>
+<dd><p>Gets balance of user</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>user</strong> &#8211; user object</li>
+<li><strong>currency</strong> &#8211; string appended to balance</li>
+<li><strong>errstring</strong> &#8211; string to return if balance could not be resolved</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">returns user balance, or none on error</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="sortimentGUI.data_manipulation.get_user_printable_name">
 <tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">get_user_printable_name</tt><big>(</big><em>user</em>, <em>errstring='???'</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#get_user_printable_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.get_user_printable_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets name of user in printable form.
-:param user: user object
-:param errstring: string to return if name could not be resolved
-:return: user[&#8216;nick&#8217;] if exists, user[&#8216;name&#8217;] otherwise (if exists), errstring if &#8216;nick&#8217; and &#8216;name&#8217; are missing</p>
+<dd><p>Gets name of user in printable form.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>user</strong> &#8211; user object</li>
+<li><strong>errstring</strong> &#8211; string to return if name could not be resolved</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">user[&#8216;nick&#8217;] if exists, user[&#8216;name&#8217;] otherwise (if exists), errstring if &#8216;nick&#8217; and &#8216;name&#8217; are missing</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -100,9 +124,19 @@
 <dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.change_label_text">
 <tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">change_label_text</tt><big>(</big><em>label</em>, <em>new_text</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#change_label_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.change_label_text" title="Permalink to this definition">¶</a></dt>
-<dd><p>Changes text of label.
-:param label: label to change
-:param new_text: string representing new text</p>
+<dd><p>Changes text of label.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>label</strong> &#8211; label to change</li>
+<li><strong>new_text</strong> &#8211; string representing new text</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -187,20 +221,42 @@
 <dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.load_image_from_file">
 <tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">load_image_from_file</tt><big>(</big><em>image</em>, <em>path</em>, <em>width</em>, <em>height</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#load_image_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.load_image_from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads file to image (if file exists).
-:param image: Gtk.Image where to put data from file
-:param path: path to image file
-:param width: target width of image
-:param height: target height of image
-:return: True if successful, False otherwise</p>
+<dd><p>Loads file to image (if file exists).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image</strong> &#8211; Gtk.Image where to put data from file</li>
+<li><strong>path</strong> &#8211; path to image file</li>
+<li><strong>width</strong> &#8211; target width of image</li>
+<li><strong>height</strong> &#8211; target height of image</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if successful, False otherwise</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.set_listbox_filter">
 <tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">set_listbox_filter</tt><big>(</big><em>listbox</em>, <em>filter_function</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#set_listbox_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.set_listbox_filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets filter function of listbox.
-:param listbox: listbox to be set
-:param filter_function: filter function</p>
+<dd><p>Sets filter function of listbox.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>listbox</strong> &#8211; listbox to be set</li>
+<li><strong>filter_function</strong> &#8211; filter function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -209,14 +265,26 @@
 <dl class="function">
 <dt id="sortimentGUI.window_creator.create_window">
 <tt class="descclassname">sortimentGUI.window_creator.</tt><tt class="descname">create_window</tt><big>(</big><em>layout_file_location</em>, <em>event_handler</em>, <em>show_all=True</em>, <em>should_quit=True</em>, <em>relative_filenames=True</em>, <em>fullscreen=True</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_creator.html#create_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_creator.create_window" title="Permalink to this definition">¶</a></dt>
-<dd><p>Universal function for creating window.
-:param layout_file_location: path to .glade file containing layout information about window
-:param event_handler: handler used to handle window events
-:param show_all: True if window should be shown immediately
-:param should_quit: True if window should quit after user closed it
-:param relative_filenames: True if layout_file_location should be considered relative to script
-:param fullscreen: True if window should be in full screen mode by default
-:return:</p>
+<dd><p>Universal function for creating window.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>layout_file_location</strong> &#8211; path to .glade file containing layout information about window</li>
+<li><strong>event_handler</strong> &#8211; handler used to handle window events</li>
+<li><strong>show_all</strong> &#8211; True if window should be shown immediately</li>
+<li><strong>should_quit</strong> &#8211; True if window should quit after user closed it</li>
+<li><strong>relative_filenames</strong> &#8211; True if layout_file_location should be considered relative to script</li>
+<li><strong>fullscreen</strong> &#8211; True if window should be in full screen mode by default</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -742,8 +810,15 @@ it is not set, returning to default window won&#8217;t work.</p>
 <dl class="function">
 <dt id="sortimentGUI.window_handler.use_threading">
 <tt class="descclassname">sortimentGUI.window_handler.</tt><tt class="descname">use_threading</tt><big>(</big><em>function</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#use_threading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.use_threading" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decorator which runs function in separate thread.
-:return:</p>
+<dd><p>Decorator which runs function in separate thread.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
