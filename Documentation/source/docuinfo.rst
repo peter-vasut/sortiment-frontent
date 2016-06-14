@@ -1,4 +1,4 @@
-How to update documentatiom
+How to update documentation
 ============
 
 Go to "Documentation" directory.::
