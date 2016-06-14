@@ -48,9 +48,12 @@
           <div class="body">
             
   <h1>Source code for sortimentGUI.gtk_element_editor</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">GObject</span>
 <span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">GdkPixbuf</span>
 <span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
 <span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Pango</span>
+
+<span class="kn">from</span> <span class="nn">data_manipulation</span> <span class="kn">import</span> <span class="n">get_user_printable_name</span>
 
 
 <div class="viewcode-block" id="create_button"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_button">[docs]</a><span class="k">def</span> <span class="nf">create_button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
@@ -65,24 +68,25 @@
 <span class="sd">    :param user: user dictionary</span>
 <span class="sd">    :param selection_callback: function to be called when user is clicked</span>
 <span class="sd">    :param register_dynamic_font_callback: callback for registering label of row</span>
+<span class="sd">    :param image_height: height of profile image in pixels</span>
 <span class="sd">    :return: new Gtk.ListBoxRow</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">row</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ListBoxRow</span><span class="p">()</span>
     <span class="n">event_box</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">EventBox</span><span class="p">()</span>
     <span class="n">hbox</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="n">Gtk</span><span class="o">.</span><span class="n">Orientation</span><span class="o">.</span><span class="n">HORIZONTAL</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;nick&#39;</span><span class="p">,</span><span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&quot;???&quot;</span><span class="p">)),</span> <span class="n">xalign</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">get_user_printable_name</span><span class="p">(</span><span class="n">user</span><span class="p">),</span> <span class="n">xalign</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Image</span><span class="p">()</span>
     <span class="n">image</span><span class="o">.</span><span class="n">set_from_icon_name</span><span class="p">(</span><span class="s">&quot;gtk-missing-image&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
     <span class="n">load_image_from_file</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;photo&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span> <span class="n">image_height</span><span class="p">,</span> <span class="n">image_height</span><span class="p">)</span>
     <span class="n">hbox</span><span class="o">.</span><span class="n">pack_start</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">hbox</span><span class="o">.</span><span class="n">pack_start</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">event_box</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">hbox</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">selection_callback</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">selection_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">event_box</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;button_press_event&quot;</span><span class="p">,</span> <span class="n">selection_callback</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
     <span class="n">row</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
     <span class="n">row</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">event_box</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">register_dynamic_font_callback</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">register_dynamic_font_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">register_dynamic_font_callback</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">row</span>
 
@@ -93,6 +97,8 @@
 
 <span class="sd">    :param food: food dictionary</span>
 <span class="sd">    :param selection_callback: function to be called when user is clicked</span>
+<span class="sd">    :param register_dynamic_font_callback: function to be called to register resizable font inside row (if needed)</span>
+<span class="sd">    :param image_height: height of image of food</span>
 <span class="sd">    :return: new ListBoxRow according to user data and callback function</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -123,7 +129,7 @@
         <span class="n">pixbuf</span> <span class="o">=</span> <span class="n">GdkPixbuf</span><span class="o">.</span><span class="n">Pixbuf</span><span class="o">.</span><span class="n">new_from_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">scaled_buf</span> <span class="o">=</span> <span class="n">pixbuf</span><span class="o">.</span><span class="n">scale_simple</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">GdkPixbuf</span><span class="o">.</span><span class="n">InterpType</span><span class="o">.</span><span class="n">BILINEAR</span><span class="p">)</span>
         <span class="n">image</span><span class="o">.</span><span class="n">set_from_pixbuf</span><span class="p">(</span><span class="n">scaled_buf</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
+    <span class="k">except</span> <span class="n">GObject</span><span class="o">.</span><span class="n">GError</span><span class="p">:</span>
         <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
     <span class="k">return</span> <span class="n">success</span>
 
@@ -144,7 +150,17 @@
 
 <span class="sd">    :param desc: description</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Pango</span><span class="o">.</span><span class="n">font_description_from_string</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">Pango</span><span class="o">.</span><span class="n">font_description_from_string</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="change_label_text"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.change_label_text">[docs]</a><span class="k">def</span> <span class="nf">change_label_text</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">new_text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Changes text of label.</span>
+<span class="sd">    :param label: label to change</span>
+<span class="sd">    :param new_text: string representing new text</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">label</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">new_text</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
