@@ -65,6 +65,7 @@ def create_window(layout_file_location, event_handler, show_all=True, should_qui
                   fullscreen=True):
     """
     Universal function for creating window.
+
     :param layout_file_location: path to .glade file containing layout information about window
     :param event_handler: handler used to handle window events
     :param show_all: True if window should be shown immediately

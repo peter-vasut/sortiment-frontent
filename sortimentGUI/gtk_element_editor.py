@@ -59,6 +59,7 @@ def create_food_row(food, selection_callback, register_dynamic_font_callback=Non
 def set_listbox_filter(listbox, filter_function):
     """
     Sets filter function of listbox.
+
     :param listbox: listbox to be set
     :param filter_function: filter function
     """
@@ -68,6 +69,7 @@ def set_listbox_filter(listbox, filter_function):
 def load_image_from_file(image, path, width, height):
     """
     Loads file to image (if file exists).
+
     :param image: Gtk.Image where to put data from file
     :param path: path to image file
     :param width: target width of image
@@ -106,6 +108,7 @@ def create_font_from_description(desc):
 def change_label_text(label, new_text):
     """
     Changes text of label.
+
     :param label: label to change
     :param new_text: string representing new text
     """

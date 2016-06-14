@@ -36,6 +36,7 @@ def use_spinner(function):
 def use_threading(function):
     """
     Decorator which runs function in separate thread.
+
     :return:
     """
 
@@ -132,7 +133,6 @@ class WindowHandler:
     def update_user_list(self, *_):
         """
         Updates user user_list with new data from database.
-
         """
 
         user_list = self.database.get_user(None)
