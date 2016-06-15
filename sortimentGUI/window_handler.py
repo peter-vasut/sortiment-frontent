@@ -1,51 +1,11 @@
-import functools
-import threading
 from math import sqrt, ceil
 from time import sleep
 
 import window_creator
 from data_manipulation import get_user_balance_printable
 from data_manipulation import get_user_printable_name
+from decorators import use_threading, use_spinner
 from . import gtk_element_editor
-
-
-def use_spinner(function):
-    """
-    Decorator activating spinner before function and deactivating it.
-    (Needs to be ran in separate thread.)
-
-    :param function: function to decorate
-    :return: decorated function
-    """
-
-    @functools.wraps(function)
-    def inner(self, *args, **kwargs):
-        self.task_count += 1
-        if self.spinner is not None:
-            self.spinner.start()
-        result = function(self, *args, **kwargs)
-        self.task_count = max(self.task_count - 1, 0)
-        if self.spinner is not None:
-            if self.task_count == 0:
-                self.spinner.stop()
-        return result
-
-    return inner
-
-
-def use_threading(function):
-    """
-    Decorator which runs function in separate thread.
-
-    :return:
-    """
-
-    @functools.wraps(function)
-    def inner(self, *args, **kwargs):
-        thread = threading.Thread(target=function, args=tuple([self] + list(args)), kwargs=kwargs)
-        thread.start()
-
-    return inner
 
 
 class WindowHandler:
@@ -359,6 +319,7 @@ class WindowHandler:
         Switches current window to transaction window.
         """
 
+        print(1 / 0)  # don't try this in production!
         self.window_history.append(self.actual_window)
         self.actual_window.hide()
         self.actual_window = window_creator.create_window_transaction(self, self.database)
