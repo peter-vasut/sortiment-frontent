@@ -130,4 +130,5 @@ def create_window_error(show_all=True, fullscreen=True):
     objects = {"cancel_button": None, "textview1": None, "textview2": None, "textview3": None}
     new_window = create_window("layouts/error_window.glade", None, show_all=show_all, should_quit=True,
                                relative_filenames=True, fullscreen=fullscreen, get_objects=objects)
+    new_window.set_keep_above(True)
     return new_window, objects

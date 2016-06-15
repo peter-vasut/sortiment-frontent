@@ -27,6 +27,8 @@ class WindowHandler:
     user_image_list = list()  # list of all images which should contain profile image of selected user
     user_name_label_list = list()
     user_balance_label_list = list()
+    current_numpad_value = 0
+    numpad_value_label_list = list()
 
     def register_user_image(self, image):
         """
@@ -82,10 +84,20 @@ class WindowHandler:
         self.update_food_list()
 
     def event_user_selected(self, *args):
+        """
+        This handler should be called when user is selected.
+
+        :param args: args[2] = object containing info about selected user
+        """
         self.selected_user = args[2]
         self.update_selected_user_all()
 
     def event_food_selected(self, *args):
+        """
+        This handler should be called when food is selected.
+
+        :param args: args[2] = object containing info about selected food
+        """
         self.selected_food = args[2]
 
     @use_threading
@@ -115,6 +127,10 @@ class WindowHandler:
         self.food_list.show_all()
 
     def update_user_image(self, *_):
+        """
+        Updates images of selected user.
+        """
+
         for user_image in self.user_image_list:
             gtk_element_editor.image_set_missing(user_image)
             if self.selected_user is not None:
@@ -124,18 +140,41 @@ class WindowHandler:
                                                         self.image_size)
 
     def update_user_name_label(self, *_):
+        """
+        Updates name labels of selected user.
+        """
+
         for user_label in self.user_name_label_list:
             gtk_element_editor.change_label_text(user_label, get_user_printable_name(self.selected_user))
 
     def update_user_balance_label(self, *_):
+        """
+        Updates labels containing balance of selected user.
+        """
+
         for user_label in self.user_balance_label_list:
             gtk_element_editor.change_label_text(user_label,
                                                  get_user_balance_printable(self.selected_user, currency="€"))
 
     def update_selected_user_all(self, *_):
+        """
+        Updates everything needed when user is selected.
+        """
+
         self.update_user_image()
         self.update_user_name_label()
         self.update_user_balance_label()
+
+    def update_numpad_value_label(self, *_):
+        """
+        Updates numpad value label.
+        It can be for example used when numpad button is clicked.
+        """
+
+        for numpad_label in self.numpad_value_label_list:
+            gtk_element_editor.change_label_text(numpad_label,
+                                                 str(self.current_numpad_value // 100) + "," +
+                                                 str(self.current_numpad_value % 100))
 
     def update(self, *_):
         """
@@ -145,6 +184,7 @@ class WindowHandler:
         self.update_food_list()
         self.update_user_list()
         self.update_selected_user_all()
+        self.update_numpad_value_label()
 
     def set_database(self, database):
         """
@@ -165,7 +205,11 @@ class WindowHandler:
         # todo: implement filter
         return True
 
-    def buy_food(self, *_):
+    def event_buy_food(self, *_):
+        """
+        This handler should be called, when user wants to buy food. (Clicking button.)
+        """
+
         self.database.buy_items(self.selected_user, self.selected_food, self.selected_amount)
         # todo: error message
 
@@ -314,15 +358,74 @@ class WindowHandler:
         self.user_balance_label_list.append(label)
         self.update_user_balance_label()
 
-    def event_jmp_transaction(self, *_):
+    def register_numpad_value(self, label, *_):
         """
-        Switches current window to transaction window.
+        Function to be called for registering GtkLabel for displaying value on numpad.
         """
 
-        print(1 / 0)  # don't try this in production!
+        self.numpad_value_label_list.append(label)
+        self.update_numpad_value_label()
+
+    def register_resulting_balance(self, label, *_):
+        pass  # todo
+
+    def event_jmp_transaction(self, *_):
+        """
+        Switches current window to transaction window and resets value on numpad.
+        """
+
+        self.current_numpad_value = 0
         self.window_history.append(self.actual_window)
         self.actual_window.hide()
         self.actual_window = window_creator.create_window_transaction(self, self.database)
 
     def event_numpad(self, num):
+        """
+        This function should be called by respective event_numpad_x function.
+        :param num: number clicked on numpad
+        """
+
+        self.current_numpad_value *= 10
+        self.current_numpad_value += num
+        self.update_numpad_value_label()
+
+    def event_make_transaction(self, *_):
         pass  # todo
+
+    def event_numpad_1(self, *_):
+        self.event_numpad(1)
+
+    def event_numpad_2(self, *_):
+        self.event_numpad(2)
+
+    def event_numpad_3(self, *_):
+        self.event_numpad(3)
+
+    def event_numpad_4(self, *_):
+        self.event_numpad(4)
+
+    def event_numpad_5(self, *_):
+        self.event_numpad(5)
+
+    def event_numpad_6(self, *_):
+        self.event_numpad(6)
+
+    def event_numpad_7(self, *_):
+        self.event_numpad(7)
+
+    def event_numpad_8(self, *_):
+        self.event_numpad(8)
+
+    def event_numpad_9(self, *_):
+        self.event_numpad(9)
+
+    def event_numpad_0(self, *_):
+        self.event_numpad(0)
+
+    def event_numpad_clear(self, *_):
+        self.current_numpad_value = 0
+        self.update_numpad_value_label()
+
+    def event_numpad_backspace(self, *_):
+        self.current_numpad_value //= 10
+        self.update_numpad_value_label()
