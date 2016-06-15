@@ -12,6 +12,14 @@ sortimentGUI.data_manipulation module
     :undoc-members:
     :show-inheritance:
 
+sortimentGUI.decorators module
+------------------------------
+
+.. automodule:: sortimentGUI.decorators
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 sortimentGUI.error_handler module
 ---------------------------------
 
