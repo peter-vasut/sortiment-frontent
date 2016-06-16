@@ -1,9 +1,9 @@
+import re
 from math import sqrt, ceil
 from time import sleep
 
+import data_manipulation
 import window_creator
-from data_manipulation import get_user_balance_printable
-from data_manipulation import get_user_printable_name
 from decorators import use_threading, use_spinner
 from . import gtk_element_editor
 
@@ -29,6 +29,9 @@ class WindowHandler:
     user_balance_label_list = list()
     current_numpad_value = 0
     numpad_value_label_list = list()
+    regex_str = ""
+    regex_obj = None
+    filter_clear_button = None
 
     def register_user_image(self, image):
         """
@@ -69,7 +72,6 @@ class WindowHandler:
         """
 
         self.user_list = user_list
-        gtk_element_editor.set_listbox_filter(user_list, self.user_filter)
         self.update_user_list()
 
     def register_food_list(self, food_list):
@@ -145,7 +147,8 @@ class WindowHandler:
         """
 
         for user_label in self.user_name_label_list:
-            gtk_element_editor.change_label_text(user_label, get_user_printable_name(self.selected_user))
+            gtk_element_editor.change_label_text(user_label,
+                                                 data_manipulation.get_user_printable_name(self.selected_user))
 
     def update_user_balance_label(self, *_):
         """
@@ -154,7 +157,8 @@ class WindowHandler:
 
         for user_label in self.user_balance_label_list:
             gtk_element_editor.change_label_text(user_label,
-                                                 get_user_balance_printable(self.selected_user, currency="€"))
+                                                 data_manipulation.get_user_balance_printable(self.selected_user,
+                                                                                              currency="€"))
 
     def update_selected_user_all(self, *_):
         """
@@ -195,15 +199,22 @@ class WindowHandler:
 
         self.database = database
 
-    def user_filter(self, row, *args):
+    def user_filter(self, row, *_):
         """
         Function used to filter users in listbox.
 
         :param row: row.user should contain valid user dictionary
         :return: True if user should be displayed, False otherwise.
         """
-        # todo: implement filter
-        return True
+
+        if self.regex_obj is None:
+            return True
+        names = data_manipulation.get_all_names(row.user)
+        for name in names:
+            name = data_manipulation.normalize_string(name)
+            if self.regex_obj.match(name) is not None:
+                return True
+        return False
 
     def event_buy_food(self, *_):
         """
@@ -283,9 +294,10 @@ class WindowHandler:
                 label = ""
             if "#s:" in label:
                 try:
-                    scale = int(label[label.find("#s:") + 3:])
+                    scale = float(label[label.find("#s:") + 3:])
                 except ValueError:
                     scale = 1
+                gtk_element_editor.change_button_label_text(widget, label[:label.find("#s:")])
 
         self.dynamic_font_list.append((widget, scale))
         if self.window_size is not None:
@@ -369,6 +381,15 @@ class WindowHandler:
     def register_resulting_balance(self, label, *_):
         pass  # todo
 
+    def register_filter_clear_button(self, button, *_):
+        """
+        Function to register clear button.
+
+        :param button: Gtk.Button
+        """
+        self.filter_clear_button = button
+        self.filter_clear_button.hide()
+
     def event_jmp_transaction(self, *_):
         """
         Switches current window to transaction window and resets value on numpad.
@@ -429,3 +450,27 @@ class WindowHandler:
     def event_numpad_backspace(self, *_):
         self.current_numpad_value //= 10
         self.update_numpad_value_label()
+
+    def event_filter(self, button, *_):
+        """
+        Updates regex to filter users and food.
+        Should be called on filter button click.
+
+        :param button: label of this Gtk.Button is used as part of regex.
+        """
+
+        self.regex_str += "[" + gtk_element_editor.get_text_from_button(button).lower() + "]"
+        self.regex_obj = re.compile(self.regex_str)
+        gtk_element_editor.set_listbox_filter(self.user_list, self.user_filter)
+        self.filter_clear_button.show()
+
+    def event_filter_clear(self, *_):
+        """
+        Resets filter.
+        Should be called on filter button click.
+        """
+
+        self.regex_str = ""
+        self.regex_obj = None
+        gtk_element_editor.set_listbox_filter(self.user_list, self.user_filter)
+        self.filter_clear_button.hide()

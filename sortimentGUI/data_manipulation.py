@@ -1,3 +1,7 @@
+import string
+import unicodedata
+
+
 def get_user_printable_name(user, errstring="???"):
     """
     Gets name of user in printable form.
@@ -17,8 +21,41 @@ def get_user_balance_printable(user, currency="", errstring="???", sep=","):
     :param user: user object
     :param currency: string appended to balance
     :param errstring: string to return if balance could not be resolved
+    :param sep: separator for decimal places
     :return: returns user balance, or none on error
     """
     if 'balance' not in user:
         return errstring
     return str(user['balance'] // 100) + sep + "{:02d}".format(user['balance'] % 100) + currency
+
+
+def get_all_names(obj):
+    """
+    Should return all possible names for object, for example real name of user or food, nick...
+
+    :param obj: user or food
+    :return: list of strings
+    """
+
+    res = list()
+    if "name" in obj:
+        res.append(obj["name"])
+    if "nick" in obj:
+        res.append(obj["nick"])
+
+    return res
+
+
+def normalize_string(s, lowercase=True, special=True):
+    output = ''
+    if special:
+        s = unicodedata.normalize('NFKD', s)
+        for c in s:
+            if not unicodedata.combining(c):
+                if c in string.ascii_letters:
+                    output += c
+    else:
+        output = s
+    if lowercase:
+        output = output.lower()
+    return output

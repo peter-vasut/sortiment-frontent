@@ -114,3 +114,38 @@ def change_label_text(label, new_text):
     """
 
     label.set_text(new_text)
+
+
+def change_button_text(button, new_text):
+    """
+    Changes text of button.
+
+    :param button: button to change
+    :param new_text: string representing new text
+    """
+
+    button.set_label(new_text)
+
+
+def change_button_label_text(widget, new_text):
+    """
+    Changes text of button or label.
+
+    :param widget: Gtk.button or Gtk.label
+    :param new_text: string reprezenting new text
+    """
+
+    if isinstance(widget, Gtk.Button):
+        change_button_text(widget, new_text)
+    if isinstance(widget, Gtk.Label):
+        change_label_text(widget, new_text)
+
+
+def get_text_from_button(button):
+    """
+    Gets label from Gtk.Button.
+    :param button: Gtk.Button
+    :return: label of button (string)
+    """
+
+    return button.get_label()
