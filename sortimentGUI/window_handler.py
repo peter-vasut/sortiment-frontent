@@ -17,6 +17,7 @@ class WindowHandler:
     selected_food = None
     selected_user = None
     selected_amount = 0
+    selected_amount_entry = None
     image_size = 300
     dynamic_scaling_list = list()
     dynamic_font_list = list()
@@ -180,6 +181,9 @@ class WindowHandler:
                                                  str(self.current_numpad_value // 100) + "," +
                                                  str(self.current_numpad_value % 100))
 
+    def update_amount_entry(self, *_):
+        gtk_element_editor.change_label_text(self.selected_amount_entry, str(self.selected_amount))
+
     def update(self, *_):
         """
         Updates all data presented in main window.
@@ -224,8 +228,13 @@ class WindowHandler:
         self.database.buy_items(self.selected_user, self.selected_food, self.selected_amount)
         # todo: error message
 
-    def event_amount_selected(self, *args):
-        print(self, args)  # todo
+    def event_amount_up(self, *_):
+        self.selected_amount += 1
+        self.update_amount_entry()
+
+    def event_amount_down(self, *_):
+        self.selected_amount -= 1
+        self.update_amount_entry()
 
     def window_configure(self, *args):
         """
@@ -389,6 +398,15 @@ class WindowHandler:
         """
         self.filter_clear_button = button
         self.filter_clear_button.hide()
+
+    def register_selected_amount_entry(self, entry, *_):
+        """
+        Function to register selected item amount entry.
+
+        :param entry: Gtk.Entry
+        """
+
+        self.selected_amount_entry = entry
 
     def event_jmp_transaction(self, *_):
         """

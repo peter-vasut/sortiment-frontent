@@ -272,13 +272,14 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkButton" id="button2">
+                  <object class="GtkButton" id="amount_up">
                     <property name="height_request">80</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="image">image_up</property>
                     <property name="always_show_image">True</property>
+                    <signal name="clicked" handler="event_amount_up" swapped="no"/>
                     <signal name="realize" handler="register_dynamic_scaling" swapped="no"/>
                   </object>
                   <packing>
@@ -288,15 +289,17 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="entry1">
+                  <object class="GtkEntry" id="amount_entry">
                     <property name="visible">True</property>
+                    <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
-                    <property name="max_length">3</property>
+                    <property name="max_length">7</property>
                     <property name="text" translatable="yes">0</property>
                     <property name="truncate_multiline">True</property>
                     <property name="progress_pulse_step">1</property>
                     <property name="input_purpose">number</property>
                     <signal name="realize" handler="register_dynamic_font" swapped="no"/>
+                    <signal name="realize" handler="register_selected_amount_entry" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -305,12 +308,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button3">
+                  <object class="GtkButton" id="amount_down">
                     <property name="height_request">80</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="image">image_down</property>
+                    <signal name="clicked" handler="event_amount_down" swapped="no"/>
                     <signal name="realize" handler="register_dynamic_scaling" swapped="no"/>
                   </object>
                   <packing>
