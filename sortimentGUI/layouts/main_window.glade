@@ -7,18 +7,6 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkSpinButton" id="spinbutton1">
-    <property name="visible">True</property>
-    <property name="can_focus">True</property>
-    <property name="max_length">3</property>
-    <property name="progress_pulse_step">1</property>
-    <property name="input_purpose">number</property>
-    <property name="orientation">vertical</property>
-    <property name="adjustment">adjustment1</property>
-    <property name="climb_rate">1</property>
-    <signal name="realize" handler="register_dynamic_scaling" swapped="no"/>
-    <signal name="value-changed" handler="event_amount_selected" swapped="no"/>
-  </object>
   <object class="GtkImage" id="image_down">
     <property name="visible">True</property>
     <property name="can_focus">False</property>

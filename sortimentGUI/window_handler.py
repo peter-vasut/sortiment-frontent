@@ -1,7 +1,7 @@
-import re
 from math import sqrt, ceil
 from time import sleep
 
+import re
 from . import data_manipulation
 from . import gtk_element_editor
 from . import window_creator
@@ -110,7 +110,7 @@ class WindowHandler:
         Updates user user_list with new data from database.
         """
 
-        user_list = self.database.get_user(None)
+        user_list = self.database.get_user()
         for user in user_list:
             row = gtk_element_editor.create_user_row(user, self.event_user_selected, self.register_dynamic_font)
             self.user_list.add(row)
@@ -137,10 +137,11 @@ class WindowHandler:
         for user_image in self.user_image_list:
             gtk_element_editor.image_set_missing(user_image)
             if self.selected_user is not None:
-                gtk_element_editor.load_image_from_file(user_image,
-                                                        self.selected_user.get('photo', ''),
-                                                        self.image_size,
-                                                        self.image_size)
+                if self.selected_user.photo is not None:
+                    gtk_element_editor.load_image_from_file(user_image,
+                                                            self.selected_user.photo,
+                                                            self.image_size,
+                                                            self.image_size)
 
     def update_user_name_label(self, *_):
         """

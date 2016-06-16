@@ -11,7 +11,7 @@ def get_user_printable_name(user, errstring="???"):
     :return: user['nick'] if exists, user['name'] otherwise (if exists), errstring if 'nick' and 'name' are missing
     """
 
-    return user.get('nick', user.get('name', errstring))
+    return user.nick if (user.nick is not None) else (user.name if (user.name is not None) else errstring)
 
 
 def get_user_balance_printable(user, currency="", errstring="???", sep=","):
@@ -24,9 +24,9 @@ def get_user_balance_printable(user, currency="", errstring="???", sep=","):
     :param sep: separator for decimal places
     :return: returns user balance, or none on error
     """
-    if 'balance' not in user:
+    if user.balance is None:
         return errstring
-    return str(user['balance'] // 100) + sep + "{:02d}".format(user['balance'] % 100) + currency
+    return str(user.balance // 100) + sep + "{:02d}".format(user.balance % 100) + currency
 
 
 def get_all_names(obj):
@@ -38,10 +38,12 @@ def get_all_names(obj):
     """
 
     res = list()
-    if "name" in obj:
-        res.append(obj["name"])
-    if "nick" in obj:
-        res.append(obj["nick"])
+    if "name" in dir(obj):
+        if obj.name is not None:
+            res.append(obj.name)
+    if "nick" in dir(obj):
+        if obj.nick is not None:
+            res.append(obj.nick)
 
     return res
 

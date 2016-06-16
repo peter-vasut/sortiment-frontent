@@ -28,7 +28,7 @@ def create_user_row(user, selection_callback=None, register_dynamic_font_callbac
     label = Gtk.Label(get_user_printable_name(user), xalign=0)
     image = Gtk.Image()
     image.set_from_icon_name("gtk-missing-image", 6)
-    load_image_from_file(image, user.get('photo', ''), image_height, image_height)
+    load_image_from_file(image, user.photo, image_height, image_height)
     hbox.pack_start(image, False, True, 0)
     hbox.pack_start(label, True, True, 0)
     event_box.add(hbox)
@@ -77,6 +77,10 @@ def load_image_from_file(image, path, width, height):
     :return: True if successful, False otherwise
     """
     success = True
+    if path is None:
+        return False
+    if image is None:
+        return False
     try:
         pixbuf = GdkPixbuf.Pixbuf.new_from_file(path)
         scaled_buf = pixbuf.scale_simple(width, height, GdkPixbuf.InterpType.BILINEAR)
