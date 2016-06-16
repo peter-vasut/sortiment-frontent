@@ -163,7 +163,42 @@
 <span class="sd">    :param new_text: string representing new text</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">label</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">new_text</span><span class="p">)</span></div>
+    <span class="n">label</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">new_text</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="change_button_text"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.change_button_text">[docs]</a><span class="k">def</span> <span class="nf">change_button_text</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="n">new_text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Changes text of button.</span>
+
+<span class="sd">    :param button: button to change</span>
+<span class="sd">    :param new_text: string representing new text</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">button</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">new_text</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="change_button_label_text"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.change_button_label_text">[docs]</a><span class="k">def</span> <span class="nf">change_button_label_text</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">new_text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Changes text of button or label.</span>
+
+<span class="sd">    :param widget: Gtk.button or Gtk.label</span>
+<span class="sd">    :param new_text: string reprezenting new text</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Button</span><span class="p">):</span>
+        <span class="n">change_button_text</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">new_text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Label</span><span class="p">):</span>
+        <span class="n">change_label_text</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">new_text</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_text_from_button"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.get_text_from_button">[docs]</a><span class="k">def</span> <span class="nf">get_text_from_button</span><span class="p">(</span><span class="n">button</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets label from Gtk.Button.</span>
+<span class="sd">    :param button: Gtk.Button</span>
+<span class="sd">    :return: label of button (string)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">button</span><span class="o">.</span><span class="n">get_label</span><span class="p">()</span></div>
 </pre></div>
 
           </div>

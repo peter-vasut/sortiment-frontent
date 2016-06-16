@@ -48,12 +48,12 @@
           <div class="body">
             
   <h1>Source code for sortimentGUI.window_handler</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">ceil</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 
+<span class="kn">import</span> <span class="nn">data_manipulation</span>
 <span class="kn">import</span> <span class="nn">window_creator</span>
-<span class="kn">from</span> <span class="nn">data_manipulation</span> <span class="kn">import</span> <span class="n">get_user_balance_printable</span>
-<span class="kn">from</span> <span class="nn">data_manipulation</span> <span class="kn">import</span> <span class="n">get_user_printable_name</span>
 <span class="kn">from</span> <span class="nn">decorators</span> <span class="kn">import</span> <span class="n">use_threading</span><span class="p">,</span> <span class="n">use_spinner</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">gtk_element_editor</span>
 
@@ -67,6 +67,7 @@
     <span class="n">selected_food</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">selected_user</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">selected_amount</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">selected_amount_entry</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">image_size</span> <span class="o">=</span> <span class="mi">300</span>
     <span class="n">dynamic_scaling_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">dynamic_font_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -77,6 +78,11 @@
     <span class="n">user_image_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>  <span class="c"># list of all images which should contain profile image of selected user</span>
     <span class="n">user_name_label_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">user_balance_label_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">current_numpad_value</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">numpad_value_label_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">regex_str</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">regex_obj</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">filter_clear_button</span> <span class="o">=</span> <span class="bp">None</span>
 
 <div class="viewcode-block" id="WindowHandler.register_user_image"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_user_image">[docs]</a>    <span class="k">def</span> <span class="nf">register_user_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -117,7 +123,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">user_list</span> <span class="o">=</span> <span class="n">user_list</span>
-        <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">set_listbox_filter</span><span class="p">(</span><span class="n">user_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_filter</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_user_list</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="WindowHandler.register_food_list"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_food_list">[docs]</a>    <span class="k">def</span> <span class="nf">register_food_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">food_list</span><span class="p">):</span>
@@ -132,10 +137,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">update_food_list</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="WindowHandler.event_user_selected"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_user_selected">[docs]</a>    <span class="k">def</span> <span class="nf">event_user_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This handler should be called when user is selected.</span>
+
+<span class="sd">        :param args: args[2] = object containing info about selected user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected_user</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_selected_user_all</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="WindowHandler.event_food_selected"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_food_selected">[docs]</a>    <span class="k">def</span> <span class="nf">event_food_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This handler should be called when food is selected.</span>
+
+<span class="sd">        :param args: args[2] = object containing info about selected food</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected_food</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 </div>
     <span class="nd">@use_threading</span>
@@ -165,6 +180,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">food_list</span><span class="o">.</span><span class="n">show_all</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="WindowHandler.update_user_image"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update_user_image">[docs]</a>    <span class="k">def</span> <span class="nf">update_user_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates images of selected user.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">for</span> <span class="n">user_image</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_image_list</span><span class="p">:</span>
             <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">image_set_missing</span><span class="p">(</span><span class="n">user_image</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -174,18 +193,46 @@
                                                         <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="WindowHandler.update_user_name_label"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update_user_name_label">[docs]</a>    <span class="k">def</span> <span class="nf">update_user_name_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates name labels of selected user.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">for</span> <span class="n">user_label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_name_label_list</span><span class="p">:</span>
-            <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">change_label_text</span><span class="p">(</span><span class="n">user_label</span><span class="p">,</span> <span class="n">get_user_printable_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_user</span><span class="p">))</span>
+            <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">change_label_text</span><span class="p">(</span><span class="n">user_label</span><span class="p">,</span>
+                                                 <span class="n">data_manipulation</span><span class="o">.</span><span class="n">get_user_printable_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_user</span><span class="p">))</span>
 </div>
 <div class="viewcode-block" id="WindowHandler.update_user_balance_label"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update_user_balance_label">[docs]</a>    <span class="k">def</span> <span class="nf">update_user_balance_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates labels containing balance of selected user.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">for</span> <span class="n">user_label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_balance_label_list</span><span class="p">:</span>
             <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">change_label_text</span><span class="p">(</span><span class="n">user_label</span><span class="p">,</span>
-                                                 <span class="n">get_user_balance_printable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_user</span><span class="p">,</span> <span class="n">currency</span><span class="o">=</span><span class="s">&quot;€&quot;</span><span class="p">))</span>
+                                                 <span class="n">data_manipulation</span><span class="o">.</span><span class="n">get_user_balance_printable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_user</span><span class="p">,</span>
+                                                                                              <span class="n">currency</span><span class="o">=</span><span class="s">&quot;€&quot;</span><span class="p">))</span>
 </div>
 <div class="viewcode-block" id="WindowHandler.update_selected_user_all"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update_selected_user_all">[docs]</a>    <span class="k">def</span> <span class="nf">update_selected_user_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates everything needed when user is selected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">update_user_image</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_user_name_label</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_user_balance_label</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.update_numpad_value_label"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update_numpad_value_label">[docs]</a>    <span class="k">def</span> <span class="nf">update_numpad_value_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates numpad value label.</span>
+<span class="sd">        It can be for example used when numpad button is clicked.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">numpad_label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">numpad_value_label_list</span><span class="p">:</span>
+            <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">change_label_text</span><span class="p">(</span><span class="n">numpad_label</span><span class="p">,</span>
+                                                 <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_numpad_value</span> <span class="o">//</span> <span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span> <span class="o">+</span>
+                                                 <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_numpad_value</span> <span class="o">%</span> <span class="mi">100</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.update_amount_entry"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update_amount_entry">[docs]</a>    <span class="k">def</span> <span class="nf">update_amount_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">change_label_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_amount_entry</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_amount</span><span class="p">))</span>
 </div>
 <div class="viewcode-block" id="WindowHandler.update"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -195,6 +242,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">update_food_list</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_user_list</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_selected_user_all</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_numpad_value_label</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="WindowHandler.set_database"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.set_database">[docs]</a>    <span class="k">def</span> <span class="nf">set_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -205,22 +253,38 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
 </div>
-<div class="viewcode-block" id="WindowHandler.user_filter"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.user_filter">[docs]</a>    <span class="k">def</span> <span class="nf">user_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.user_filter"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.user_filter">[docs]</a>    <span class="k">def</span> <span class="nf">user_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function used to filter users in listbox.</span>
 
 <span class="sd">        :param row: row.user should contain valid user dictionary</span>
 <span class="sd">        :return: True if user should be displayed, False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># todo: implement filter</span>
-        <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_obj</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">data_manipulation</span><span class="o">.</span><span class="n">get_all_names</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">data_manipulation</span><span class="o">.</span><span class="n">normalize_string</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_obj</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">False</span>
 </div>
-<div class="viewcode-block" id="WindowHandler.buy_food"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.buy_food">[docs]</a>    <span class="k">def</span> <span class="nf">buy_food</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.event_buy_food"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_buy_food">[docs]</a>    <span class="k">def</span> <span class="nf">event_buy_food</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This handler should be called, when user wants to buy food. (Clicking button.)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">buy_items</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_food</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_amount</span><span class="p">)</span>
         <span class="c"># todo: error message</span>
 </div>
-<div class="viewcode-block" id="WindowHandler.event_amount_selected"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_amount_selected">[docs]</a>    <span class="k">def</span> <span class="nf">event_amount_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>  <span class="c"># todo</span>
+<div class="viewcode-block" id="WindowHandler.event_amount_up"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_amount_up">[docs]</a>    <span class="k">def</span> <span class="nf">event_amount_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_amount</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_amount_entry</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_amount_down"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_amount_down">[docs]</a>    <span class="k">def</span> <span class="nf">event_amount_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_amount</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_amount_entry</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="WindowHandler.window_configure"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.window_configure">[docs]</a>    <span class="k">def</span> <span class="nf">window_configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -289,9 +353,10 @@
                 <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
             <span class="k">if</span> <span class="s">&quot;#s:&quot;</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="n">scale</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="n">label</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;#s:&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span><span class="p">:])</span>
+                    <span class="n">scale</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="n">label</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;#s:&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span><span class="p">:])</span>
                 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                     <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">change_button_label_text</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">label</span><span class="p">[:</span><span class="n">label</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;#s:&quot;</span><span class="p">)])</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">dynamic_font_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">widget</span><span class="p">,</span> <span class="n">scale</span><span class="p">))</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -364,18 +429,119 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">user_balance_label_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_user_balance_label</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="WindowHandler.event_jmp_transaction"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_jmp_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">event_jmp_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowHandler.register_numpad_value"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_numpad_value">[docs]</a>    <span class="k">def</span> <span class="nf">register_numpad_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Switches current window to transaction window.</span>
+<span class="sd">        Function to be called for registering GtkLabel for displaying value on numpad.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>  <span class="c"># don&#39;t try this in production!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numpad_value_label_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_numpad_value_label</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.register_resulting_balance"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_resulting_balance">[docs]</a>    <span class="k">def</span> <span class="nf">register_resulting_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c"># todo</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.register_filter_clear_button"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_filter_clear_button">[docs]</a>    <span class="k">def</span> <span class="nf">register_filter_clear_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to register clear button.</span>
+
+<span class="sd">        :param button: Gtk.Button</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_clear_button</span> <span class="o">=</span> <span class="n">button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_clear_button</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.register_selected_amount_entry"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.register_selected_amount_entry">[docs]</a>    <span class="k">def</span> <span class="nf">register_selected_amount_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to register selected item amount entry.</span>
+
+<span class="sd">        :param entry: Gtk.Entry</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_amount_entry</span> <span class="o">=</span> <span class="n">entry</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_jmp_transaction"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_jmp_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">event_jmp_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Switches current window to transaction window and resets value on numpad.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_numpad_value</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actual_window</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actual_window</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actual_window</span> <span class="o">=</span> <span class="n">window_creator</span><span class="o">.</span><span class="n">create_window_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="WindowHandler.event_numpad"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
-        <span class="k">pass</span>  <span class="c"># todo</span></div></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function should be called by respective event_numpad_x function.</span>
+<span class="sd">        :param num: number clicked on numpad</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_numpad_value</span> <span class="o">*=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_numpad_value</span> <span class="o">+=</span> <span class="n">num</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_numpad_value_label</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_make_transaction"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_make_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">event_make_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c"># todo</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_1"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_1">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_numpad</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_2"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_2">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_numpad</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_3"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_3">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_numpad</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_4"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_4">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_numpad</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_5"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_5">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_5</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_numpad</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_6"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_6">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_6</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_numpad</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_7"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_7">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_7</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_numpad</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_8"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_8">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_8</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_numpad</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_9"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_9">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_9</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_numpad</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_0"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_0">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_0</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_numpad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_clear"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_clear">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_numpad_value</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_numpad_value_label</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_numpad_backspace"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_numpad_backspace">[docs]</a>    <span class="k">def</span> <span class="nf">event_numpad_backspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_numpad_value</span> <span class="o">//=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_numpad_value_label</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_filter"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_filter">[docs]</a>    <span class="k">def</span> <span class="nf">event_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates regex to filter users and food.</span>
+<span class="sd">        Should be called on filter button click.</span>
+
+<span class="sd">        :param button: label of this Gtk.Button is used as part of regex.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">regex_str</span> <span class="o">+=</span> <span class="s">&quot;[&quot;</span> <span class="o">+</span> <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">get_text_from_button</span><span class="p">(</span><span class="n">button</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;]&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regex_obj</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">regex_str</span><span class="p">)</span>
+        <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">set_listbox_filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_filter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_clear_button</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="WindowHandler.event_filter_clear"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_handler.WindowHandler.event_filter_clear">[docs]</a>    <span class="k">def</span> <span class="nf">event_filter_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets filter.</span>
+<span class="sd">        Should be called on filter button click.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">regex_str</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regex_obj</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">gtk_element_editor</span><span class="o">.</span><span class="n">set_listbox_filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_filter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_clear_button</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span></div></div>
 </pre></div>
 
           </div>
