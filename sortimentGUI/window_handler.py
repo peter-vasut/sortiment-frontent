@@ -2,10 +2,10 @@ import re
 from math import sqrt, ceil
 from time import sleep
 
-import data_manipulation
-import window_creator
-from decorators import use_threading, use_spinner
+from . import data_manipulation
 from . import gtk_element_editor
+from . import window_creator
+from .decorators import use_threading, use_spinner
 
 
 class WindowHandler:

@@ -3,8 +3,8 @@ import sys
 from gi.repository import Gtk
 
 from database import Database
-from error_handler import catch_global_exception, catch_global_exception_with_gtk_main
 from . import window_creator
+from .error_handler import catch_global_exception, catch_global_exception_with_gtk_main
 from .window_handler import WindowHandler
 
 

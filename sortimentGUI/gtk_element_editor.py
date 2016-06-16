@@ -3,7 +3,7 @@ from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 from gi.repository import Pango
 
-from data_manipulation import get_user_printable_name
+from .data_manipulation import get_user_printable_name
 
 
 def create_button(text=""):

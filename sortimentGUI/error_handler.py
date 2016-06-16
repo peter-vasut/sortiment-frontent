@@ -4,7 +4,7 @@ import traceback
 
 from gi.repository import Gtk
 
-import window_creator
+from . import window_creator
 
 
 def show_error(exctype, value, tb, gtk_main=False):
