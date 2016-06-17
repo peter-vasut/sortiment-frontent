@@ -1,5 +1,7 @@
+import getpass
 import string
 import unicodedata
+from math import sqrt
 
 
 def get_user_printable_name(user, errstring="???"):
@@ -61,3 +63,11 @@ def normalize_string(s, lowercase=True, special=True):
     if lowercase:
         output = output.lower()
     return output
+
+
+def expand_username(text):
+    return text.replace("%user%", getpass.getuser())
+
+
+def compute_scaling_factor(awidth, aheight, standard_window_width, standard_window_height):
+    return sqrt((min(awidth, aheight) ** 2) / (standard_window_width * standard_window_height))

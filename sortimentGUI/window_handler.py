@@ -1,6 +1,7 @@
-from math import sqrt, ceil
+from math import ceil
 from time import sleep
 
+import os
 import re
 from . import data_manipulation
 from . import gtk_element_editor
@@ -18,7 +19,7 @@ class WindowHandler:
     selected_user = None
     selected_amount = 0
     selected_amount_entry = None
-    image_size = 300
+    image_size = 75
     dynamic_scaling_list = list()
     dynamic_font_list = list()
     default_font_factor = 0.05
@@ -115,6 +116,24 @@ class WindowHandler:
         self.database.edit_user(self.selected_user)
         self.event_jmp_back()
 
+    def event_select_image(self, *_):
+        """
+        Lunches external command found in first line of config and finds last edited image in directory specified in
+        second line. Then it sets this image as user image.
+        """
+
+        config = open(os.path.join(os.path.dirname(__file__), '../config.txt'), "r").read().split("\n")
+        config_command = data_manipulation.expand_username(config[0])
+        config_imagepath = data_manipulation.expand_username(config[1])
+        self.actual_window.hide()
+        os.system(config_command)
+        self.actual_window.show()
+        newest = max(os.listdir(config_imagepath), key=lambda x: os.path.getctime(os.path.join(config_imagepath, x)))
+        newest = os.path.join(config_imagepath, newest)
+        print(newest)
+        self.selected_user.photo = newest
+        self.update_user_image()
+
     @use_threading
     @use_spinner
     def update_user_list(self, *_):
@@ -141,10 +160,15 @@ class WindowHandler:
             self.food_list.add(row)
         self.food_list.show_all()
 
-    def update_user_image(self, *_):
+    def update_user_image(self, *_, standard_window_width=640, standard_window_height=320):
         """
         Updates images of selected user.
         """
+        if self.window_size is None:
+            scaling_factor = 1
+        else:
+            scaling_factor = data_manipulation.compute_scaling_factor(self.window_size[0], self.window_size[1],
+                                                                      standard_window_width, standard_window_height)
 
         for user_image in self.user_image_list:
             gtk_element_editor.image_set_missing(user_image)
@@ -152,8 +176,8 @@ class WindowHandler:
                 if self.selected_user.photo is not None:
                     gtk_element_editor.load_image_from_file(user_image,
                                                             self.selected_user.photo,
-                                                            self.image_size,
-                                                            self.image_size)
+                                                            self.image_size * scaling_factor,
+                                                            self.image_size * scaling_factor)
 
     def update_user_name_label(self, *_):
         """
@@ -281,7 +305,8 @@ class WindowHandler:
         :param standard_window_height: standard window height used as reference
         """
 
-        scaling_factor = sqrt((min(awidth, aheight) ** 2) / (standard_window_width * standard_window_height))
+        scaling_factor = data_manipulation.compute_scaling_factor(awidth, aheight,
+                                                                  standard_window_width, standard_window_height)
         if widget_t[1] > 0:
             widget_t[0].props.width_request = ceil(widget_t[1] * scaling_factor)
         if widget_t[2] > 0:
@@ -299,6 +324,7 @@ class WindowHandler:
 
         for w in self.dynamic_scaling_list:
             self.apply_dynamic_scaling(awidth, aheight, w, standard_window_width, standard_window_height)
+        self.update_user_image()
 
     def register_dynamic_font(self, widget, scale=None, *_):
         """

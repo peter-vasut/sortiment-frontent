@@ -1,0 +1,2 @@
+cheese
+/home/%user%/Pictures/Webcam
