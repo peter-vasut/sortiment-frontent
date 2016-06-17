@@ -134,9 +134,21 @@ class WindowHandler:
         self.selected_user.photo = newest
         self.update_user_image()
 
+    def event_transfer(self, *_):
+        print(self.selected_user, self.selected_food, self.selected_amount)
+        if self.selected_user is not None and self.selected_food is not None:
+            self.database.buy_items(self.selected_user.id, self.selected_food.id, self.selected_amount)
+            for c in self.user_list:
+                self.user_list.remove(c)
+            self.update_user_list_non_threading()
+            self.update_user_balance_labels()
+
     @use_threading
-    @use_spinner
     def update_user_list(self, *_):
+        self.update_user_list_non_threading()
+
+    @use_spinner
+    def update_user_list_non_threading(self, *_):
         """
         Updates user user_list with new data from database.
         """
@@ -145,7 +157,14 @@ class WindowHandler:
         for user in user_list:
             row = gtk_element_editor.create_user_row(user, self.event_user_selected, self.register_dynamic_font)
             self.user_list.add(row)
+            print(dir(self.user_list))
         self.user_list.show_all()
+        if self.selected_user is not None:
+            for user in user_list:
+                if user.id == self.selected_user.id:
+                    self.selected_user = user
+                    return
+            self.selected_user = None
 
     @use_threading
     @use_spinner
@@ -188,7 +207,7 @@ class WindowHandler:
             gtk_element_editor.change_label_text(user_label,
                                                  data_manipulation.get_user_printable_name(self.selected_user))
 
-    def update_user_balance_label(self, *_):
+    def update_user_balance_labels(self, *_):
         """
         Updates labels containing balance of selected user.
         """
@@ -205,7 +224,7 @@ class WindowHandler:
 
         self.update_user_image()
         self.update_user_name_label()
-        self.update_user_balance_label()
+        self.update_user_balance_labels()
 
     def update_numpad_value_label(self, *_):
         """
@@ -215,8 +234,7 @@ class WindowHandler:
 
         for numpad_label in self.numpad_value_label_list:
             gtk_element_editor.change_label_text(numpad_label,
-                                                 str(self.current_numpad_value // 100) + "," +
-                                                 str(self.current_numpad_value % 100))
+                                                 data_manipulation.format_money(self.current_numpad_value))
 
     def update_amount_entry(self, *_):
         gtk_element_editor.change_label_text(self.selected_amount_entry, str(self.selected_amount))
@@ -416,7 +434,7 @@ class WindowHandler:
         """
 
         self.user_balance_label_list.append(label)
-        self.update_user_balance_label()
+        self.update_user_balance_labels()
 
     def register_numpad_value(self, label, *_):
         """

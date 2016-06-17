@@ -237,14 +237,40 @@
                 <property name="can_focus">False</property>
                 <signal name="button-press-event" handler="event_jmp_profile" swapped="no"/>
                 <child>
-                  <object class="GtkImage" id="image">
-                    <property name="width_request">50</property>
-                    <property name="height_request">50</property>
+                  <object class="GtkBox" id="box4">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="stock">gtk-missing-image</property>
-                    <signal name="realize" handler="register_dynamic_scaling" swapped="no"/>
-                    <signal name="realize" handler="register_user_image" swapped="no"/>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkImage" id="image">
+                        <property name="width_request">50</property>
+                        <property name="height_request">50</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="stock">gtk-missing-image</property>
+                        <signal name="realize" handler="register_dynamic_scaling" swapped="no"/>
+                        <signal name="realize" handler="register_user_image" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="balance">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">#s:0.5</property>
+                        <signal name="realize" handler="register_dynamic_font" swapped="no"/>
+                        <signal name="realize" handler="register_user_balance" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                 </child>
               </object>
@@ -326,6 +352,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="event_transfer" swapped="no"/>
                 <signal name="realize" handler="register_dynamic_font" swapped="no"/>
                 <signal name="realize" handler="register_dynamic_scaling" swapped="no"/>
               </object>

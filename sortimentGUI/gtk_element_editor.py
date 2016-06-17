@@ -3,7 +3,7 @@ from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 from gi.repository import Pango
 
-from .data_manipulation import get_user_printable_name
+from . import data_manipulation
 
 
 def create_button(text=""):
@@ -11,7 +11,7 @@ def create_button(text=""):
 
 
 def create_user_row(user, selection_callback=None, register_dynamic_font_callback=None,
-                    image_height=50):  # todo: request image size
+                    image_height=50, display_string=None):  # todo: request image size
     """
     Creates ListBoxRow to display user nick or name and image.
 
@@ -19,13 +19,16 @@ def create_user_row(user, selection_callback=None, register_dynamic_font_callbac
     :param selection_callback: function to be called when user is clicked
     :param register_dynamic_font_callback: callback for registering label of row
     :param image_height: height of profile image in pixels
+    :param display_string: String to override user name or None
     :return: new Gtk.ListBoxRow
     """
 
+    if display_string is None:
+        display_string = data_manipulation.get_universal_printable_name(user)
     row = Gtk.ListBoxRow()
     event_box = Gtk.EventBox()
     hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
-    label = Gtk.Label(get_user_printable_name(user), xalign=0)
+    label = Gtk.Label(display_string, xalign=0)
     image = Gtk.Image()
     image.set_from_icon_name("gtk-missing-image", 6)
     load_image_from_file(image, user.photo, image_height, image_height)
@@ -41,7 +44,8 @@ def create_user_row(user, selection_callback=None, register_dynamic_font_callbac
     return row
 
 
-def create_food_row(food, selection_callback, register_dynamic_font_callback=None, image_height=50):
+def create_food_row(food, selection_callback,
+                    register_dynamic_font_callback=None, image_height=50, display_string=None):
     """
     Creates ListBoxRow to display food name and image.
 
@@ -49,11 +53,15 @@ def create_food_row(food, selection_callback, register_dynamic_font_callback=Non
     :param selection_callback: function to be called when user is clicked
     :param register_dynamic_font_callback: function to be called to register resizable font inside row (if needed)
     :param image_height: height of image of food
+    :param display_string: String to override food name or None
     :return: new ListBoxRow according to user data and callback function
     """
 
+    if display_string is None:
+        display_string = data_manipulation.get_item_printable_name(food)
     return create_user_row(food, selection_callback, register_dynamic_font_callback,
-                           image_height)  # todo: create different row type for food with price tag and edit button
+                           image_height,
+                           display_string=display_string)  # todo: create different row type for food with price tag and edit button
 
 
 def set_listbox_filter(listbox, filter_function):
