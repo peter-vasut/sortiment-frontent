@@ -33,6 +33,8 @@ class WindowHandler:
     regex_str = ""
     regex_obj = None
     filter_clear_button = None
+    edit_nick_entry = None
+    edit_name_entry = None
 
     def register_user_image(self, image):
         """
@@ -102,6 +104,16 @@ class WindowHandler:
         :param args: args[2] = object containing info about selected food
         """
         self.selected_food = args[2]
+
+    def event_save_profile(self, *_):
+        """
+        Modifies user according to `edit_nick_entry` and `edit_name_entry`.
+        """
+
+        self.selected_user.name = gtk_element_editor.get_text_from_entry(self.edit_name_entry)
+        self.selected_user.nick = gtk_element_editor.get_text_from_entry(self.edit_nick_entry)
+        self.database.edit_user(self.selected_user)
+        self.event_jmp_back()
 
     @use_threading
     @use_spinner
@@ -353,7 +365,7 @@ class WindowHandler:
         if self.selected_user is not None:
             self.window_history.append(self.actual_window)
             self.actual_window.hide()
-            self.actual_window = window_creator.create_window_profile(self, self.database)
+            self.actual_window = window_creator.create_window_profile(self)
 
     def event_jmp_back(self, *_):
         """
@@ -408,6 +420,26 @@ class WindowHandler:
         """
 
         self.selected_amount_entry = entry
+
+    def register_edit_nick(self, entry, *_):
+        """
+        Function to register Gtk.Entry for new nick of user.
+        :param entry: Gtk.Entry
+        """
+
+        self.edit_nick_entry = entry
+        gtk_element_editor.change_label_text(entry,
+                                             self.selected_user.nick if (self.selected_user.nick is not None) else "")
+
+    def register_edit_real_name(self, entry, *_):
+        """
+        Function to register Gtk.Entry for new name of user.
+        :param entry: Gtk.Entry
+        """
+
+        self.edit_name_entry = entry
+        gtk_element_editor.change_label_text(entry,
+                                             self.selected_user.name if (self.selected_user.name is not None) else "")
 
     def event_jmp_transaction(self, *_):
         """
@@ -493,3 +525,13 @@ class WindowHandler:
         self.regex_obj = None
         gtk_element_editor.set_listbox_filter(self.user_list, self.user_filter)
         self.filter_clear_button.hide()
+
+    def event_jmp_edit_user(self, *_):
+        """
+        Switches current window to profile editing window.
+        """
+
+        if self.selected_user is not None:
+            self.window_history.append(self.actual_window)
+            self.actual_window.hide()
+            self.actual_window = window_creator.create_window_edit_profile(self)

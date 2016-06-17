@@ -153,3 +153,7 @@ def get_text_from_button(button):
     """
 
     return button.get_label()
+
+
+def get_text_from_entry(entry):
+    return entry.get_text()

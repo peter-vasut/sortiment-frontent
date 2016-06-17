@@ -1,8 +1,6 @@
 import os
-
-from gi.repository import Gtk
-
 from database import Database
+from gi.repository import Gtk
 
 
 def create_window_main(handler, database=None, show_all=True):
@@ -132,3 +130,17 @@ def create_window_error(show_all=True, fullscreen=True):
                                relative_filenames=True, fullscreen=fullscreen, get_objects=objects)
     new_window.set_keep_above(True)
     return new_window, objects
+
+
+def create_window_edit_profile(handler, show_all=True, fullscreen=True):
+    """
+    Creates window displaying info about user. It also alows modifying data.
+
+    :param fullscreen: True if window should be in full screen mode by default
+    :param handler: Sortiment WindowHandler or None
+    :param show_all: True if window should be shown immediately
+    :return: new Window
+    """
+
+    return create_window("layouts/profile_edit_window.glade", handler, show_all=show_all, should_quit=False,
+                         relative_filenames=True, fullscreen=fullscreen)

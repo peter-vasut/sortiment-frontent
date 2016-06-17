@@ -37,8 +37,8 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="delete">
-                <property name="label">gtk-delete</property>
+              <object class="GtkButton" id="edit">
+                <property name="label">gtk-edit</property>
                 <property name="width_request">100</property>
                 <property name="height_request">62</property>
                 <property name="visible">True</property>
@@ -47,6 +47,7 @@
                 <property name="use_stock">True</property>
                 <property name="image_position">right</property>
                 <property name="always_show_image">True</property>
+                <signal name="clicked" handler="event_jmp_edit_user" swapped="no"/>
                 <signal name="realize" handler="register_dynamic_font" swapped="no"/>
               </object>
               <packing>
