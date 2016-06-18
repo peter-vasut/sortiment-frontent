@@ -30,6 +30,8 @@ def get_user_printable_name(user, errstring="???"):
     :return: user.nick if exists, user.name otherwise (if exists), errstring if nick and name are missing
     """
 
+    if user is None:
+        return errstring
     return user.nick if (user.nick is not None) else (user.name if (user.name is not None) else errstring)
 
 
@@ -42,6 +44,8 @@ def get_item_printable_name(item, errstring="???"):
     :return: item.name if exists, errstring if name is missing
     """
 
+    if item is None:
+        return errstring
     res = item.name if (item.name is not None) else errstring
     if item.price is not None:
         res += " (" + str(get_item_price_printable(item)) + ")"

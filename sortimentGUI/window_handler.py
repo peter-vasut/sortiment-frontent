@@ -124,6 +124,7 @@ class WindowHandler:
             self.database.edit_user(self.user_to_edit)
         self.clear_user_list()
         self.update_user_list_non_threading()
+        self.update_selected_user_all()
         self.event_jmp_back()
 
     def event_select_image(self, *_):
