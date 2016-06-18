@@ -58,10 +58,10 @@ def create_food_row(food, selection_callback,
     """
 
     if display_string is None:
-        display_string = data_manipulation.get_item_printable_name(food)
+        display_string = data_manipulation.get_item_printable_name(food, pricetag=True)
     return create_user_row(food, selection_callback, register_dynamic_font_callback,
                            image_height,
-                           display_string=display_string)  # todo: create different row type for food with price tag and edit button
+                           display_string=display_string)
 
 
 def set_listbox_filter(listbox, filter_function):

@@ -35,19 +35,20 @@ def get_user_printable_name(user, errstring="???"):
     return user.nick if (user.nick is not None) else (user.name if (user.name is not None) else errstring)
 
 
-def get_item_printable_name(item, errstring="???"):
+def get_item_printable_name(item, errstring="???", pricetag=False):
     """
     Gets name of item in printable form.
 
     :param item: item object
     :param errstring: string to return if name could not be resolved
+    :param pricetag: True if price should be included in name
     :return: item.name if exists, errstring if name is missing
     """
 
     if item is None:
         return errstring
     res = item.name if (item.name is not None) else errstring
-    if item.price is not None:
+    if item.price is not None and pricetag:
         res += " (" + str(get_item_price_printable(item)) + ")"
     return res
 
