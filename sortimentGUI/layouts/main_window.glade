@@ -232,60 +232,134 @@
             <property name="spacing">6</property>
             <property name="baseline_position">top</property>
             <child>
-              <object class="GtkEventBox" id="eventbox1">
+              <object class="GtkBox" id="box4">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <signal name="button-press-event" handler="event_jmp_profile" swapped="no"/>
+                <property name="homogeneous">True</property>
                 <child>
-                  <object class="GtkBox" id="box4">
+                  <object class="GtkEventBox" id="eventbox1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="orientation">vertical</property>
+                    <signal name="button-press-event" handler="event_jmp_profile" swapped="no"/>
                     <child>
-                      <object class="GtkImage" id="image">
-                        <property name="width_request">50</property>
-                        <property name="height_request">50</property>
+                      <object class="GtkBox" id="user_info_box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="stock">gtk-missing-image</property>
-                        <signal name="realize" handler="register_dynamic_scaling" swapped="no"/>
-                        <signal name="realize" handler="register_user_image" swapped="no"/>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkImage" id="image">
+                            <property name="width_request">50</property>
+                            <property name="height_request">50</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="stock">gtk-missing-image</property>
+                            <signal name="realize" handler="register_dynamic_scaling" swapped="no"/>
+                            <signal name="realize" handler="register_user_image" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="balance">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">#s:0.5</property>
+                            <signal name="realize" handler="register_dynamic_font" swapped="no"/>
+                            <signal name="realize" handler="register_user_balance" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="user_name">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">#s:0.4</property>
+                            <signal name="realize" handler="register_dynamic_font" swapped="no"/>
+                            <signal name="realize" handler="register_user_name" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="balance">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">#s:0.5</property>
-                        <signal name="realize" handler="register_dynamic_font" swapped="no"/>
-                        <signal name="realize" handler="register_user_balance" swapped="no"/>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="user_name">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">#s:0.4</property>
-                        <signal name="realize" handler="register_dynamic_font" swapped="no"/>
-                        <signal name="realize" handler="register_user_name" swapped="no"/>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
                     </child>
                   </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEventBox" id="eventbox2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkBox" id="food_item_box">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkImage" id="image1">
+                            <property name="width_request">50</property>
+                            <property name="height_request">50</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="stock">gtk-missing-image</property>
+                            <signal name="realize" handler="register_dynamic_scaling" swapped="no"/>
+                            <signal name="realize" handler="register_food_image" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="price">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">#s:0.5</property>
+                            <signal name="realize" handler="register_dynamic_font" swapped="no"/>
+                            <signal name="realize" handler="register_food_price" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="food_name">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">#s:0.4</property>
+                            <signal name="realize" handler="register_dynamic_font" swapped="no"/>
+                            <signal name="realize" handler="register_food_name" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </object>
               <packing>

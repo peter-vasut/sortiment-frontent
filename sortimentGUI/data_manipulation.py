@@ -78,6 +78,8 @@ def get_item_price_printable(item, currency=default_currency, errstring="???", s
     :param sep: separator for decimal places
     :return: returns item price, or none on error
     """
+    if item is None:
+        return errstring
     if item.price is None:
         return errstring
     return format_money(item.price, sep, currency)

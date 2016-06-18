@@ -31,6 +31,9 @@ class WindowHandler:
     user_image_list = list()  # list of all images which should contain profile image of selected user
     user_name_label_list = list()
     user_balance_label_list = list()
+    food_image_list = list()  # list of all images which should contain profile image of selected food
+    food_name_label_list = list()
+    food_price_label_list = list()
     current_numpad_value = 0
     numpad_value_label_list = list()
     regex_str = ""
@@ -107,6 +110,7 @@ class WindowHandler:
         :param args: args[2] = object containing info about selected food
         """
         self.selected_food = args[2]
+        self.update_selected_food_all()
 
     def event_save_profile(self, *_):
         """
@@ -236,8 +240,7 @@ class WindowHandler:
 
         for user_label in self.user_balance_label_list:
             gtk_element_editor.change_label_text(user_label,
-                                                 data_manipulation.get_user_balance_printable(self.selected_user,
-                                                                                              currency="€"))
+                                                 data_manipulation.get_user_balance_printable(self.selected_user))
 
     def update_selected_user_all(self, *_):
         """
@@ -260,6 +263,53 @@ class WindowHandler:
 
     def update_amount_entry(self, *_):
         gtk_element_editor.change_label_text(self.selected_amount_entry, str(self.selected_amount))
+
+    def update_food_image(self, *_, standard_window_width=640, standard_window_height=320):
+        """
+        Updates images of selected food.
+        """
+
+        if self.window_size is None:
+            scaling_factor = 1
+        else:
+            scaling_factor = data_manipulation.compute_scaling_factor(self.window_size[0], self.window_size[1],
+                                                                      standard_window_width, standard_window_height)
+
+        for food_image in self.food_image_list:
+            gtk_element_editor.image_set_missing(food_image)
+            if self.selected_food is not None:
+                if self.selected_food.photo is not None:
+                    gtk_element_editor.load_image_from_file(food_image,
+                                                            self.selected_food.photo,
+                                                            self.image_size * scaling_factor,
+                                                            self.image_size * scaling_factor)
+
+    def update_food_price_labels(self, *_):
+        """
+        Updates labels containing price of selected food.
+        """
+
+        for food_price_label in self.food_price_label_list:
+            gtk_element_editor.change_label_text(food_price_label,
+                                                 data_manipulation.get_item_price_printable(self.selected_food))
+
+    def update_food_name_labels(self, *_):
+        """
+        Updates name labels of selected food.
+        """
+
+        for food_label in self.food_name_label_list:
+            gtk_element_editor.change_label_text(food_label,
+                                                 data_manipulation.get_item_printable_name(self.selected_food))
+
+    def update_selected_food_all(self, *_):
+        """
+        Updates all widgets containing information about selected food.
+        """
+
+        self.update_food_image()
+        self.update_food_name_labels()
+        self.update_food_price_labels()
 
     def update(self, *_):
         """
@@ -506,6 +556,18 @@ class WindowHandler:
         self.edit_name_entry = entry
         gtk_element_editor.change_label_text(entry,
                                              self.user_to_edit.name if (self.user_to_edit.name is not None) else "")
+
+    def register_food_image(self, image, *_):
+        self.food_image_list.append(image)
+        self.update_food_image()
+
+    def register_food_price(self, label, *_):
+        self.food_price_label_list.append(label)
+        self.update_food_price_labels()
+
+    def register_food_name(self, label, *_):
+        self.food_name_label_list.append(label)
+        self.update_food_name_labels()
 
     def event_jmp_transaction(self, *_):
         """
