@@ -3,6 +3,7 @@ from time import sleep
 
 import os
 import re
+from database import User
 from . import data_manipulation
 from . import gtk_element_editor
 from . import window_creator
@@ -17,6 +18,7 @@ class WindowHandler:
     database = None
     selected_food = None
     selected_user = None
+    user_to_edit = None
     selected_amount = 0
     selected_amount_entry = None
     image_size = 75
@@ -111,9 +113,17 @@ class WindowHandler:
         Modifies user according to `edit_nick_entry` and `edit_name_entry`.
         """
 
-        self.selected_user.name = gtk_element_editor.get_text_from_entry(self.edit_name_entry)
+        new_user = True if self.user_to_edit is None else False
+        if new_user:
+            self.user_to_edit = User()
+        self.user_to_edit.name = gtk_element_editor.get_text_from_entry(self.edit_name_entry)
         self.selected_user.nick = gtk_element_editor.get_text_from_entry(self.edit_nick_entry)
-        self.database.edit_user(self.selected_user)
+        if new_user:
+            self.database.add_user(self.user_to_edit)
+        else:
+            self.database.edit_user(self.user_to_edit)
+        self.clear_user_list()
+        self.update_user_list_non_threading()
         self.event_jmp_back()
 
     def event_select_image(self, *_):
@@ -135,13 +145,24 @@ class WindowHandler:
         self.update_user_image()
 
     def event_transfer(self, *_):
+        """
+        Should be called when user clicked button to buy items.
+        """
+
         print(self.selected_user, self.selected_food, self.selected_amount)
         if self.selected_user is not None and self.selected_food is not None:
             self.database.buy_items(self.selected_user.id, self.selected_food.id, self.selected_amount)
-            for c in self.user_list:
-                self.user_list.remove(c)
+            self.clear_user_list()
             self.update_user_list_non_threading()
             self.update_user_balance_labels()
+
+    def clear_user_list(self, *_):
+        """
+        Clears user list. (Don't use if another thread may be accessing user list.)
+        """
+
+        for c in self.user_list:
+            self.user_list.remove(c)
 
     @use_threading
     def update_user_list(self, *_):
@@ -473,7 +494,7 @@ class WindowHandler:
 
         self.edit_nick_entry = entry
         gtk_element_editor.change_label_text(entry,
-                                             self.selected_user.nick if (self.selected_user.nick is not None) else "")
+                                             self.user_to_edit.nick if (self.user_to_edit.nick is not None) else "")
 
     def register_edit_real_name(self, entry, *_):
         """
@@ -483,7 +504,7 @@ class WindowHandler:
 
         self.edit_name_entry = entry
         gtk_element_editor.change_label_text(entry,
-                                             self.selected_user.name if (self.selected_user.name is not None) else "")
+                                             self.user_to_edit.name if (self.user_to_edit.name is not None) else "")
 
     def event_jmp_transaction(self, *_):
         """
@@ -575,6 +596,7 @@ class WindowHandler:
         Switches current window to profile editing window.
         """
 
+        self.user_to_edit = self.selected_user
         if self.selected_user is not None:
             self.window_history.append(self.actual_window)
             self.actual_window.hide()
