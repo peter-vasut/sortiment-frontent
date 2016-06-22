@@ -117,7 +117,7 @@ def create_font_from_description(desc):
     return Pango.font_description_from_string(desc)
 
 
-def change_label_text(label, new_text):
+def change_label_entry_text(label, new_text):
     """
     Changes text of label.
 
@@ -150,7 +150,7 @@ def change_button_label_text(widget, new_text):
     if isinstance(widget, Gtk.Button):
         change_button_text(widget, new_text)
     if isinstance(widget, Gtk.Label):
-        change_label_text(widget, new_text)
+        change_label_entry_text(widget, new_text)
 
 
 def get_text_from_button(button):

@@ -144,3 +144,17 @@ def create_window_edit_profile(handler, show_all=True, fullscreen=True):
 
     return create_window("layouts/profile_edit_window.glade", handler, show_all=show_all, should_quit=False,
                          relative_filenames=True, fullscreen=fullscreen)
+
+
+def create_window_edit_food(handler, show_all=True, fullscreen=True):
+    """
+    Creates window displaying info about food. It also allows modifying data.
+
+    :param handler: Sortiment WindowHandler or None
+    :param show_all: True if window should be shown immediately
+    :param fullscreen: True if window should be in full screen mode by default
+    :return: ner Window
+    """
+
+    return create_window("layouts/item_edit_window.glade", handler, show_all=show_all, should_quit=False,
+                         relative_filenames=True, fullscreen=fullscreen)

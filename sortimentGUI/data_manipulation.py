@@ -131,3 +131,14 @@ def expand_username(text):
 
 def compute_scaling_factor(awidth, aheight, standard_window_width, standard_window_height):
     return sqrt((min(awidth, aheight) ** 2) / (standard_window_width * standard_window_height))
+
+
+def price_string_to_int(s):
+    seppos = s.find(".")
+    if seppos < 0:
+        seppos = s.find(",")
+    if seppos >= 0:
+        r = s[:seppos] + s[seppos + 1:seppos + 3]
+    else:
+        r = s
+    return int(r)

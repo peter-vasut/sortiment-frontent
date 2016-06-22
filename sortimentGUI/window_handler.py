@@ -3,7 +3,7 @@ from time import sleep
 
 import os
 import re
-from database import User
+from database import User, Item
 from . import data_manipulation
 from . import gtk_element_editor
 from . import window_creator
@@ -19,6 +19,7 @@ class WindowHandler:
     selected_food = None
     selected_user = None
     user_to_edit = None
+    food_to_edit = None
     selected_amount = 0
     selected_amount_entry = None
     image_size = 75
@@ -41,6 +42,8 @@ class WindowHandler:
     filter_clear_button = None
     edit_nick_entry = None
     edit_name_entry = None
+    edit_food_name_entry = None
+    edit_food_price_entry = None
 
     def register_user_image(self, image):
         """
@@ -93,6 +96,27 @@ class WindowHandler:
         self.food_list = food_list
         # todo: add food filter
         self.update_food_list()
+
+    def register_edit_food_price(self, edit):
+        """
+        Function used to register `Gtk.Entry` containing new price of food.
+
+        :param edit: Gtk.Entry
+        """
+
+        self.edit_food_price_entry = edit
+        gtk_element_editor.change_label_entry_text(edit, data_manipulation.get_item_price_printable(self.selected_food,
+                                                                                                    currency=""))
+
+    def register_edit_food_name(self, edit):
+        """
+        Function used to register `Gtk.Entry` containing new name for food.
+
+        :param edit: Gtk.Entry
+        """
+
+        self.edit_food_name_entry = edit
+        gtk_element_editor.change_label_entry_text(edit, data_manipulation.get_item_printable_name(self.selected_food))
 
     def event_user_selected(self, *args):
         """
@@ -154,12 +178,31 @@ class WindowHandler:
         Should be called when user clicked button to buy items.
         """
 
-        print(self.selected_user, self.selected_food, self.selected_amount)
         if self.selected_user is not None and self.selected_food is not None:
             self.database.buy_items(self.selected_user.id, self.selected_food.id, self.selected_amount)
             self.clear_user_list()
             self.update_user_list_non_threading()
             self.update_user_balance_labels()
+
+    def event_save_food(self, *_):
+        """
+        Modifies item according to `edit_food_name_entry` and `edit_food_price_entry`.
+        """
+
+        new_food = True if self.food_to_edit is None else False
+        if new_food:
+            self.user_to_edit = Item()
+        self.food_to_edit.name = gtk_element_editor.get_text_from_entry(self.edit_food_name_entry)
+        pricestring = gtk_element_editor.get_text_from_entry(self.edit_food_price_entry)
+        self.food_to_edit.price = data_manipulation.price_string_to_int(pricestring)
+        if new_food:
+            self.database.add_item(self.food_to_edit)
+        else:
+            self.database.edit_item(self.food_to_edit)
+        self.clear_food_list()
+        self.update_food_list_non_threading()
+        self.update_selected_food_all()
+        self.event_jmp_back()
 
     def clear_user_list(self, *_):
         """
@@ -169,21 +212,32 @@ class WindowHandler:
         for c in self.user_list:
             self.user_list.remove(c)
 
+    def clear_food_list(self, *_):
+        """
+        Clears food list. (Don't use if another thread may be accessing food list.)
+        """
+
+        for c in self.food_list:
+            self.food_list.remove(c)
+
     @use_threading
     def update_user_list(self, *_):
+        """
+        Updates user_list with new data from database in new thread.
+        """
+
         self.update_user_list_non_threading()
 
     @use_spinner
     def update_user_list_non_threading(self, *_):
         """
-        Updates user user_list with new data from database.
+        Updates user_list with new data from database.
         """
 
         user_list = self.database.get_user()
         for user in user_list:
             row = gtk_element_editor.create_user_row(user, self.event_user_selected, self.register_dynamic_font)
             self.user_list.add(row)
-            print(dir(self.user_list))
         self.user_list.show_all()
         if self.selected_user is not None:
             for user in user_list:
@@ -193,10 +247,16 @@ class WindowHandler:
             self.selected_user = None
 
     @use_threading
-    @use_spinner
     def update_food_list(self, *_):
         """
-        Updates food food_list with new data from database.
+        Updates food_list with new data from database in new thread.
+        """
+        self.update_food_list_non_threading()
+
+    @use_spinner
+    def update_food_list_non_threading(self, *_):
+        """
+        Updates food_list with new data from database.
         """
 
         food_list = self.database.get_item(None)
@@ -230,8 +290,8 @@ class WindowHandler:
         """
 
         for user_label in self.user_name_label_list:
-            gtk_element_editor.change_label_text(user_label,
-                                                 data_manipulation.get_user_printable_name(self.selected_user))
+            gtk_element_editor.change_label_entry_text(user_label,
+                                                       data_manipulation.get_user_printable_name(self.selected_user))
 
     def update_user_balance_labels(self, *_):
         """
@@ -239,8 +299,8 @@ class WindowHandler:
         """
 
         for user_label in self.user_balance_label_list:
-            gtk_element_editor.change_label_text(user_label,
-                                                 data_manipulation.get_user_balance_printable(self.selected_user))
+            gtk_element_editor.change_label_entry_text(user_label,
+                                                       data_manipulation.get_user_balance_printable(self.selected_user))
 
     def update_selected_user_all(self, *_):
         """
@@ -258,11 +318,11 @@ class WindowHandler:
         """
 
         for numpad_label in self.numpad_value_label_list:
-            gtk_element_editor.change_label_text(numpad_label,
-                                                 data_manipulation.format_money(self.current_numpad_value))
+            gtk_element_editor.change_label_entry_text(numpad_label,
+                                                       data_manipulation.format_money(self.current_numpad_value))
 
     def update_amount_entry(self, *_):
-        gtk_element_editor.change_label_text(self.selected_amount_entry, str(self.selected_amount))
+        gtk_element_editor.change_label_entry_text(self.selected_amount_entry, str(self.selected_amount))
 
     def update_food_image(self, *_, standard_window_width=640, standard_window_height=320):
         """
@@ -290,8 +350,8 @@ class WindowHandler:
         """
 
         for food_price_label in self.food_price_label_list:
-            gtk_element_editor.change_label_text(food_price_label,
-                                                 data_manipulation.get_item_price_printable(self.selected_food))
+            gtk_element_editor.change_label_entry_text(food_price_label,
+                                                       data_manipulation.get_item_price_printable(self.selected_food))
 
     def update_food_name_labels(self, *_):
         """
@@ -299,8 +359,8 @@ class WindowHandler:
         """
 
         for food_label in self.food_name_label_list:
-            gtk_element_editor.change_label_text(food_label,
-                                                 data_manipulation.get_item_printable_name(self.selected_food))
+            gtk_element_editor.change_label_entry_text(food_label,
+                                                       data_manipulation.get_item_printable_name(self.selected_food))
 
     def update_selected_food_all(self, *_):
         """
@@ -343,7 +403,7 @@ class WindowHandler:
         names = data_manipulation.get_all_names(row.user)
         for name in names:
             name = data_manipulation.normalize_string(name)
-            if self.regex_obj.match(name) is not None:
+            if self.regex_obj.search(name) is not None:
                 return True
         return False
 
@@ -544,8 +604,9 @@ class WindowHandler:
         """
 
         self.edit_nick_entry = entry
-        gtk_element_editor.change_label_text(entry,
-                                             self.user_to_edit.nick if (self.user_to_edit.nick is not None) else "")
+        gtk_element_editor.change_label_entry_text(entry,
+                                                   self.user_to_edit.nick if (self.user_to_edit.nick is not None)
+                                                   else "")
 
     def register_edit_real_name(self, entry, *_):
         """
@@ -554,8 +615,9 @@ class WindowHandler:
         """
 
         self.edit_name_entry = entry
-        gtk_element_editor.change_label_text(entry,
-                                             self.user_to_edit.name if (self.user_to_edit.name is not None) else "")
+        gtk_element_editor.change_label_entry_text(entry,
+                                                   self.user_to_edit.name if (self.user_to_edit.name is not None)
+                                                   else "")
 
     def register_food_image(self, image, *_):
         self.food_image_list.append(image)
@@ -578,6 +640,17 @@ class WindowHandler:
         self.window_history.append(self.actual_window)
         self.actual_window.hide()
         self.actual_window = window_creator.create_window_transaction(self, self.database)
+
+    def event_jmp_edit_food(self, *_):
+        """
+        Switches current window to food editing window.
+        """
+
+        self.food_to_edit = self.selected_food
+        if self.food_to_edit is not None:
+            self.window_history.append(self.actual_window)
+            self.actual_window.hide()
+            self.actual_window = window_creator.create_window_edit_food(self)
 
     def event_numpad(self, num):
         """

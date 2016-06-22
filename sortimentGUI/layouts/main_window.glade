@@ -303,6 +303,8 @@
                   <object class="GtkEventBox" id="eventbox2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <signal name="button-press-event" handler="event_jmp_edit_food" swapped="no"/>
+                    <signal name="realize" handler="register_dynamic_scaling" swapped="no"/>
                     <child>
                       <object class="GtkBox" id="food_item_box">
                         <property name="visible">True</property>
