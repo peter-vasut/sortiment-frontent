@@ -63,6 +63,21 @@
 <div class="section" id="module-sortimentGUI.data_manipulation">
 <span id="sortimentgui-data-manipulation-module"></span><h2>sortimentGUI.data_manipulation module<a class="headerlink" href="#module-sortimentGUI.data_manipulation" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
+<dt id="sortimentGUI.data_manipulation.compute_scaling_factor">
+<tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">compute_scaling_factor</tt><big>(</big><em>awidth</em>, <em>aheight</em>, <em>standard_window_width</em>, <em>standard_window_height</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#compute_scaling_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.compute_scaling_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sortimentGUI.data_manipulation.expand_username">
+<tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">expand_username</tt><big>(</big><em>text</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#expand_username"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.expand_username" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sortimentGUI.data_manipulation.format_money">
+<tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">format_money</tt><big>(</big><em>number</em>, <em>separator='</em>, <em>'</em>, <em>currency='€'</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#format_money"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.format_money" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="sortimentGUI.data_manipulation.get_all_names">
 <tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">get_all_names</tt><big>(</big><em>obj</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#get_all_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.get_all_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Should return all possible names for object, for example real name of user or food, nick...</p>
@@ -79,8 +94,74 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="sortimentGUI.data_manipulation.get_item_price_printable">
+<tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">get_item_price_printable</tt><big>(</big><em>item</em>, <em>currency='€'</em>, <em>errstring='???'</em>, <em>sep='</em>, <em>'</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#get_item_price_printable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.get_item_price_printable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets price of item</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>item</strong> &#8211; Item object</li>
+<li><strong>currency</strong> &#8211; string appended to balance</li>
+<li><strong>errstring</strong> &#8211; string to return if balance could not be resolved</li>
+<li><strong>sep</strong> &#8211; separator for decimal places</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">returns item price, or none on error</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sortimentGUI.data_manipulation.get_item_printable_name">
+<tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">get_item_printable_name</tt><big>(</big><em>item</em>, <em>errstring='???'</em>, <em>pricetag=False</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#get_item_printable_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.get_item_printable_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets name of item in printable form.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>item</strong> &#8211; item object</li>
+<li><strong>errstring</strong> &#8211; string to return if name could not be resolved</li>
+<li><strong>pricetag</strong> &#8211; True if price should be included in name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">item.name if exists, errstring if name is missing</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sortimentGUI.data_manipulation.get_universal_printable_name">
+<tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">get_universal_printable_name</tt><big>(</big><em>item</em>, <em>errstring='???'</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#get_universal_printable_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.get_universal_printable_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets name of user or food in printable form.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>item</strong> &#8211; User or Item object</li>
+<li><strong>errstring</strong> &#8211; string to return if name could not be resolved</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">item.nick if exists, item.name otherwise (if exists), errstring if nick and name are missing</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="sortimentGUI.data_manipulation.get_user_balance_printable">
-<tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">get_user_balance_printable</tt><big>(</big><em>user</em>, <em>currency=''</em>, <em>errstring='???'</em>, <em>sep='</em>, <em>'</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#get_user_balance_printable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.get_user_balance_printable" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">get_user_balance_printable</tt><big>(</big><em>user</em>, <em>currency='€'</em>, <em>errstring='???'</em>, <em>sep='</em>, <em>'</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#get_user_balance_printable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.get_user_balance_printable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets balance of user</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -115,7 +196,7 @@
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">user[&#8216;nick&#8217;] if exists, user[&#8216;name&#8217;] otherwise (if exists), errstring if &#8216;nick&#8217; and &#8216;name&#8217; are missing</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">user.nick if exists, user.name otherwise (if exists), errstring if nick and name are missing</p>
 </td>
 </tr>
 </tbody>
@@ -125,6 +206,11 @@
 <dl class="function">
 <dt id="sortimentGUI.data_manipulation.normalize_string">
 <tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">normalize_string</tt><big>(</big><em>s</em>, <em>lowercase=True</em>, <em>special=True</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#normalize_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.normalize_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sortimentGUI.data_manipulation.price_string_to_int">
+<tt class="descclassname">sortimentGUI.data_manipulation.</tt><tt class="descname">price_string_to_int</tt><big>(</big><em>s</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/data_manipulation.html#price_string_to_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.data_manipulation.price_string_to_int" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -285,8 +371,8 @@ It can be used if program crashes before main loop is started elsewhere.</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="sortimentGUI.gtk_element_editor.change_label_text">
-<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">change_label_text</tt><big>(</big><em>label</em>, <em>new_text</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#change_label_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.change_label_text" title="Permalink to this definition">¶</a></dt>
+<dt id="sortimentGUI.gtk_element_editor.change_label_entry_text">
+<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">change_label_entry_text</tt><big>(</big><em>label</em>, <em>new_text</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#change_label_entry_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.change_label_entry_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Changes text of label.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -308,6 +394,48 @@ It can be used if program crashes before main loop is started elsewhere.</li>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="sortimentGUI.gtk_element_editor.create_event_button">
+<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_event_button</tt><big>(</big><em>event_handler</em>, <em>text</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_event_button"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_event_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates new button and sets up on_clicked event handler.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>event_handler</strong> &#8211; function to be linked as buttons event handler</li>
+<li><strong>text</strong> &#8211; button label</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><cite>Gtk.Button</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sortimentGUI.gtk_element_editor.create_event_button_row">
+<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_event_button_row</tt><big>(</big><em>event_handler</em>, <em>text</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_event_button_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_event_button_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates new row containing event button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>event_handler</strong> &#8211; function to be linked as buttons event handler</li>
+<li><strong>text</strong> &#8211; button label</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.create_font_from_description">
 <tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_font_from_description</tt><big>(</big><em>desc</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_font_from_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_font_from_description" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates Pango font from string description.</p>
@@ -323,7 +451,7 @@ It can be used if program crashes before main loop is started elsewhere.</li>
 
 <dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.create_food_row">
-<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_food_row</tt><big>(</big><em>food</em>, <em>selection_callback</em>, <em>register_dynamic_font_callback=None</em>, <em>image_height=50</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_food_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_food_row" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_food_row</tt><big>(</big><em>food</em>, <em>selection_callback</em>, <em>register_dynamic_font_callback=None</em>, <em>image_height=50</em>, <em>display_string=None</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_food_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_food_row" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates ListBoxRow to display food name and image.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -334,6 +462,7 @@ It can be used if program crashes before main loop is started elsewhere.</li>
 <li><strong>selection_callback</strong> &#8211; function to be called when user is clicked</li>
 <li><strong>register_dynamic_font_callback</strong> &#8211; function to be called to register resizable font inside row (if needed)</li>
 <li><strong>image_height</strong> &#8211; height of image of food</li>
+<li><strong>display_string</strong> &#8211; String to override food name or None</li>
 </ul>
 </td>
 </tr>
@@ -346,7 +475,7 @@ It can be used if program crashes before main loop is started elsewhere.</li>
 
 <dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.create_user_row">
-<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_user_row</tt><big>(</big><em>user</em>, <em>selection_callback=None</em>, <em>register_dynamic_font_callback=None</em>, <em>image_height=50</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_user_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_user_row" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">create_user_row</tt><big>(</big><em>user</em>, <em>selection_callback=None</em>, <em>register_dynamic_font_callback=None</em>, <em>image_height=50</em>, <em>display_string=None</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#create_user_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.create_user_row" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates ListBoxRow to display user nick or name and image.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -357,6 +486,7 @@ It can be used if program crashes before main loop is started elsewhere.</li>
 <li><strong>selection_callback</strong> &#8211; function to be called when user is clicked</li>
 <li><strong>register_dynamic_font_callback</strong> &#8211; callback for registering label of row</li>
 <li><strong>image_height</strong> &#8211; height of profile image in pixels</li>
+<li><strong>display_string</strong> &#8211; String to override user name or None</li>
 </ul>
 </td>
 </tr>
@@ -374,6 +504,11 @@ It can be used if program crashes before main loop is started elsewhere.</li>
 :param button: Gtk.Button
 :return: label of button (string)</p>
 </dd></dl>
+
+<dl class="function">
+<dt id="sortimentGUI.gtk_element_editor.get_text_from_entry">
+<tt class="descclassname">sortimentGUI.gtk_element_editor.</tt><tt class="descname">get_text_from_entry</tt><big>(</big><em>entry</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/gtk_element_editor.html#get_text_from_entry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.gtk_element_editor.get_text_from_entry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="function">
 <dt id="sortimentGUI.gtk_element_editor.image_set_missing">
@@ -474,6 +609,50 @@ It can be used if program crashes before main loop is started elsewhere.</li>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">returns new window</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sortimentGUI.window_creator.create_window_edit_food">
+<tt class="descclassname">sortimentGUI.window_creator.</tt><tt class="descname">create_window_edit_food</tt><big>(</big><em>handler</em>, <em>show_all=True</em>, <em>fullscreen=True</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_creator.html#create_window_edit_food"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_creator.create_window_edit_food" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates window displaying info about food. It also allows modifying data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>handler</strong> &#8211; Sortiment WindowHandler or None</li>
+<li><strong>show_all</strong> &#8211; True if window should be shown immediately</li>
+<li><strong>fullscreen</strong> &#8211; True if window should be in full screen mode by default</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ner Window</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sortimentGUI.window_creator.create_window_edit_profile">
+<tt class="descclassname">sortimentGUI.window_creator.</tt><tt class="descname">create_window_edit_profile</tt><big>(</big><em>handler</em>, <em>show_all=True</em>, <em>fullscreen=True</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_creator.html#create_window_edit_profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_creator.create_window_edit_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates window displaying info about user. It also alows modifying data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fullscreen</strong> &#8211; True if window should be in full screen mode by default</li>
+<li><strong>handler</strong> &#8211; Sortiment WindowHandler or None</li>
+<li><strong>show_all</strong> &#8211; True if window should be shown immediately</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">new Window</p>
 </td>
 </tr>
 </tbody>
@@ -678,6 +857,28 @@ It can be used if program crashes before main loop is started elsewhere.</li>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.clear_food_list">
+<tt class="descname">clear_food_list</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.clear_food_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.clear_food_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears food list. (Don&#8217;t use if another thread may be accessing food list.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.clear_user_list">
+<tt class="descname">clear_user_list</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.clear_user_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.clear_user_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears user list. (Don&#8217;t use if another thread may be accessing user list.)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.creating_new_food">
+<tt class="descname">creating_new_food</tt><em class="property"> = True</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.creating_new_food" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.creating_new_user">
+<tt class="descname">creating_new_user</tt><em class="property"> = True</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.creating_new_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="sortimentGUI.window_handler.WindowHandler.current_numpad_value">
 <tt class="descname">current_numpad_value</tt><em class="property"> = 0</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.current_numpad_value" title="Permalink to this definition">¶</a></dt>
@@ -701,6 +902,26 @@ It can be used if program crashes before main loop is started elsewhere.</li>
 <dl class="attribute">
 <dt id="sortimentGUI.window_handler.WindowHandler.dynamic_scaling_list">
 <tt class="descname">dynamic_scaling_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.dynamic_scaling_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.edit_food_name_entry">
+<tt class="descname">edit_food_name_entry</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.edit_food_name_entry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.edit_food_price_entry">
+<tt class="descname">edit_food_price_entry</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.edit_food_price_entry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.edit_name_entry">
+<tt class="descname">edit_name_entry</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.edit_name_entry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.edit_nick_entry">
+<tt class="descname">edit_nick_entry</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.edit_nick_entry" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -759,6 +980,30 @@ Should be called on filter button click.</p>
 <dt id="sortimentGUI.window_handler.WindowHandler.event_jmp_back">
 <tt class="descname">event_jmp_back</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.event_jmp_back"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.event_jmp_back" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switches window to previous window on window_history.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.event_jmp_edit_food">
+<tt class="descname">event_jmp_edit_food</tt><big>(</big><em>*_</em>, <em>new=False</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.event_jmp_edit_food"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.event_jmp_edit_food" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switches current window to food editing window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.event_jmp_edit_user">
+<tt class="descname">event_jmp_edit_user</tt><big>(</big><em>*_</em>, <em>new=False</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.event_jmp_edit_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.event_jmp_edit_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switches current window to profile editing window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.event_jmp_new_food">
+<tt class="descname">event_jmp_new_food</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.event_jmp_new_food"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.event_jmp_new_food" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens window for creating new food.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.event_jmp_new_user">
+<tt class="descname">event_jmp_new_user</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.event_jmp_new_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.event_jmp_new_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens window for creating new user.</p>
 </dd></dl>
 
 <dl class="method">
@@ -846,6 +1091,31 @@ Should be called on filter button click.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.event_save_food">
+<tt class="descname">event_save_food</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.event_save_food"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.event_save_food" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modifies item according to <cite>edit_food_name_entry</cite> and <cite>edit_food_price_entry</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.event_save_profile">
+<tt class="descname">event_save_profile</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.event_save_profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.event_save_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modifies user according to <cite>edit_nick_entry</cite> and <cite>edit_name_entry</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.event_select_image">
+<tt class="descname">event_select_image</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.event_select_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.event_select_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lunches external command found in first line of config and finds last edited image in directory specified in
+second line. Then it sets this image as user image.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.event_transfer">
+<tt class="descname">event_transfer</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.event_transfer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.event_transfer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should be called when user clicked button to buy items.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="sortimentGUI.window_handler.WindowHandler.event_user_selected">
 <tt class="descname">event_user_selected</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.event_user_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.event_user_selected" title="Permalink to this definition">¶</a></dt>
 <dd><p>This handler should be called when user is selected.</p>
@@ -865,13 +1135,33 @@ Should be called on filter button click.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.food_image_list">
+<tt class="descname">food_image_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.food_image_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="sortimentGUI.window_handler.WindowHandler.food_list">
 <tt class="descname">food_list</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.food_list" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.food_name_label_list">
+<tt class="descname">food_name_label_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.food_name_label_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.food_price_label_list">
+<tt class="descname">food_price_label_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.food_price_label_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.food_to_edit">
+<tt class="descname">food_to_edit</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.food_to_edit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="sortimentGUI.window_handler.WindowHandler.image_size">
-<tt class="descname">image_size</tt><em class="property"> = 300</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.image_size" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">image_size</tt><em class="property"> = 75</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.image_size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -922,6 +1212,48 @@ Should be called on filter button click.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_edit_food_name">
+<tt class="descname">register_edit_food_name</tt><big>(</big><em>edit</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_edit_food_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_edit_food_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to register <cite>Gtk.Entry</cite> containing new name for food.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>edit</strong> &#8211; Gtk.Entry</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_edit_food_price">
+<tt class="descname">register_edit_food_price</tt><big>(</big><em>edit</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_edit_food_price"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_edit_food_price" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to register <cite>Gtk.Entry</cite> containing new price of food.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>edit</strong> &#8211; Gtk.Entry</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_edit_nick">
+<tt class="descname">register_edit_nick</tt><big>(</big><em>entry</em>, <em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_edit_nick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_edit_nick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to register Gtk.Entry for new nick of user.
+:param entry: Gtk.Entry</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_edit_real_name">
+<tt class="descname">register_edit_real_name</tt><big>(</big><em>entry</em>, <em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_edit_real_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_edit_real_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to register Gtk.Entry for new name of user.
+:param entry: Gtk.Entry</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="sortimentGUI.window_handler.WindowHandler.register_filter_clear_button">
 <tt class="descname">register_filter_clear_button</tt><big>(</big><em>button</em>, <em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_filter_clear_button"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_filter_clear_button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to register clear button.</p>
@@ -936,6 +1268,11 @@ Should be called on filter button click.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_food_image">
+<tt class="descname">register_food_image</tt><big>(</big><em>image</em>, <em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_food_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_food_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="sortimentGUI.window_handler.WindowHandler.register_food_list">
 <tt class="descname">register_food_list</tt><big>(</big><em>food_list</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_food_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_food_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function used to register graphical list of food.</p>
@@ -948,6 +1285,16 @@ Should be called on filter button click.</p>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_food_name">
+<tt class="descname">register_food_name</tt><big>(</big><em>label</em>, <em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_food_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_food_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.register_food_price">
+<tt class="descname">register_food_price</tt><big>(</big><em>label</em>, <em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.register_food_price"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.register_food_price" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sortimentGUI.window_handler.WindowHandler.register_numpad_value">
@@ -1105,9 +1452,33 @@ it is not set, returning to default window won&#8217;t work.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.update_food_image">
+<tt class="descname">update_food_image</tt><big>(</big><em>*_</em>, <em>standard_window_width=640</em>, <em>standard_window_height=320</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_food_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_food_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates images of selected food.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="sortimentGUI.window_handler.WindowHandler.update_food_list">
 <tt class="descname">update_food_list</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_food_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_food_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates food food_list with new data from database.</p>
+<dd><p>Updates food_list with new data from database in new thread.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.update_food_list_non_threading">
+<tt class="descname">update_food_list_non_threading</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_food_list_non_threading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_food_list_non_threading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates food_list with new data from database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.update_food_name_labels">
+<tt class="descname">update_food_name_labels</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_food_name_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_food_name_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates name labels of selected food.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.update_food_price_labels">
+<tt class="descname">update_food_price_labels</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_food_price_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_food_price_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates labels containing price of selected food.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1118,27 +1489,39 @@ It can be for example used when numpad button is clicked.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.update_selected_food_all">
+<tt class="descname">update_selected_food_all</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_selected_food_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_selected_food_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates all widgets containing information about selected food.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="sortimentGUI.window_handler.WindowHandler.update_selected_user_all">
 <tt class="descname">update_selected_user_all</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_selected_user_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_selected_user_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates everything needed when user is selected.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sortimentGUI.window_handler.WindowHandler.update_user_balance_label">
-<tt class="descname">update_user_balance_label</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_user_balance_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_user_balance_label" title="Permalink to this definition">¶</a></dt>
+<dt id="sortimentGUI.window_handler.WindowHandler.update_user_balance_labels">
+<tt class="descname">update_user_balance_labels</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_user_balance_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_user_balance_labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates labels containing balance of selected user.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="sortimentGUI.window_handler.WindowHandler.update_user_image">
-<tt class="descname">update_user_image</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_user_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_user_image" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">update_user_image</tt><big>(</big><em>*_</em>, <em>standard_window_width=640</em>, <em>standard_window_height=320</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_user_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_user_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates images of selected user.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="sortimentGUI.window_handler.WindowHandler.update_user_list">
 <tt class="descname">update_user_list</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_user_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_user_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates user user_list with new data from database.</p>
+<dd><p>Updates user_list with new data from database in new thread.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sortimentGUI.window_handler.WindowHandler.update_user_list_non_threading">
+<tt class="descname">update_user_list_non_threading</tt><big>(</big><em>*_</em><big>)</big><a class="reference internal" href="_modules/sortimentGUI/window_handler.html#WindowHandler.update_user_list_non_threading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.update_user_list_non_threading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates user_list with new data from database.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1181,6 +1564,11 @@ It can be for example used when numpad button is clicked.</p>
 <dl class="attribute">
 <dt id="sortimentGUI.window_handler.WindowHandler.user_name_label_list">
 <tt class="descname">user_name_label_list</tt><em class="property"> = []</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.user_name_label_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sortimentGUI.window_handler.WindowHandler.user_to_edit">
+<tt class="descname">user_to_edit</tt><em class="property"> = None</em><a class="headerlink" href="#sortimentGUI.window_handler.WindowHandler.user_to_edit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">

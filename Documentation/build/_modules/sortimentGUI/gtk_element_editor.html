@@ -53,7 +53,7 @@
 <span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
 <span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Pango</span>
 
-<span class="kn">from</span> <span class="nn">data_manipulation</span> <span class="kn">import</span> <span class="n">get_user_printable_name</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">data_manipulation</span>
 
 
 <div class="viewcode-block" id="create_button"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_button">[docs]</a><span class="k">def</span> <span class="nf">create_button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
@@ -61,7 +61,7 @@
 
 </div>
 <div class="viewcode-block" id="create_user_row"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_user_row">[docs]</a><span class="k">def</span> <span class="nf">create_user_row</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">selection_callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">register_dynamic_font_callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                    <span class="n">image_height</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>  <span class="c"># todo: request image size</span>
+                    <span class="n">image_height</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">display_string</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>  <span class="c"># todo: request image size</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates ListBoxRow to display user nick or name and image.</span>
 
@@ -69,16 +69,19 @@
 <span class="sd">    :param selection_callback: function to be called when user is clicked</span>
 <span class="sd">    :param register_dynamic_font_callback: callback for registering label of row</span>
 <span class="sd">    :param image_height: height of profile image in pixels</span>
+<span class="sd">    :param display_string: String to override user name or None</span>
 <span class="sd">    :return: new Gtk.ListBoxRow</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="k">if</span> <span class="n">display_string</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">display_string</span> <span class="o">=</span> <span class="n">data_manipulation</span><span class="o">.</span><span class="n">get_universal_printable_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
     <span class="n">row</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ListBoxRow</span><span class="p">()</span>
     <span class="n">event_box</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">EventBox</span><span class="p">()</span>
     <span class="n">hbox</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="n">Gtk</span><span class="o">.</span><span class="n">Orientation</span><span class="o">.</span><span class="n">HORIZONTAL</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">get_user_printable_name</span><span class="p">(</span><span class="n">user</span><span class="p">),</span> <span class="n">xalign</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">display_string</span><span class="p">,</span> <span class="n">xalign</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Image</span><span class="p">()</span>
     <span class="n">image</span><span class="o">.</span><span class="n">set_from_icon_name</span><span class="p">(</span><span class="s">&quot;gtk-missing-image&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-    <span class="n">load_image_from_file</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;photo&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span> <span class="n">image_height</span><span class="p">,</span> <span class="n">image_height</span><span class="p">)</span>
+    <span class="n">load_image_from_file</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">photo</span><span class="p">,</span> <span class="n">image_height</span><span class="p">,</span> <span class="n">image_height</span><span class="p">)</span>
     <span class="n">hbox</span><span class="o">.</span><span class="n">pack_start</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">hbox</span><span class="o">.</span><span class="n">pack_start</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">event_box</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">hbox</span><span class="p">)</span>
@@ -91,7 +94,8 @@
     <span class="k">return</span> <span class="n">row</span>
 
 </div>
-<div class="viewcode-block" id="create_food_row"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_food_row">[docs]</a><span class="k">def</span> <span class="nf">create_food_row</span><span class="p">(</span><span class="n">food</span><span class="p">,</span> <span class="n">selection_callback</span><span class="p">,</span> <span class="n">register_dynamic_font_callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">image_height</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<div class="viewcode-block" id="create_food_row"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_food_row">[docs]</a><span class="k">def</span> <span class="nf">create_food_row</span><span class="p">(</span><span class="n">food</span><span class="p">,</span> <span class="n">selection_callback</span><span class="p">,</span>
+                    <span class="n">register_dynamic_font_callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">image_height</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">display_string</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates ListBoxRow to display food name and image.</span>
 
@@ -99,11 +103,15 @@
 <span class="sd">    :param selection_callback: function to be called when user is clicked</span>
 <span class="sd">    :param register_dynamic_font_callback: function to be called to register resizable font inside row (if needed)</span>
 <span class="sd">    :param image_height: height of image of food</span>
+<span class="sd">    :param display_string: String to override food name or None</span>
 <span class="sd">    :return: new ListBoxRow according to user data and callback function</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="k">if</span> <span class="n">display_string</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">display_string</span> <span class="o">=</span> <span class="n">data_manipulation</span><span class="o">.</span><span class="n">get_item_printable_name</span><span class="p">(</span><span class="n">food</span><span class="p">,</span> <span class="n">pricetag</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">create_user_row</span><span class="p">(</span><span class="n">food</span><span class="p">,</span> <span class="n">selection_callback</span><span class="p">,</span> <span class="n">register_dynamic_font_callback</span><span class="p">,</span>
-                           <span class="n">image_height</span><span class="p">)</span>  <span class="c"># todo: create different row type for food with price tag and edit button</span>
+                           <span class="n">image_height</span><span class="p">,</span>
+                           <span class="n">display_string</span><span class="o">=</span><span class="n">display_string</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="set_listbox_filter"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.set_listbox_filter">[docs]</a><span class="k">def</span> <span class="nf">set_listbox_filter</span><span class="p">(</span><span class="n">listbox</span><span class="p">,</span> <span class="n">filter_function</span><span class="p">):</span>
@@ -127,6 +135,10 @@
 <span class="sd">    :return: True if successful, False otherwise</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">pixbuf</span> <span class="o">=</span> <span class="n">GdkPixbuf</span><span class="o">.</span><span class="n">Pixbuf</span><span class="o">.</span><span class="n">new_from_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">scaled_buf</span> <span class="o">=</span> <span class="n">pixbuf</span><span class="o">.</span><span class="n">scale_simple</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">GdkPixbuf</span><span class="o">.</span><span class="n">InterpType</span><span class="o">.</span><span class="n">BILINEAR</span><span class="p">)</span>
@@ -155,7 +167,7 @@
     <span class="k">return</span> <span class="n">Pango</span><span class="o">.</span><span class="n">font_description_from_string</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="change_label_text"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.change_label_text">[docs]</a><span class="k">def</span> <span class="nf">change_label_text</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">new_text</span><span class="p">):</span>
+<div class="viewcode-block" id="change_label_entry_text"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.change_label_entry_text">[docs]</a><span class="k">def</span> <span class="nf">change_label_entry_text</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">new_text</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Changes text of label.</span>
 
@@ -188,7 +200,7 @@
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Button</span><span class="p">):</span>
         <span class="n">change_button_text</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">new_text</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Label</span><span class="p">):</span>
-        <span class="n">change_label_text</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">new_text</span><span class="p">)</span>
+        <span class="n">change_label_entry_text</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">new_text</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="get_text_from_button"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.get_text_from_button">[docs]</a><span class="k">def</span> <span class="nf">get_text_from_button</span><span class="p">(</span><span class="n">button</span><span class="p">):</span>
@@ -198,7 +210,39 @@
 <span class="sd">    :return: label of button (string)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">button</span><span class="o">.</span><span class="n">get_label</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">button</span><span class="o">.</span><span class="n">get_label</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="get_text_from_entry"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.get_text_from_entry">[docs]</a><span class="k">def</span> <span class="nf">get_text_from_entry</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">entry</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="create_event_button"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_event_button">[docs]</a><span class="k">def</span> <span class="nf">create_event_button</span><span class="p">(</span><span class="n">event_handler</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates new button and sets up on_clicked event handler.</span>
+
+<span class="sd">    :param event_handler: function to be linked as buttons event handler</span>
+<span class="sd">    :param text: button label</span>
+<span class="sd">    :return: `Gtk.Button`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">button</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">button</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;clicked&quot;</span><span class="p">,</span> <span class="n">event_handler</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">button</span>
+
+</div>
+<div class="viewcode-block" id="create_event_button_row"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.gtk_element_editor.create_event_button_row">[docs]</a><span class="k">def</span> <span class="nf">create_event_button_row</span><span class="p">(</span><span class="n">event_handler</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates new row containing event button.</span>
+
+<span class="sd">    :param event_handler: function to be linked as buttons event handler</span>
+<span class="sd">    :param text: button label</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">row</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ListBoxRow</span><span class="p">()</span>
+    <span class="n">row</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">create_event_button</span><span class="p">(</span><span class="n">event_handler</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">row</span></div>
 </pre></div>
 
           </div>

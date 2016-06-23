@@ -48,23 +48,62 @@
           <div class="body">
             
   <h1>Source code for sortimentGUI.data_manipulation</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">getpass</span>
 <span class="kn">import</span> <span class="nn">string</span>
 <span class="kn">import</span> <span class="nn">unicodedata</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+
+<span class="n">default_currency</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\u20AC</span><span class="s">&quot;</span>
 
 
+<div class="viewcode-block" id="get_universal_printable_name"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.data_manipulation.get_universal_printable_name">[docs]</a><span class="k">def</span> <span class="nf">get_universal_printable_name</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">errstring</span><span class="o">=</span><span class="s">&quot;???&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets name of user or food in printable form.</span>
+
+<span class="sd">    :param item: User or Item object</span>
+<span class="sd">    :param errstring: string to return if name could not be resolved</span>
+<span class="sd">    :return: item.nick if exists, item.name otherwise (if exists), errstring if nick and name are missing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="s">&quot;nick&quot;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_user_printable_name</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">errstring</span><span class="o">=</span><span class="n">errstring</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get_item_printable_name</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">errstring</span><span class="o">=</span><span class="n">errstring</span><span class="p">)</span>
+
+</div>
 <div class="viewcode-block" id="get_user_printable_name"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.data_manipulation.get_user_printable_name">[docs]</a><span class="k">def</span> <span class="nf">get_user_printable_name</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">errstring</span><span class="o">=</span><span class="s">&quot;???&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gets name of user in printable form.</span>
 
 <span class="sd">    :param user: user object</span>
 <span class="sd">    :param errstring: string to return if name could not be resolved</span>
-<span class="sd">    :return: user[&#39;nick&#39;] if exists, user[&#39;name&#39;] otherwise (if exists), errstring if &#39;nick&#39; and &#39;name&#39; are missing</span>
+<span class="sd">    :return: user.nick if exists, user.name otherwise (if exists), errstring if nick and name are missing</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">errstring</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">errstring</span>
+    <span class="k">return</span> <span class="n">user</span><span class="o">.</span><span class="n">nick</span> <span class="k">if</span> <span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">nick</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="k">else</span> <span class="n">errstring</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="get_user_balance_printable"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.data_manipulation.get_user_balance_printable">[docs]</a><span class="k">def</span> <span class="nf">get_user_balance_printable</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">currency</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">errstring</span><span class="o">=</span><span class="s">&quot;???&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="get_item_printable_name"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.data_manipulation.get_item_printable_name">[docs]</a><span class="k">def</span> <span class="nf">get_item_printable_name</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">errstring</span><span class="o">=</span><span class="s">&quot;???&quot;</span><span class="p">,</span> <span class="n">pricetag</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets name of item in printable form.</span>
+
+<span class="sd">    :param item: item object</span>
+<span class="sd">    :param errstring: string to return if name could not be resolved</span>
+<span class="sd">    :param pricetag: True if price should be included in name</span>
+<span class="sd">    :return: item.name if exists, errstring if name is missing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">errstring</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="k">else</span> <span class="n">errstring</span>
+    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">price</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">pricetag</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">get_item_price_printable</span><span class="p">(</span><span class="n">item</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+</div>
+<div class="viewcode-block" id="get_user_balance_printable"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.data_manipulation.get_user_balance_printable">[docs]</a><span class="k">def</span> <span class="nf">get_user_balance_printable</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">currency</span><span class="o">=</span><span class="n">default_currency</span><span class="p">,</span> <span class="n">errstring</span><span class="o">=</span><span class="s">&quot;???&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gets balance of user</span>
 
@@ -74,9 +113,27 @@
 <span class="sd">    :param sep: separator for decimal places</span>
 <span class="sd">    :return: returns user balance, or none on error</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s">&#39;balance&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">user</span><span class="p">:</span>
+
+    <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">user</span><span class="o">.</span><span class="n">balance</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">errstring</span>
-    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s">&#39;balance&#39;</span><span class="p">]</span> <span class="o">//</span> <span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="n">sep</span> <span class="o">+</span> <span class="s">&quot;{:02d}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s">&#39;balance&#39;</span><span class="p">]</span> <span class="o">%</span> <span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="n">currency</span>
+    <span class="k">return</span> <span class="n">format_money</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">balance</span><span class="p">,</span> <span class="n">sep</span><span class="p">,</span> <span class="n">currency</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_item_price_printable"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.data_manipulation.get_item_price_printable">[docs]</a><span class="k">def</span> <span class="nf">get_item_price_printable</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">currency</span><span class="o">=</span><span class="n">default_currency</span><span class="p">,</span> <span class="n">errstring</span><span class="o">=</span><span class="s">&quot;???&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets price of item</span>
+
+<span class="sd">    :param item: Item object</span>
+<span class="sd">    :param currency: string appended to balance</span>
+<span class="sd">    :param errstring: string to return if balance could not be resolved</span>
+<span class="sd">    :param sep: separator for decimal places</span>
+<span class="sd">    :return: returns item price, or none on error</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">errstring</span>
+    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">price</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">errstring</span>
+    <span class="k">return</span> <span class="n">format_money</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="n">sep</span><span class="p">,</span> <span class="n">currency</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="get_all_names"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.data_manipulation.get_all_names">[docs]</a><span class="k">def</span> <span class="nf">get_all_names</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
@@ -88,10 +145,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">res</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-    <span class="k">if</span> <span class="s">&quot;name&quot;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="s">&quot;nick&quot;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s">&quot;nick&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s">&quot;name&quot;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s">&quot;nick&quot;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">nick</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">nick</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">res</span>
 
@@ -108,7 +167,31 @@
         <span class="n">output</span> <span class="o">=</span> <span class="n">s</span>
     <span class="k">if</span> <span class="n">lowercase</span><span class="p">:</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">output</span></div>
+    <span class="k">return</span> <span class="n">output</span>
+
+</div>
+<div class="viewcode-block" id="format_money"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.data_manipulation.format_money">[docs]</a><span class="k">def</span> <span class="nf">format_money</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">currency</span><span class="o">=</span><span class="n">default_currency</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="s">&quot;-&quot;</span> <span class="k">if</span> <span class="n">number</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">//</span> <span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="s">&quot;{:02d}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="nb">abs</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">%</span> <span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="n">currency</span>
+
+</div>
+<div class="viewcode-block" id="expand_username"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.data_manipulation.expand_username">[docs]</a><span class="k">def</span> <span class="nf">expand_username</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%u</span><span class="s">ser%&quot;</span><span class="p">,</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getuser</span><span class="p">())</span>
+
+</div>
+<div class="viewcode-block" id="compute_scaling_factor"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.data_manipulation.compute_scaling_factor">[docs]</a><span class="k">def</span> <span class="nf">compute_scaling_factor</span><span class="p">(</span><span class="n">awidth</span><span class="p">,</span> <span class="n">aheight</span><span class="p">,</span> <span class="n">standard_window_width</span><span class="p">,</span> <span class="n">standard_window_height</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">((</span><span class="nb">min</span><span class="p">(</span><span class="n">awidth</span><span class="p">,</span> <span class="n">aheight</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">standard_window_width</span> <span class="o">*</span> <span class="n">standard_window_height</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="price_string_to_int"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.data_manipulation.price_string_to_int">[docs]</a><span class="k">def</span> <span class="nf">price_string_to_int</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">seppos</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">seppos</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">seppos</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">seppos</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="p">[:</span><span class="n">seppos</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="n">seppos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span><span class="n">seppos</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

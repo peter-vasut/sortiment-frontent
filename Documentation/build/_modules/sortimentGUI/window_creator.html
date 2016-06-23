@@ -49,10 +49,8 @@
             
   <h1>Source code for sortimentGUI.window_creator</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">os</span>
-
-<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
-
 <span class="kn">from</span> <span class="nn">database</span> <span class="kn">import</span> <span class="n">Database</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
 
 
 <div class="viewcode-block" id="create_window_main"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_creator.create_window_main">[docs]</a><span class="k">def</span> <span class="nf">create_window_main</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">show_all</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
@@ -181,7 +179,35 @@
     <span class="n">new_window</span> <span class="o">=</span> <span class="n">create_window</span><span class="p">(</span><span class="s">&quot;layouts/error_window.glade&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">show_all</span><span class="o">=</span><span class="n">show_all</span><span class="p">,</span> <span class="n">should_quit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
                                <span class="n">relative_filenames</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="n">fullscreen</span><span class="p">,</span> <span class="n">get_objects</span><span class="o">=</span><span class="n">objects</span><span class="p">)</span>
     <span class="n">new_window</span><span class="o">.</span><span class="n">set_keep_above</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">new_window</span><span class="p">,</span> <span class="n">objects</span></div>
+    <span class="k">return</span> <span class="n">new_window</span><span class="p">,</span> <span class="n">objects</span>
+
+</div>
+<div class="viewcode-block" id="create_window_edit_profile"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_creator.create_window_edit_profile">[docs]</a><span class="k">def</span> <span class="nf">create_window_edit_profile</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">show_all</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates window displaying info about user. It also alows modifying data.</span>
+
+<span class="sd">    :param fullscreen: True if window should be in full screen mode by default</span>
+<span class="sd">    :param handler: Sortiment WindowHandler or None</span>
+<span class="sd">    :param show_all: True if window should be shown immediately</span>
+<span class="sd">    :return: new Window</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">create_window</span><span class="p">(</span><span class="s">&quot;layouts/profile_edit_window.glade&quot;</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">show_all</span><span class="o">=</span><span class="n">show_all</span><span class="p">,</span> <span class="n">should_quit</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                         <span class="n">relative_filenames</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="n">fullscreen</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="create_window_edit_food"><a class="viewcode-back" href="../../sortimentGUI.html#sortimentGUI.window_creator.create_window_edit_food">[docs]</a><span class="k">def</span> <span class="nf">create_window_edit_food</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">show_all</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates window displaying info about food. It also allows modifying data.</span>
+
+<span class="sd">    :param handler: Sortiment WindowHandler or None</span>
+<span class="sd">    :param show_all: True if window should be shown immediately</span>
+<span class="sd">    :param fullscreen: True if window should be in full screen mode by default</span>
+<span class="sd">    :return: ner Window</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">create_window</span><span class="p">(</span><span class="s">&quot;layouts/item_edit_window.glade&quot;</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">show_all</span><span class="o">=</span><span class="n">show_all</span><span class="p">,</span> <span class="n">should_quit</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                         <span class="n">relative_filenames</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="n">fullscreen</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
