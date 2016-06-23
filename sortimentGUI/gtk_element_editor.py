@@ -165,3 +165,31 @@ def get_text_from_button(button):
 
 def get_text_from_entry(entry):
     return entry.get_text()
+
+
+def create_event_button(event_handler, text):
+    """
+    Creates new button and sets up on_clicked event handler.
+
+    :param event_handler: function to be linked as buttons event handler
+    :param text: button label
+    :return: `Gtk.Button`
+    """
+
+    button = Gtk.Button(text)
+    button.connect("clicked", event_handler)
+    return button
+
+
+def create_event_button_row(event_handler, text):
+    """
+    Creates new row containing event button.
+
+    :param event_handler: function to be linked as buttons event handler
+    :param text: button label
+    :return:
+    """
+
+    row = Gtk.ListBoxRow()
+    row.add(create_event_button(event_handler, text))
+    return row

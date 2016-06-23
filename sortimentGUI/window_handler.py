@@ -44,6 +44,8 @@ class WindowHandler:
     edit_name_entry = None
     edit_food_name_entry = None
     edit_food_price_entry = None
+    creating_new_user = True
+    creating_new_food = True
 
     def register_user_image(self, image):
         """
@@ -84,6 +86,7 @@ class WindowHandler:
         """
 
         self.user_list = user_list
+        self.clear_user_list()
         self.update_user_list()
 
     def register_food_list(self, food_list):
@@ -95,6 +98,7 @@ class WindowHandler:
 
         self.food_list = food_list
         # todo: add food filter
+        self.clear_food_list()
         self.update_food_list()
 
     def register_edit_food_price(self, edit):
@@ -105,7 +109,7 @@ class WindowHandler:
         """
 
         self.edit_food_price_entry = edit
-        gtk_element_editor.change_label_entry_text(edit, data_manipulation.get_item_price_printable(self.selected_food,
+        gtk_element_editor.change_label_entry_text(edit, data_manipulation.get_item_price_printable(self.food_to_edit,
                                                                                                     currency=""))
 
     def register_edit_food_name(self, edit):
@@ -116,7 +120,7 @@ class WindowHandler:
         """
 
         self.edit_food_name_entry = edit
-        gtk_element_editor.change_label_entry_text(edit, data_manipulation.get_item_printable_name(self.selected_food))
+        gtk_element_editor.change_label_entry_text(edit, data_manipulation.get_item_printable_name(self.food_to_edit))
 
     def event_user_selected(self, *args):
         """
@@ -141,12 +145,11 @@ class WindowHandler:
         Modifies user according to `edit_nick_entry` and `edit_name_entry`.
         """
 
-        new_user = True if self.user_to_edit is None else False
-        if new_user:
+        if self.creating_new_user:
             self.user_to_edit = User()
         self.user_to_edit.name = gtk_element_editor.get_text_from_entry(self.edit_name_entry)
-        self.selected_user.nick = gtk_element_editor.get_text_from_entry(self.edit_nick_entry)
-        if new_user:
+        self.user_to_edit.nick = gtk_element_editor.get_text_from_entry(self.edit_nick_entry)
+        if self.creating_new_user:
             self.database.add_user(self.user_to_edit)
         else:
             self.database.edit_user(self.user_to_edit)
@@ -169,7 +172,6 @@ class WindowHandler:
         self.actual_window.show()
         newest = max(os.listdir(config_imagepath), key=lambda x: os.path.getctime(os.path.join(config_imagepath, x)))
         newest = os.path.join(config_imagepath, newest)
-        print(newest)
         self.selected_user.photo = newest
         self.update_user_image()
 
@@ -189,13 +191,12 @@ class WindowHandler:
         Modifies item according to `edit_food_name_entry` and `edit_food_price_entry`.
         """
 
-        new_food = True if self.food_to_edit is None else False
-        if new_food:
+        if self.creating_new_food:
             self.user_to_edit = Item()
         self.food_to_edit.name = gtk_element_editor.get_text_from_entry(self.edit_food_name_entry)
         pricestring = gtk_element_editor.get_text_from_entry(self.edit_food_price_entry)
         self.food_to_edit.price = data_manipulation.price_string_to_int(pricestring)
-        if new_food:
+        if self.creating_new_food:
             self.database.add_item(self.food_to_edit)
         else:
             self.database.edit_item(self.food_to_edit)
@@ -212,6 +213,8 @@ class WindowHandler:
         for c in self.user_list:
             self.user_list.remove(c)
 
+        self.user_list.add(gtk_element_editor.create_event_button(self.event_jmp_new_user, "+"))
+
     def clear_food_list(self, *_):
         """
         Clears food list. (Don't use if another thread may be accessing food list.)
@@ -219,6 +222,8 @@ class WindowHandler:
 
         for c in self.food_list:
             self.food_list.remove(c)
+
+        self.food_list.add(gtk_element_editor.create_event_button(self.event_jmp_new_food, "+"))
 
     @use_threading
     def update_user_list(self, *_):
@@ -400,7 +405,10 @@ class WindowHandler:
 
         if self.regex_obj is None:
             return True
-        names = data_manipulation.get_all_names(row.user)
+        try:
+            names = data_manipulation.get_all_names(row.user)
+        except AttributeError:
+            return True
         for name in names:
             name = data_manipulation.normalize_string(name)
             if self.regex_obj.search(name) is not None:
@@ -641,16 +649,20 @@ class WindowHandler:
         self.actual_window.hide()
         self.actual_window = window_creator.create_window_transaction(self, self.database)
 
-    def event_jmp_edit_food(self, *_):
+    def event_jmp_edit_food(self, *_, new=False):
         """
         Switches current window to food editing window.
         """
 
-        self.food_to_edit = self.selected_food
-        if self.food_to_edit is not None:
-            self.window_history.append(self.actual_window)
-            self.actual_window.hide()
-            self.actual_window = window_creator.create_window_edit_food(self)
+        self.creating_new_food = new
+
+        if not new:
+            self.food_to_edit = self.selected_food
+        else:
+            self.food_to_edit = Item()
+        self.window_history.append(self.actual_window)
+        self.actual_window.hide()
+        self.actual_window = window_creator.create_window_edit_food(self)
 
     def event_numpad(self, num):
         """
@@ -727,13 +739,30 @@ class WindowHandler:
         gtk_element_editor.set_listbox_filter(self.user_list, self.user_filter)
         self.filter_clear_button.hide()
 
-    def event_jmp_edit_user(self, *_):
+    def event_jmp_edit_user(self, *_, new=False):
         """
         Switches current window to profile editing window.
         """
 
-        self.user_to_edit = self.selected_user
-        if self.selected_user is not None:
-            self.window_history.append(self.actual_window)
-            self.actual_window.hide()
-            self.actual_window = window_creator.create_window_edit_profile(self)
+        self.creating_new_user = new
+        if not new:
+            self.user_to_edit = self.selected_user
+        else:
+            self.user_to_edit = User()
+        self.window_history.append(self.actual_window)
+        self.actual_window.hide()
+        self.actual_window = window_creator.create_window_edit_profile(self)
+
+    def event_jmp_new_user(self, *_):
+        """
+        Opens window for creating new user.
+        """
+
+        self.event_jmp_edit_user(new=True)
+
+    def event_jmp_new_food(self, *_):
+        """
+        Opens window for creating new food.
+        """
+
+        self.event_jmp_edit_food(new=True)

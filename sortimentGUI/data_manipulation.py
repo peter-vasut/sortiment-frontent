@@ -140,5 +140,5 @@ def price_string_to_int(s):
     if seppos >= 0:
         r = s[:seppos] + s[seppos + 1:seppos + 3]
     else:
-        r = s
+        r = int(s) * 100
     return int(r)
